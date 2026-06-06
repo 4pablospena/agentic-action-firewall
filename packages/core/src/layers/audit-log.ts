@@ -6,8 +6,8 @@ import {
   generateKeypair,
   sha256Hex,
   signPayload,
-  verifySignature,
 } from "../utils/crypto.js";
+import { verifyAuditChainEntries } from "../audit-verify.js";
 import { hashArguments, sanitizeArguments } from "../utils/sanitize.js";
 
 function serializeForSigning(entry: Omit<AuditEntry, "signature">): string {
@@ -107,23 +107,7 @@ export class AuditLog {
   }
 
   async verifyChain(): Promise<boolean> {
-    let expectedPrevious = GENESIS_HASH;
-
-    for (const entry of this.entries) {
-      if (entry.previous_hash !== expectedPrevious) {
-        return false;
-      }
-
-      const { signature, ...rest } = entry;
-      const payload = serializeForSigning(rest as Omit<AuditEntry, "signature">);
-      const valid = await verifySignature(this.publicKey, payload, signature);
-      if (!valid) {
-        return false;
-      }
-
-      expectedPrevious = sha256Hex(JSON.stringify(entry));
-    }
-
-    return true;
+    const result = await verifyAuditChainEntries(this.entries, this.publicKey);
+    return result.valid;
   }
 }

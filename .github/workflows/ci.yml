@@ -39,6 +39,11 @@ jobs:
 
       - name: Build
         run: pnpm build
+        env:
+          DATABASE_URL: postgresql://aaf:aaf@localhost:5432/aaf_dashboard
+          NUXT_SESSION_PASSWORD: ci-test-session-password-min-32-chars
+          NUXT_OAUTH_GITHUB_CLIENT_ID: ci
+          NUXT_OAUTH_GITHUB_CLIENT_SECRET: ci
 
       - name: Typecheck
         run: pnpm typecheck

@@ -199,6 +199,8 @@ MVP wrappers are TypeScript-only ([ADR-0002](./adrs/0002-typescript-first.md)). 
 | Hermes Framework            | `@agent-firewall/hermes`         | —                            | Phase 1      |
 | Custom (function-style)     | `@agent-firewall/core`           | `packages/core/`             | Implemented  |
 | Slack approval channel      | `@agent-firewall/slack-channel`  | `packages/slack-channel/`    | Implemented  |
+| Pro dashboard               | `@agent-firewall/dashboard`      | `apps/dashboard/`            | Implemented (MVP) |
+| Nuxt integration module     | `@agent-firewall/nuxt`           | `packages/nuxt/`             | Implemented (MVP) |
 
 ```typescript
 import { wrapLangChainTools } from '@agent-firewall/langchain';

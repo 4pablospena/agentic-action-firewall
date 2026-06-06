@@ -11,6 +11,10 @@ export {
   formatPolicyErrors,
 } from "./policy/load.js";
 export {
+  verifyAuditChainEntries,
+  type AuditChainVerificationResult,
+} from "./audit-verify.js";
+export {
   buildToolCall,
   guardToolExecution,
   wrapAgentTools,

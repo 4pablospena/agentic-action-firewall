@@ -1,0 +1,33 @@
+{
+  "name": "@agent-firewall/nuxt",
+  "version": "0.0.0",
+  "description": "Nuxt 3 integration module for Agent Action Firewall",
+  "license": "MIT",
+  "type": "module",
+  "exports": {
+    ".": {
+      "import": "./dist/module.mjs",
+      "types": "./dist/module.d.ts"
+    }
+  },
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "nuxt-module-build build",
+    "dev": "nuxt-module-build build --stub",
+    "test": "vitest run",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@agent-firewall/core": "workspace:*",
+    "@nuxt/kit": "^3.16.0"
+  },
+  "devDependencies": {
+    "@nuxt/module-builder": "^0.8.4",
+    "@nuxt/schema": "^4.4.7",
+    "nuxt": "^3.16.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4"
+  }
+}

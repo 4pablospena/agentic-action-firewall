@@ -8,6 +8,10 @@
       "types": "./lib/validate-policy.d.ts",
       "import": "./lib/validate-policy.mjs"
     },
+    "./audit": {
+      "types": "./lib/validate-audit.d.ts",
+      "import": "./lib/validate-audit.mjs"
+    },
     "./policy.schema.json": "./policy.schema.json"
   },
   "scripts": {

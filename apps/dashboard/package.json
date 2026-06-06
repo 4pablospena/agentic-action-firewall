@@ -1,0 +1,39 @@
+{
+  "name": "@agent-firewall/dashboard",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/prepare-dev.mjs && TMPDIR=/tmp nuxt dev",
+    "build": "nuxt build",
+    "preview": "nuxt preview",
+    "typecheck": "nuxt typecheck",
+    "test": "vitest run",
+    "test:e2e": "playwright test",
+    "db:migrate": "node scripts/migrate.mjs"
+  },
+  "dependencies": {
+    "@agent-firewall/core": "workspace:*",
+    "@agent-firewall/nuxt": "workspace:*",
+    "@agent-firewall/schemas": "workspace:*",
+    "@nuxt/ui": "^3.0.0",
+    "drizzle-orm": "^0.44.0",
+    "js-yaml": "^4.1.0",
+    "nanoid": "^5.1.11",
+    "nuxt": "^3.16.0",
+    "nuxt-auth-utils": "^0.5.0",
+    "postgres": "^3.4.5",
+    "vue": "^3.5.13",
+    "vue-router": "^4.5.0",
+    "zod": "^3.24.2"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.51.0",
+    "@types/js-yaml": "^4.0.9",
+    "@types/node": "^22.15.21",
+    "drizzle-kit": "^0.31.0",
+    "typescript": "^5.8.3",
+    "vitest": "^3.2.4",
+    "vue-tsc": "^2.2.8"
+  }
+}

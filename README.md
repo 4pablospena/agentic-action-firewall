@@ -69,9 +69,7 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 ## Project status
 
-Pre-alpha. Core firewall engine, CLI, MVP wrappers, and Slack approval channel are implemented. See [roadmap](./docs/overview.md#roadmap).
-
-Monorepo: `packages/core`, `packages/cli`, `packages/langchain`, `packages/claude-sdk`, `packages/openai`, `packages/slack-channel`.
+Pre-alpha. Phase 0 MVP and Phase 1 dashboard foundation (Nuxt 3, Postgres, OAuth) are implemented. Learning Mode and control-plane ML/multi-channel are pending — see [phase-1-deferred.md](./docs/phase-1-deferred.md).
 
 ### Development
 
@@ -86,9 +84,20 @@ pnpm test:behavioral   # 25 enforcement specs
 pnpm exec aaf policy validate ./schemas/fixtures/firewall.example.yml
 ```
 
+### Dashboard (Phase 1)
+
+```bash
+docker compose up -d
+cp apps/dashboard/.env.example apps/dashboard/.env   # set OAuth + session password
+pnpm --filter @agent-firewall/dashboard db:migrate
+pnpm --filter @agent-firewall/dashboard dev
+```
+
+Open `http://localhost:3000/login`. Ingest audit entries via `POST /api/v1/audit/entries` (session cookie or future API key).
+
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.
 
-Phase 1 adds the Pro/Team dashboard (`apps/dashboard/`, Nuxt 3), the Nuxt integration module (`@agent-firewall/nuxt`), and a distributed control plane (Hono on Cloudflare Workers).
+Monorepo: `packages/*`, `apps/dashboard`, `schemas/`.
 
 ## License
 

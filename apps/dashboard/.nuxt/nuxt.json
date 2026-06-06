@@ -1,0 +1,9 @@
+{
+  "_hash": "o14qUNTix68lXqgzNPgHEiLhap8k7582VY3eBBSJ7is",
+  "project": {
+    "rootDir": "/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard"
+  },
+  "versions": {
+    "nuxt": "3.21.7"
+  }
+}
