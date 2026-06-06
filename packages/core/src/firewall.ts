@@ -1,10 +1,4 @@
-import { AuditLog } from "./layers/audit-log.js";
-import { approvePending } from "./layers/approval.js";
-import { KillSwitch } from "./layers/kill-switch.js";
-import { recordRateLimitState } from "./layers/rate-limit.js";
-import { loadPolicyFromPath } from "./policy/load.js";
-import { evaluatePipeline, type ResolvedFirewallConfig } from "./pipeline.js";
-import { SessionState } from "./session-state.js";
+import { wrapAgentTools } from "./wrap.js";
 import type {
   AgentTool,
   ApproveOptions,
@@ -14,14 +8,15 @@ import type {
   KillSwitchScope,
   Policy,
   ToolCall,
+  WrapOptions,
 } from "./types.js";
-
-export class FirewallBlockedError extends Error {
-  constructor(public readonly decision: FirewallDecision) {
-    super(decision.reason);
-    this.name = "FirewallBlockedError";
-  }
-}
+import { AuditLog } from "./layers/audit-log.js";
+import { approvePending } from "./layers/approval.js";
+import { KillSwitch } from "./layers/kill-switch.js";
+import { recordRateLimitState } from "./layers/rate-limit.js";
+import { loadPolicyFromPath } from "./policy/load.js";
+import { evaluatePipeline, type ResolvedFirewallConfig } from "./pipeline.js";
+import { SessionState } from "./session-state.js";
 
 export class Firewall {
   private readonly resolvedConfig: ResolvedFirewallConfig;
@@ -48,23 +43,8 @@ export class Firewall {
     });
   }
 
-  wrap<T extends AgentTool>(tools: T[]): T[] {
-    return tools.map((tool) => ({
-      ...tool,
-      execute: async (args: Record<string, unknown>) => {
-        const decision = await this.evaluate({
-          name: tool.name,
-          arguments: args,
-          agentId: "wrapped-agent",
-          sessionId: "wrapped-session",
-          timestamp: new Date().toISOString(),
-        });
-        if (decision.outcome === "allow") {
-          return tool.execute(args);
-        }
-        throw new FirewallBlockedError(decision);
-      },
-    }));
+  wrap<T extends AgentTool>(tools: T[], options?: WrapOptions): T[] {
+    return wrapAgentTools(this, tools, options);
   }
 
   async activateKillSwitch(scope: KillSwitchScope, reason: string): Promise<void> {

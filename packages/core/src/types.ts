@@ -64,3 +64,25 @@ export interface AgentTool<TArgs = Record<string, unknown>, TResult = unknown> {
   name: string;
   execute: (args: TArgs) => Promise<TResult>;
 }
+
+export interface WrapContext {
+  agentId: string;
+  sessionId: string;
+  costUsd?: number;
+  recipients?: string[];
+  payloadEmbedding?: number[];
+}
+
+export interface WrapOptions {
+  context: WrapContext;
+  mapCall?: (
+    tool: AgentTool,
+    args: Record<string, unknown>,
+    ctx: WrapContext,
+  ) => Partial<ToolCall>;
+}
+
+export const DEFAULT_WRAP_CONTEXT: WrapContext = {
+  agentId: "wrapped-agent",
+  sessionId: "wrapped-session",
+};

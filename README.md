@@ -23,21 +23,18 @@ npm install @agent-firewall/core
 
 ```typescript
 import { Firewall } from '@agent-firewall/core';
+import { wrapLangChainTools } from '@agent-firewall/langchain';
+// or: wrapClaudeTools from '@agent-firewall/claude-sdk'
+// or: wrapOpenAITools from '@agent-firewall/openai'
 
 const firewall = new Firewall({
-  policies: './firewall.yml', // validated at load time (cwd-relative path)
+  policies: './firewall.yml',
   onBlock: async (event) => notifyUser(event),
   onApprovalNeeded: async (event) => notifyApprover(event),
 });
 
-const protectedTools = firewall.wrap([
-  gmailTool,
-  linkedinTool,
-  databaseTool,
-]);
-
-const agent = new ClaudeAgent({ tools: protectedTools });
-await agent.run('Send follow-up emails to my prospects');
+const context = { agentId: 'my-agent', sessionId: 'sess-001' };
+const protectedTools = wrapLangChainTools(firewall, [gmailTool, linkedinTool], context);
 ```
 
 ## Documentation
@@ -60,9 +57,9 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 ## Project status
 
-Pre-alpha. Core firewall engine and CLI policy validation are implemented. See [roadmap](./docs/overview.md#roadmap).
+Pre-alpha. Core firewall engine, CLI, and MVP wrappers are implemented. See [roadmap](./docs/overview.md#roadmap).
 
-Monorepo: `packages/core` (5-layer pipeline), `packages/cli` (`aaf policy validate`), schema validation, and CI.
+Monorepo: `packages/core`, `packages/cli`, `packages/langchain`, `packages/claude-sdk`, `packages/openai`.
 
 ### Development
 

@@ -1,8 +1,8 @@
 /** @agent-firewall/core */
 export const VERSION = "0.0.0";
 
-export { FirewallInternalError, NotImplementedError } from "./errors.js";
-export { FirewallBlockedError, Firewall } from "./firewall.js";
+export { FirewallBlockedError, FirewallInternalError, NotImplementedError } from "./errors.js";
+export { Firewall } from "./firewall.js";
 export {
   loadPolicyFromPath,
   loadPolicyFromYaml,
@@ -10,6 +10,11 @@ export {
   validatePolicyDocument,
   formatPolicyErrors,
 } from "./policy/load.js";
+export {
+  buildToolCall,
+  guardToolExecution,
+  wrapAgentTools,
+} from "./wrap.js";
 export type {
   AgentTool,
   ApprovalNeededEvent,
@@ -23,4 +28,7 @@ export type {
   Policy,
   RiskTier,
   ToolCall,
+  WrapContext,
+  WrapOptions,
 } from "./types.js";
+export { DEFAULT_WRAP_CONTEXT } from "./types.js";

@@ -23,7 +23,7 @@ fills that gap.
 ═══════════════════════════════════════════════════════════════════════════
 ## Project status
 
-Pre-alpha. Core firewall (5-layer pipeline) and CLI policy validation are implemented. Learning Mode, wrappers, and Slack channel are pending.
+Pre-alpha. Core firewall, CLI, and MVP framework wrappers (LangChain, Claude SDK, OpenAI) are implemented. Learning Mode and Slack channel are pending.
 
 ═══════════════════════════════════════════════════════════════════════════
 ## Architecture in one paragraph
@@ -72,9 +72,9 @@ schemas/                           # Level 3 — Contracts
 packages/                          # Level 5 — Implementation
   core/                            # @agent-firewall/core — 5-layer firewall engine
   cli/                             # @agent-firewall/cli — aaf policy validate
-  langchain/                       # LangChain wrapper (pending)
-  claude-sdk/                      # Anthropic Claude SDK wrapper (pending)
-  openai-agents/                   # OpenAI Agents SDK wrapper (pending)
+  langchain/                       # @agent-firewall/langchain
+  claude-sdk/                      # @agent-firewall/claude-sdk
+  openai/                          # @agent-firewall/openai
   nuxt/                            # Nuxt 3 integration module (Phase 1)
   slack-channel/                   # Slack approval channel (pending)
 

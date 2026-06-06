@@ -183,16 +183,28 @@ await agent.run('Send a follow-up email to my prospects');
 
 ## Official wrappers
 
-| Framework                   | Package                          | MVP status   |
-| --------------------------- | -------------------------------- | ------------ |
-| LangChain (Python · JS)     | `@agent-firewall/langchain`      | Yes — wk 5   |
-| Anthropic Claude SDK        | `@agent-firewall/claude-sdk`     | Yes — wk 5   |
-| OpenAI Agents SDK           | `@agent-firewall/openai`         | Yes — wk 6   |
-| Nuxt 3                      | `@agent-firewall/nuxt`           | Phase 1      |
-| CrewAI                      | `@agent-firewall/crewai`         | Phase 1      |
-| Microsoft AutoGen           | `@agent-firewall/autogen`        | Phase 1      |
-| Hermes Framework            | `@agent-firewall/hermes`         | Phase 1      |
-| Custom (function-style)     | `@agent-firewall/core`           | Yes — wk 1   |
+MVP wrappers are TypeScript-only ([ADR-0002](./adrs/0002-typescript-first.md)). Each package exposes a thin adapter that maps framework tools to `ToolCall` and delegates to `@agent-firewall/core`.
+
+| Framework                   | Package                          | Path                         | MVP status   |
+| --------------------------- | -------------------------------- | ---------------------------- | ------------ |
+| LangChain (JS)              | `@agent-firewall/langchain`      | `packages/langchain/`        | Implemented  |
+| Anthropic Claude SDK        | `@agent-firewall/claude-sdk`     | `packages/claude-sdk/`       | Implemented  |
+| OpenAI Agents SDK           | `@agent-firewall/openai`         | `packages/openai/`           | Implemented  |
+| LangChain (Python)          | `@agent-firewall/langchain`      | —                            | Phase 1      |
+| Nuxt 3                      | `@agent-firewall/nuxt`           | —                            | Phase 1      |
+| CrewAI                      | `@agent-firewall/crewai`         | —                            | Phase 1      |
+| Microsoft AutoGen           | `@agent-firewall/autogen`        | —                            | Phase 1      |
+| Hermes Framework            | `@agent-firewall/hermes`         | —                            | Phase 1      |
+| Custom (function-style)     | `@agent-firewall/core`           | `packages/core/`             | Implemented  |
+
+```typescript
+import { wrapLangChainTools } from '@agent-firewall/langchain';
+
+const protectedTools = wrapLangChainTools(firewall, tools, {
+  agentId: 'my-agent',
+  sessionId: 'sess-001',
+});
+```
 
 ## Architecture decisions
 

@@ -15,7 +15,7 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test": "vitest run test/smoke.test.ts test/policy-loader.test.ts test/callbacks.test.ts",
+    "test": "vitest run test/smoke.test.ts test/policy-loader.test.ts test/callbacks.test.ts test/wrap-context.test.ts",
     "test:behavioral": "vitest run test/behavioral",
     "typecheck": "tsc --noEmit",
     "generate:types": "node scripts/generate-types.mjs"

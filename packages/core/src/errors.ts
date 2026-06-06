@@ -1,3 +1,5 @@
+import type { FirewallDecision } from "./types.js";
+
 export class NotImplementedError extends Error {
   constructor(feature: string) {
     super(`Not implemented: ${feature} (Paso 3b)`);
@@ -12,5 +14,12 @@ export class FirewallInternalError extends Error {
   ) {
     super(`[Layer ${layer}] ${message}`);
     this.name = "FirewallInternalError";
+  }
+}
+
+export class FirewallBlockedError extends Error {
+  constructor(public readonly decision: FirewallDecision) {
+    super(decision.reason);
+    this.name = "FirewallBlockedError";
   }
 }
