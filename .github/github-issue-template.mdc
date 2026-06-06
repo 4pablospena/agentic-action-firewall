@@ -1,0 +1,30 @@
+---
+description: How to prepare, draft, or refine GitHub issues
+alwaysApply: true
+---
+
+# GitHub Issue Preparation
+
+When the user asks to prepare, draft, or refine a GitHub issue:
+
+- Always write the issue **in English**.
+- Keep the wording **very specific and concise**.
+- Return the **issue wrapped in a single code fence with markdown tag** in **markdown raw format**.
+- Do not include any text before or after the fenced markdown block; only output the issue body inside the code fence.
+- At the very top of the fenced markdown block, include a line suggesting an issue title in the form: Title: [short, concise title] (before ### Description).
+- Use **exactly** this template and keep the section headings unchanged:
+
+### Description
+[Explain what needs to be done in this task, relevant context, the value/impact it adds, and any dependencies or blockers with other tasks.]
+
+### Scope
+[Define what is included in this task and what is explicitly out of scope. Clarify any boundaries, assumptions, or constraints that affect the work.]
+
+### Acceptance Criteria
+[Specific, measurable outcome or deliverable.]
+- [ ] Requirement 1
+- [ ] Requirement 2
+- [ ] Requirement 3
+
+### Additional Notes
+[Implementation considerations, technical details, design references, or any other resources needed to complete the task.]

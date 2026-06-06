@@ -23,9 +23,8 @@ fills that gap.
 ═══════════════════════════════════════════════════════════════════════════
 ## Project status
 
-Pre-alpha. We are in the foundational phase: docs and schemas exist; code
-implementation is starting. Do not assume implementation exists unless you
-see it in the repo.
+Pre-alpha. Monorepo, schemas, and package scaffolds exist; firewall logic is Paso 3.
+Do not assume full implementation exists unless you see it in the repo.
 
 ═══════════════════════════════════════════════════════════════════════════
 ## Architecture in one paragraph
@@ -71,14 +70,14 @@ schemas/                           # Level 3 — Contracts
   fixtures/                        # Example documents
   validate.mjs                     # Local AJV validation
 
-packages/                          # Level 5 — Implementation (pending)
-  core/                            # Core firewall engine (framework-agnostic)
-  langchain/                       # LangChain wrapper
-  claude-sdk/                      # Anthropic Claude SDK wrapper
-  openai-agents/                   # OpenAI Agents SDK wrapper (@agent-firewall/openai)
-  nuxt/                            # Nuxt 3 integration module (@agent-firewall/nuxt)
-  slack-channel/                   # Slack approval channel
-  cli/                             # 'aaf' CLI
+packages/                          # Level 5 — Implementation
+  core/                            # @agent-firewall/core — scaffold (Paso 3: firewall)
+  cli/                             # @agent-firewall/cli — scaffold
+  langchain/                       # LangChain wrapper (pending)
+  claude-sdk/                      # Anthropic Claude SDK wrapper (pending)
+  openai-agents/                   # OpenAI Agents SDK wrapper (pending)
+  nuxt/                            # Nuxt 3 integration module (Phase 1)
+  slack-channel/                   # Slack approval channel (pending)
 
 apps/                              # Frontend applications (Phase 1+)
   dashboard/                       # Nuxt 3 dashboard for Pro/Team users
@@ -99,7 +98,7 @@ apps/                              # Frontend applications (Phase 1+)
 - Embeddings: Voyage-3-lite or text-embedding-3-small
 - Crypto: @noble/ed25519 (pure JS, no native deps)
 - Audit storage: S3-compatible (Cloudflare R2 default)
-- CI/CD: GitHub Actions + Changesets
+- CI/CD: GitHub Actions (`.github/workflows/ci.yml`) + Changesets
 
 ### Dashboard and web (Phase 1)
 - Framework: Nuxt 3 (Vue 3, Composition API)

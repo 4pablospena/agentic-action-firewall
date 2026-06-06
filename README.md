@@ -61,6 +61,20 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 Pre-alpha. The MVP is under construction. See [roadmap](./docs/overview.md#roadmap).
 
+Monorepo scaffold is in place: `packages/core`, `packages/cli`, schema validation, and CI. Firewall implementation is Paso 3.
+
+### Development
+
+Requires Node.js 22+ and pnpm 9+.
+
+```bash
+pnpm install
+pnpm validate:schemas
+pnpm test
+```
+
+See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.
+
 Phase 1 adds the Pro/Team dashboard (`apps/dashboard/`, Nuxt 3), the Nuxt integration module (`@agent-firewall/nuxt`), and a distributed control plane (Hono on Cloudflare Workers).
 
 ## License

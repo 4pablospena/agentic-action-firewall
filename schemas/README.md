@@ -23,10 +23,17 @@ Example documents in [`fixtures/`](./fixtures/) including incident scenarios:
 
 ## Local validation
 
+From the repository root:
+
 ```bash
-cd schemas
-npm install
-npm run validate
+pnpm install
+pnpm validate:schemas
+```
+
+Or from this directory:
+
+```bash
+pnpm validate
 ```
 
 Uses AJV 2020-12 with `ajv-formats`. YAML policies are parsed with `js-yaml` before validation.
@@ -38,7 +45,7 @@ Changing a schema is a **contract change**. Required steps:
 1. Open or update an ADR explaining the change.
 2. Update the schema and fixtures.
 3. Update behavioral tests (when they exist).
-4. Run `npm run validate` — must pass before merge.
+4. Run `pnpm validate:schemas` — must pass before merge.
 
 Do not change schemas silently to match implementation drift.
 

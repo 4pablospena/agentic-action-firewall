@@ -8,6 +8,23 @@ Thanks for considering a contribution to Agent Action Firewall.
 2. Check existing issues to avoid duplicate work.
 3. For significant changes, open a discussion or RFC first.
 
+## Local development
+
+Requirements: **Node.js 22+**, **pnpm 9+**.
+
+```bash
+git clone https://github.com/your-org/agentic-action-firewall.git
+cd agentic-action-firewall
+pnpm install
+pnpm validate:schemas   # JSON Schema fixtures
+pnpm generate:types     # schemas → packages/core/src/generated/
+pnpm typecheck
+pnpm build
+pnpm test
+```
+
+CI runs the same checks on every push and pull request (see [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)).
+
 ## Pull requests
 
 - Each PR should answer:

@@ -1,0 +1,30 @@
+---
+description: How to prepare, draft, or refine GitHub pull request
+alwaysApply: true
+---
+
+# PRs template
+
+When the user asks to prepare, draft, or refine a GitHub pull request:
+
+- **Analyze changes** made in the working directory.
+- Always write the pull request **in English**.
+- Keep the wording **very specific and concise**.
+- Return the **pull request body wrapped in a single code fence with markdown tag** in **markdown raw format**.
+- Do not include any text before or after the fenced markdown block; only output the issue body inside the code fence.
+- At the very top of the fenced markdown block, include a line suggesting an **pull request title** in the form: Title: [short, concise title] (before ### Description).
+- **Breaking**: If there are breaking changes, highlight them clearly in the description.
+- Use **exactly** this template and keep the section headings unchanged:
+
+## What changes does this PR include?
+- Short bullet 1 describing a change
+- Short bullet 2 describing another change
+- Short bullet 3 (add/remove as needed)
+
+## Why are these changes necessary?
+Write 1–3 concise sentences explaining the reason for the changes.
+
+## How can they be tested?
+1. Step 1 (e.g., run `npm test`)
+2. Step 2 (e.g., open `/some-route`)
+3. Step 3 (e.g., verify expected behavior)

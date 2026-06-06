@@ -1,0 +1,4 @@
+packages:
+  - schemas
+  - packages/*
+  # - apps/*  # Phase 1 — dashboard and www

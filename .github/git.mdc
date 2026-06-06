@@ -1,0 +1,170 @@
+---
+description: Git workflow, commit conventions, branching strategies, and code review practices. This rule ensures consistent version control practices across all projects, covering commit message formats, branch naming, pull request standards, and code review guidelines.
+alwaysApply: true
+---
+
+## Commit Messages: Conventional Commits
+
+Every commit message must follow the [Conventional Commits](https://www.conventionalcommits.org/en/v1.0.0/) specification. This enables automated changelog generation and semantic versioning.
+
+**Format**: `<type>(<scope>): <description>`
+
+*   **`type`**: `feat`, `fix`, `docs`, `style`, `refactor`, `perf`, `test`, `build`, `ci`, `chore`, `revert`.
+*   **`scope` (optional)**: The part of the codebase affected (e.g., `auth`, `api`, `ui`, `database`).
+*   **`description`**: Concise, imperative, present tense. Max 50 characters.
+*   **Body (optional)**: More detailed explanation, breaking changes, references to issues.
+
+### Guideline: Write Clear, Atomic Commits
+
+Each commit should represent a single logical change.
+
+❌ **BAD**:
+```bash
+git commit -m "Fixed bug and added new feature"
+```
+
+✅ **GOOD**:
+```bash
+# First commit for the fix
+git commit -m "fix(auth): Correctly handle expired tokens" -m "This fixes an issue where users were stuck in a redirect loop after their session expired. Now, they are redirected to the login page."
+
+# Second commit for the feature
+git commit -m "feat(profile): Implement user profile view" -m "Adds a new page for users to view and edit their profile information."
+```
+
+## Branch Naming
+
+- Use descriptive branch names with prefixes
+- Format: `<type>/<description>`
+- Types: `feature`, `fix`, `bugfix`, `hotfix`, `chore`, `docs`, `refactor`, `test`
+- Use kebab-case for descriptions
+- Example: ✅ Good branch names:
+  ```bash
+  feature/deployment-status-api
+  fix/auth-token-expiration
+  chore/update-dependencies
+  refactor/extract-deployment-logic
+  ```
+- Example: ❌ Bad branch names:
+  ```bash
+  my-branch
+  fix
+  feature_new_thing
+  ```
+
+## Pull Requests
+
+- Use clear, descriptive titles that explain what the PR does
+- Include comprehensive description covering:
+  - What changes were made and why
+  - How to test the changes
+  - Screenshots or examples for UI changes
+  - Related issues or tickets
+- Link to related issues using keywords (fixes #123, closes #456)
+- Keep PRs focused and reasonably sized (aim for < 500 lines when possible)
+- Example: ✅ Good PR title and description:
+  ```
+  Title: feat(api): Add deployment status endpoint
+  
+  Description:
+  Adds GET /api/v1/deployments/:id/status endpoint to retrieve 
+  real-time deployment status.
+  
+  Changes:
+  - Added DeploymentStatusService with status calculation logic
+  - Created status endpoint with proper error handling
+  - Added integration tests for status endpoint
+  
+  Testing:
+  1. Start local server
+  2. Create a deployment
+  3. GET /api/v1/deployments/{id}/status
+  4. Verify status response matches deployment state
+  
+  Fixes #123
+  ```
+- Request reviews from appropriate team members
+- Address all review comments before merging
+- Ensure CI/CD checks pass before requesting review
+
+## Code Review Guidelines
+
+### For Reviewers
+
+- Review within 24 hours when possible
+- Focus on:
+  - Code correctness and logic
+  - Security implications
+  - Performance considerations
+  - Test coverage
+  - Code style and consistency
+  - Documentation completeness
+- Provide constructive, specific feedback
+- Approve when changes meet standards, even if you'd write it differently
+- Request changes only for issues that matter
+- Example: ✅ Good review comment:
+  ```
+  This looks good overall. One suggestion: consider adding 
+  error handling for the case where the deployment service 
+  is unavailable. We could use a circuit breaker pattern here.
+  ```
+- Example: ❌ Bad review comment:
+  ```
+  I don't like this approach
+  ```
+
+### For Authors
+
+- Respond to all review comments
+- Explain your reasoning if you disagree with a suggestion
+- Make requested changes or discuss alternatives
+- Keep discussions professional and focused on code
+- Update PR description if significant changes are made
+
+## Git Workflow
+
+- Use GitHub Flow for most projects:
+  - `main` branch is always deployable
+  - Create feature branches from `main`
+  - Open PR to merge back to `main`
+  - Deploy from `main` after merge
+- For projects requiring release branches, use GitFlow:
+  - `main` for production releases
+  - `develop` for integration
+  - `release/*` for preparing releases
+  - `hotfix/*` for urgent production fixes
+- Never force push to shared branches
+- Keep branches up to date with base branch
+- Use `git rebase` or merge commits based on team preference (be consistent)
+
+## Commit Best Practices
+
+- Make atomic commits (one logical change per commit)
+- Write clear commit messages that explain "why" not just "what"
+- Squash commits when merging to keep history clean
+- Don't commit:
+  - Secrets or credentials
+  - Generated files (unless necessary)
+  - Large binary files
+  - Temporary or debug code
+- Use `.gitignore` appropriately
+- Example: ✅ Good commit structure:
+  ```bash
+  feat(api): add deployment status endpoint
+  
+  - Add DeploymentStatusService
+  - Create GET /api/v1/deployments/:id/status endpoint
+  - Add integration tests
+  - Update API documentation
+  ```
+- Example: ❌ Bad commit structure:
+  ```bash
+  WIP: changes
+  ```
+
+## Related Cursor Rules
+
+- **`.cursor/rules/testing.mdc`** - Testing patterns to ensure code quality before commits
+- **`.cursor/rules/security.mdc`** - Security considerations for code reviews
+- **`.cursor/rules/devops.mdc`** - CI/CD integration with Git workflows
+- **`.cursor/rules/dash.mdc`** - Product context for feature development
