@@ -17,7 +17,7 @@ This matters because:
 
 ## Record structure
 
-> The canonical schema lives in [`/schemas/audit-entry.schema.json`](../../schemas/audit-entry.schema.json) (pending).
+> The canonical schema lives in [`/schemas/audit-entry.schema.json`](../../schemas/audit-entry.schema.json).
 
 ```typescript
 interface AuditEntry {
@@ -220,6 +220,6 @@ Faced with a claim for an agent action, the legal team can present cryptographic
 ## References
 
 - [Architecture — Layer 5](../architecture.md)
-- [EU AI Act compliance](../compliance-eu-ai-act.md) (pending)
-- Schema: [`/schemas/audit-entry.schema.json`](../../schemas/audit-entry.schema.json) (pending)
-- ADR-0007: Ed25519 over RSA (pending)
+- [EU AI Act compliance](../compliance-eu-ai-act.md)
+- Schema: [`/schemas/audit-entry.schema.json`](../../schemas/audit-entry.schema.json)
+- ADR-0007: [Ed25519 over RSA](../adrs/0007-ed25519-signing.md)

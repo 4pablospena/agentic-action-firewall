@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/anomaly-result.schema.json",
+  "title": "AnomalyResult",
+  "description": "Layer 3 detector output. Canonical spec: docs/concepts/anomaly-detection.md. ADR-0006.",
+  "type": "object",
+  "properties": {
+    "detected": { "type": "boolean" },
+    "severity": { "$ref": "common.defs.json#/$defs/AnomalySeverity" },
+    "confidence": { "type": "number", "minimum": 0, "maximum": 1 },
+    "pattern": { "$ref": "common.defs.json#/$defs/PatternType" },
+    "reason": { "type": "string", "minLength": 1 },
+    "suggested": { "$ref": "common.defs.json#/$defs/SuggestedAction" },
+    "evidence": {
+      "type": "object",
+      "properties": {
+        "events": {
+          "type": "array",
+          "items": { "$ref": "common.defs.json#/$defs/UuidV7" }
+        },
+        "metrics": {
+          "type": "object",
+          "additionalProperties": { "type": "number" }
+        }
+      },
+      "required": ["events", "metrics"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["detected", "severity", "confidence", "pattern", "reason", "suggested", "evidence"],
+  "additionalProperties": false,
+  "if": {
+    "properties": { "detected": { "const": false } }
+  },
+  "then": {
+    "properties": {
+      "severity": { "const": "low" },
+      "confidence": { "type": "number", "maximum": 0.01 }
+    }
+  }
+}

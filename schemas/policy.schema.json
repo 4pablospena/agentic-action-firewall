@@ -1,0 +1,251 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/policy.schema.json",
+  "title": "FirewallPolicy",
+  "description": "firewall.yml policy document. Canonical shape: this schema. Human docs: docs/policies/reference.md. ADR-0003, ADR-0005.",
+  "type": "object",
+  "properties": {
+    "version": {
+      "type": "string",
+      "const": "1"
+    },
+    "learning_mode": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "observation_hours": {
+          "type": "integer",
+          "minimum": 24,
+          "maximum": 168,
+          "default": 72,
+          "description": "Default 72h per ADR-0004. Auto-extends to 7d if insufficient activity."
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "tools": {
+      "type": "object",
+      "description": "Per-tool policy keyed by tool name (namespace.action).",
+      "additionalProperties": { "$ref": "#/$defs/ToolPolicy" }
+    },
+    "anomaly_detection": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "patterns": {
+          "type": "object",
+          "properties": {
+            "repetition": { "$ref": "#/$defs/RepetitionPattern" },
+            "loop": { "$ref": "#/$defs/LoopPattern" },
+            "speed": { "$ref": "#/$defs/SpeedPattern" },
+            "mass_action": { "$ref": "#/$defs/MassActionPattern" },
+            "recipient_escalation": { "$ref": "#/$defs/RecipientEscalationPattern" },
+            "scope_drift": { "$ref": "#/$defs/ScopeDriftPattern" }
+          },
+          "additionalProperties": false
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "approval": {
+      "type": "object",
+      "properties": {
+        "r1": {
+          "type": "string",
+          "enum": ["auto_allow", "notify"],
+          "default": "auto_allow"
+        },
+        "r2": {
+          "type": "object",
+          "properties": {
+            "cancel_window_seconds": {
+              "type": "integer",
+              "minimum": 0,
+              "maximum": 120,
+              "default": 30
+            }
+          },
+          "additionalProperties": false
+        },
+        "r3": {
+          "type": "object",
+          "properties": {
+            "require_explicit_approval": {
+              "type": "boolean",
+              "const": true
+            }
+          },
+          "additionalProperties": false
+        },
+        "r4": {
+          "type": "object",
+          "properties": {
+            "require_mfa": {
+              "type": "boolean",
+              "const": true
+            },
+            "relaxable": {
+              "type": "boolean",
+              "const": false,
+              "description": "R4 is never relaxable per ADR-0005."
+            }
+          },
+          "required": ["require_mfa", "relaxable"],
+          "additionalProperties": false
+        }
+      },
+      "additionalProperties": false
+    },
+    "budget": {
+      "type": "object",
+      "properties": {
+        "max_cost_per_session_usd": {
+          "type": "number",
+          "minimum": 0,
+          "description": "Layer 2 session cost cap (LangChain $47K incident mitigation)."
+        }
+      },
+      "additionalProperties": false
+    }
+  },
+  "required": ["version"],
+  "additionalProperties": false,
+  "$defs": {
+    "ToolPolicy": {
+      "type": "object",
+      "properties": {
+        "risk": { "$ref": "common.defs.json#/$defs/RiskTier" },
+        "when": { "$ref": "common.defs.json#/$defs/ConditionMap" },
+        "escalate_to": { "$ref": "common.defs.json#/$defs/RiskTier" },
+        "rate_limits": {
+          "type": "object",
+          "properties": {
+            "per_hour": { "type": "integer", "minimum": 1 },
+            "min_interval": {
+              "type": "string",
+              "pattern": "^[0-9]+(ms|s|m|h)$",
+              "description": "Minimum interval between calls, e.g. 2s, 500ms."
+            },
+            "per_recipient_24h": { "type": "integer", "minimum": 1 },
+            "per_session": { "type": "integer", "minimum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "anomaly_thresholds": {
+          "type": "object",
+          "properties": {
+            "unique_recipients_per_hour": { "type": "integer", "minimum": 1 },
+            "payload_similarity": { "type": "number", "minimum": 0, "maximum": 1 }
+          },
+          "additionalProperties": false
+        },
+        "require_approval": {
+          "type": "object",
+          "properties": {
+            "when": {
+              "type": "array",
+              "items": { "$ref": "common.defs.json#/$defs/ConditionMap" },
+              "minItems": 1
+            }
+          },
+          "required": ["when"],
+          "additionalProperties": false
+        }
+      },
+      "required": ["risk"],
+      "additionalProperties": false
+    },
+    "PatternToggle": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" }
+      },
+      "required": ["enabled"]
+    },
+    "RepetitionPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "threshold": {
+          "type": "number",
+          "minimum": 0,
+          "maximum": 1,
+          "default": 0.92
+        },
+        "action_if_recipients_gt": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 5
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "LoopPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "sequence_min_length": { "type": "integer", "minimum": 2, "default": 2 },
+        "window_seconds": { "type": "integer", "minimum": 1, "default": 60 },
+        "max_occurrences": { "type": "integer", "minimum": 2, "default": 3 }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "SpeedPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "max_per_second": {
+          "type": "number",
+          "exclusiveMinimum": 0,
+          "default": 0.33,
+          "description": "Default 0.33 = 1 action every 3 seconds."
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "MassActionPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "threshold_per_minute": { "type": "integer", "minimum": 1, "default": 50 },
+        "action": {
+          "type": "string",
+          "enum": ["pause_and_snapshot", "block", "require_approval"],
+          "default": "pause_and_snapshot"
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "RecipientEscalationPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "baseline_multiplier": {
+          "type": "number",
+          "minimum": 1,
+          "default": 10
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    },
+    "ScopeDriftPattern": {
+      "type": "object",
+      "properties": {
+        "enabled": { "type": "boolean" },
+        "require_approval_on_first_use": {
+          "type": "boolean",
+          "default": true
+        }
+      },
+      "required": ["enabled"],
+      "additionalProperties": false
+    }
+  }
+}

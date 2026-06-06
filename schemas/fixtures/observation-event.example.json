@@ -1,0 +1,19 @@
+{
+  "event_id": "018f8b5a-7890-7000-8000-000000000001",
+  "agent_id": "inbox-organizer-bot",
+  "session_id": "sess_openclaw_20260201",
+  "timestamp": "2026-02-01T14:23:11.042Z",
+  "tool_name": "gmail.delete",
+  "tool_namespace": "gmail",
+  "tool_category": "messaging",
+  "time_since_last_action_ms": 120,
+  "time_since_session_start_ms": 3600000,
+  "session_action_count": 847,
+  "recipients": [],
+  "payload_hash": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+  "payload_size_bytes": 128,
+  "batch_size": 50,
+  "succeeded": true,
+  "duration_ms": 340,
+  "external_response_hash": "fedcba0987654321fedcba0987654321fedcba0987654321fedcba0987654321"
+}

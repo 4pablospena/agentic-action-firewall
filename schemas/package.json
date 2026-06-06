@@ -1,0 +1,14 @@
+{
+  "name": "@agent-firewall/schemas",
+  "private": true,
+  "type": "module",
+  "description": "JSON Schema contracts and local validation for Agent Action Firewall",
+  "scripts": {
+    "validate": "node validate.mjs"
+  },
+  "devDependencies": {
+    "ajv": "^8.17.1",
+    "ajv-formats": "^3.0.1",
+    "js-yaml": "^4.1.0"
+  }
+}

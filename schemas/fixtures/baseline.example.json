@@ -1,0 +1,67 @@
+{
+  "agent_id": "antonio-outreach-bot",
+  "observation_period": {
+    "start": "2026-05-04T08:00:00.000Z",
+    "end": "2026-05-07T08:00:00.000Z",
+    "total_actions": 234
+  },
+  "tools": {
+    "gmail.send": {
+      "usage_count": 87,
+      "calls_per_hour_p50": 3,
+      "calls_per_hour_p95": 8,
+      "calls_per_hour_max": 12,
+      "min_interval_observed_ms": 4200,
+      "median_interval_ms": 11200,
+      "recipients_per_call_p50": 1,
+      "recipients_per_call_p95": 3,
+      "unique_recipients_total": 47,
+      "recipient_overlap_rate": 0.12,
+      "payload_size_p50_bytes": 2048,
+      "payload_size_p95_bytes": 4096,
+      "payload_similarity_p50": 0.34,
+      "payload_similarity_max": 0.91,
+      "batch_size_p50": 1,
+      "batch_size_p95": 1,
+      "batch_size_max": 1
+    },
+    "linkedin.connect": {
+      "usage_count": 23,
+      "calls_per_hour_p50": 1,
+      "calls_per_hour_p95": 3,
+      "calls_per_hour_max": 5,
+      "min_interval_observed_ms": 8000,
+      "median_interval_ms": 45000,
+      "recipients_per_call_p50": 1,
+      "recipients_per_call_p95": 1,
+      "unique_recipients_total": 23,
+      "recipient_overlap_rate": 0,
+      "payload_size_p50_bytes": 512,
+      "payload_size_p95_bytes": 768,
+      "payload_similarity_p50": 0.45,
+      "payload_similarity_max": 0.72,
+      "batch_size_p50": 1,
+      "batch_size_p95": 1,
+      "batch_size_max": 1
+    }
+  },
+  "global_patterns": {
+    "actions_per_session_p50": 45,
+    "actions_per_session_p95": 120,
+    "interval_between_actions_p50_ms": 8500,
+    "interval_between_actions_p95_ms": 42000,
+    "common_tool_sequences": [
+      {
+        "tools": ["crm.lookup", "gmail.send"],
+        "count": 34,
+        "frequency_p50": 0.15
+      }
+    ]
+  },
+  "confidence": {
+    "sample_size": 234,
+    "days_of_data": 3,
+    "confidence_score": 0.87,
+    "weak_signals": []
+  }
+}

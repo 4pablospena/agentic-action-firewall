@@ -61,12 +61,15 @@ docs/                              # Level 2 — Specification
   adrs/                            # Architecture Decision Records
     0001-source-of-truth.md        # READ THIS FIRST
 
-schemas/                           # Level 3 — Contracts (pending)
+schemas/                           # Level 3 — Contracts
   policy.schema.json               # firewall.yml validation
   event.schema.json                # Observation events
   baseline.schema.json             # Learning Mode output
   audit-entry.schema.json          # Layer 5 records
   anomaly-result.schema.json       # Layer 3 output
+  common.defs.json                 # Shared type definitions
+  fixtures/                        # Example documents
+  validate.mjs                     # Local AJV validation
 
 packages/                          # Level 5 — Implementation (pending)
   core/                            # Core firewall engine (framework-agnostic)

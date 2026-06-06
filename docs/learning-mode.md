@@ -151,7 +151,7 @@ interface BehaviorBaseline {
     actions_per_session_p95:        number;
     interval_between_actions_p50_ms: number;
     interval_between_actions_p95_ms: number;
-    common_tool_sequences:          Sequence[];
+    common_tool_sequences:          Sequence[];  // see schemas/common.defs.json#ToolSequence
   };
 
   confidence: {
@@ -395,7 +395,7 @@ Detect changes in system prompt or tools. Notify: "Want to re-learn the baseline
 
 ## References
 
-- ADR-0004: 72h observation window in Learning Mode *(pending)*
-- Schema: [`/schemas/baseline.schema.json`](../schemas/baseline.schema.json)
+- ADR-0004: [72h observation window](../adrs/0004-observation-window.md)
+- Schema: [`/schemas/baseline.schema.json`](../schemas/baseline.schema.json) — includes `ToolSequence` definition in `common.defs.json`
 - Schema: [`/schemas/event.schema.json`](../schemas/event.schema.json)
-- Behavioral tests: [`/packages/core/test/behavioral/learning-mode.test.ts`](../packages/core/test/behavioral/learning-mode.test.ts) *(to be created)*
+- Behavioral tests: [`/packages/core/test/behavioral/learning-mode.test.ts`](../packages/core/test/behavioral/learning-mode.test.ts) (Paso 3)

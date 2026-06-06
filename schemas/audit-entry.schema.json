@@ -1,0 +1,56 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/audit-entry.schema.json",
+  "title": "AuditEntry",
+  "description": "Immutable audit log record. Canonical spec: docs/concepts/audit-log.md. ADR-0007. Privacy: arguments are sanitized; arguments_hash is required for full payload traceability.",
+  "type": "object",
+  "properties": {
+    "id": { "$ref": "common.defs.json#/$defs/UuidV7" },
+    "timestamp": { "$ref": "common.defs.json#/$defs/IsoDateTime" },
+    "previous_hash": { "$ref": "common.defs.json#/$defs/Sha256Hex" },
+    "agent_id": { "type": "string", "minLength": 1 },
+    "session_id": { "type": "string", "minLength": 1 },
+    "tool_call": {
+      "type": "object",
+      "properties": {
+        "name": { "$ref": "common.defs.json#/$defs/ToolName" },
+        "arguments": { "$ref": "common.defs.json#/$defs/SanitizedArguments" },
+        "arguments_hash": { "$ref": "common.defs.json#/$defs/Sha256Hex" },
+        "risk_class": { "$ref": "common.defs.json#/$defs/RiskTier" }
+      },
+      "required": ["name", "arguments", "arguments_hash", "risk_class"],
+      "additionalProperties": false
+    },
+    "decision": {
+      "type": "object",
+      "properties": {
+        "outcome": { "$ref": "common.defs.json#/$defs/DecisionOutcome" },
+        "by_layer": { "$ref": "common.defs.json#/$defs/FirewallLayer" },
+        "reason": { "type": "string", "minLength": 1 }
+      },
+      "required": ["outcome", "by_layer", "reason"],
+      "additionalProperties": false
+    },
+    "approver": {
+      "type": "string",
+      "minLength": 1,
+      "description": "user_id when Layer 4 approval was involved."
+    },
+    "signature": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{128}$",
+      "description": "Ed25519 signature (64 bytes, hex-encoded)."
+    }
+  },
+  "required": [
+    "id",
+    "timestamp",
+    "previous_hash",
+    "agent_id",
+    "session_id",
+    "tool_call",
+    "decision",
+    "signature"
+  ],
+  "additionalProperties": false
+}

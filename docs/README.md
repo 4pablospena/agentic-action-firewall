@@ -10,15 +10,30 @@ docs/
 ├── overview.md                     ← product, market, business, roadmap
 ├── architecture.md                 ← 5-layer technical architecture
 ├── learning-mode.md                ← Learning Mode specification
+├── policies/
+│   └── reference.md                ← firewall.yml format
+├── compliance-eu-ai-act.md         ← EU AI Act mapping
+├── risks.md                        ← product risk analysis
 │
 ├── concepts/                       ← canonical product concepts
 │   ├── risk-tiers.md               ← R1, R2, R3, R4 — authoritative definition
 │   ├── anomaly-detection.md        ← Layer 3 in detail
 │   └── audit-log.md                ← Layer 5 in detail
 │
+├── policies/
+│   └── reference.md                ← firewall.yml format (links to schema)
+├── compliance-eu-ai-act.md         ← EU AI Act mapping
+├── risks.md                        ← product risk analysis
+│
 └── adrs/                           ← Architecture Decision Records
     ├── TEMPLATE.md
-    └── 0001-source-of-truth.md     ← the level hierarchy
+    ├── 0001-source-of-truth.md     ← the level hierarchy
+    ├── 0002-typescript-first.md
+    ├── 0003-yaml-for-policies.md
+    ├── 0004-observation-window.md
+    ├── 0005-four-tier-risk.md
+    ├── 0006-heuristics-first.md
+    └── 0007-ed25519-signing.md
 ```
 
 ## Conventions
@@ -52,14 +67,14 @@ In this doc we focus on how Layer 1 applies them.
 
 Editing the doc is not enough. If the decision is structural (changes behavior, contracts, or sets precedent), open an ADR first, discuss it, accept it, and then edit the doc.
 
-ADR candidates near term (pending creation):
+Accepted ADRs:
 
-- **ADR-0002:** TypeScript as primary language vs Python
-- **ADR-0003:** YAML for policies vs JSON / custom DSL
-- **ADR-0004:** 72h observation window (Learning Mode)
-- **ADR-0005:** 4 risk tiers (R1-R4)
-- **ADR-0006:** Heuristics first, ML later (Layer 3)
-- **ADR-0007:** Ed25519 over RSA for audit log signing
+- [ADR-0002: TypeScript as primary language](./adrs/0002-typescript-first.md)
+- [ADR-0003: YAML for policies](./adrs/0003-yaml-for-policies.md)
+- [ADR-0004: 72h observation window](./adrs/0004-observation-window.md)
+- [ADR-0005: 4-tier risk structure](./adrs/0005-four-tier-risk.md)
+- [ADR-0006: Heuristics first, ML later](./adrs/0006-heuristics-first.md)
+- [ADR-0007: Ed25519 over RSA](./adrs/0007-ed25519-signing.md)
 
 ## For contributors
 

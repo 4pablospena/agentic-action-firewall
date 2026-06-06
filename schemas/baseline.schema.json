@@ -1,0 +1,105 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/baseline.schema.json",
+  "title": "BehaviorBaseline",
+  "description": "Learning Mode behavior baseline output. Canonical spec: docs/learning-mode.md. ToolSequence defined here (see $defs).",
+  "type": "object",
+  "properties": {
+    "agent_id": { "type": "string", "minLength": 1 },
+    "observation_period": {
+      "type": "object",
+      "properties": {
+        "start": { "$ref": "common.defs.json#/$defs/IsoDateTime" },
+        "end": { "$ref": "common.defs.json#/$defs/IsoDateTime" },
+        "total_actions": { "type": "integer", "minimum": 0 }
+      },
+      "required": ["start", "end", "total_actions"],
+      "additionalProperties": false
+    },
+    "tools": {
+      "type": "object",
+      "additionalProperties": { "$ref": "#/$defs/ToolProfile" }
+    },
+    "global_patterns": {
+      "type": "object",
+      "properties": {
+        "actions_per_session_p50": { "type": "number", "minimum": 0 },
+        "actions_per_session_p95": { "type": "number", "minimum": 0 },
+        "interval_between_actions_p50_ms": { "type": "number", "minimum": 0 },
+        "interval_between_actions_p95_ms": { "type": "number", "minimum": 0 },
+        "common_tool_sequences": {
+          "type": "array",
+          "items": { "$ref": "common.defs.json#/$defs/ToolSequence" }
+        }
+      },
+      "required": [
+        "actions_per_session_p50",
+        "actions_per_session_p95",
+        "interval_between_actions_p50_ms",
+        "interval_between_actions_p95_ms",
+        "common_tool_sequences"
+      ],
+      "additionalProperties": false
+    },
+    "confidence": {
+      "type": "object",
+      "properties": {
+        "sample_size": { "type": "integer", "minimum": 0 },
+        "days_of_data": { "type": "number", "minimum": 0 },
+        "confidence_score": { "type": "number", "minimum": 0, "maximum": 1 },
+        "weak_signals": {
+          "type": "array",
+          "items": { "$ref": "common.defs.json#/$defs/ToolName" }
+        }
+      },
+      "required": ["sample_size", "days_of_data", "confidence_score", "weak_signals"],
+      "additionalProperties": false
+    }
+  },
+  "required": ["agent_id", "observation_period", "tools", "global_patterns", "confidence"],
+  "additionalProperties": false,
+  "$defs": {
+    "ToolProfile": {
+      "type": "object",
+      "properties": {
+        "usage_count": { "type": "integer", "minimum": 0 },
+        "calls_per_hour_p50": { "type": "number", "minimum": 0 },
+        "calls_per_hour_p95": { "type": "number", "minimum": 0 },
+        "calls_per_hour_max": { "type": "number", "minimum": 0 },
+        "min_interval_observed_ms": { "type": "number", "minimum": 0 },
+        "median_interval_ms": { "type": "number", "minimum": 0 },
+        "recipients_per_call_p50": { "type": "number", "minimum": 0 },
+        "recipients_per_call_p95": { "type": "number", "minimum": 0 },
+        "unique_recipients_total": { "type": "integer", "minimum": 0 },
+        "recipient_overlap_rate": { "type": "number", "minimum": 0, "maximum": 1 },
+        "payload_size_p50_bytes": { "type": "number", "minimum": 0 },
+        "payload_size_p95_bytes": { "type": "number", "minimum": 0 },
+        "payload_similarity_p50": { "type": "number", "minimum": 0, "maximum": 1 },
+        "payload_similarity_max": { "type": "number", "minimum": 0, "maximum": 1 },
+        "batch_size_p50": { "type": "number", "minimum": 0 },
+        "batch_size_p95": { "type": "number", "minimum": 0 },
+        "batch_size_max": { "type": "number", "minimum": 0 }
+      },
+      "required": [
+        "usage_count",
+        "calls_per_hour_p50",
+        "calls_per_hour_p95",
+        "calls_per_hour_max",
+        "min_interval_observed_ms",
+        "median_interval_ms",
+        "recipients_per_call_p50",
+        "recipients_per_call_p95",
+        "unique_recipients_total",
+        "recipient_overlap_rate",
+        "payload_size_p50_bytes",
+        "payload_size_p95_bytes",
+        "payload_similarity_p50",
+        "payload_similarity_max",
+        "batch_size_p50",
+        "batch_size_p95",
+        "batch_size_max"
+      ],
+      "additionalProperties": false
+    }
+  }
+}

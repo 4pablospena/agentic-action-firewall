@@ -199,6 +199,9 @@ await agent.run('Send a follow-up email to my prospects');
 Significant architectural changes are documented as ADRs in [`adrs/`](./adrs/):
 
 - [ADR-0001: Source of truth for the product](./adrs/0001-source-of-truth.md)
-- [ADR-0002: TypeScript as primary language](./adrs/0002-typescript-first.md) *(pending)*
-- [ADR-0003: YAML for policies](./adrs/0003-yaml-for-policies.md) *(pending)*
-- [ADR-0004: 72h observation window in Learning Mode](./adrs/0004-observation-window.md) *(pending)*
+- [ADR-0002: TypeScript as primary language](./adrs/0002-typescript-first.md)
+- [ADR-0003: YAML for policies](./adrs/0003-yaml-for-policies.md)
+- [ADR-0004: 72h observation window in Learning Mode](./adrs/0004-observation-window.md)
+- [ADR-0005: 4-tier risk structure (R1–R4)](./adrs/0005-four-tier-risk.md)
+- [ADR-0006: Heuristics first, ML later](./adrs/0006-heuristics-first.md)
+- [ADR-0007: Ed25519 over RSA for audit log signing](./adrs/0007-ed25519-signing.md)

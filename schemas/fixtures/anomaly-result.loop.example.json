@@ -1,0 +1,24 @@
+{
+  "detected": true,
+  "severity": "critical",
+  "confidence": 0.99,
+  "pattern": "loop",
+  "reason": "Same tool-call sequence (analyzer.run → verifier.run) observed 4 times in 60s — LangChain A2A ping-pong pattern",
+  "suggested": {
+    "type": "throttle",
+    "delay_ms": 16000
+  },
+  "evidence": {
+    "events": [
+      "018f8b5a-7890-7000-8000-000000000010",
+      "018f8b5a-7890-7000-8000-000000000011",
+      "018f8b5a-7890-7000-8000-000000000012",
+      "018f8b5a-7890-7000-8000-000000000013"
+    ],
+    "metrics": {
+      "sequence_occurrences": 4,
+      "window_seconds": 60,
+      "sequence_length": 2
+    }
+  }
+}

@@ -1,0 +1,22 @@
+{
+  "id": "018f8b5a-7890-7000-8000-000000000100",
+  "timestamp": "2026-02-01T14:23:30.512Z",
+  "previous_hash": "0000000000000000000000000000000000000000000000000000000000000000",
+  "agent_id": "inbox-organizer-bot",
+  "session_id": "sess_openclaw_20260201",
+  "tool_call": {
+    "name": "gmail.delete",
+    "arguments": {
+      "batch_size": 50,
+      "label": "INBOX"
+    },
+    "arguments_hash": "a1b2c3d4e5f6789012345678901234567890abcdef1234567890abcdef123456",
+    "risk_class": "R4"
+  },
+  "decision": {
+    "outcome": "block",
+    "by_layer": 3,
+    "reason": "Mass action: 51 destructive operations in 45s exceeds threshold_per_minute: 50"
+  },
+  "signature": "0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef0123456789abcdef"
+}

@@ -1,0 +1,14 @@
+{
+  "detected": false,
+  "severity": "low",
+  "confidence": 0,
+  "pattern": "repetition",
+  "reason": "No anomaly detected",
+  "suggested": {
+    "type": "allow"
+  },
+  "evidence": {
+    "events": [],
+    "metrics": {}
+  }
+}

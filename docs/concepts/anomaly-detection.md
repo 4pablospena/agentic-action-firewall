@@ -110,7 +110,7 @@ Layer 3 is the core detector of the product. It's where the differential value l
 
 ## Detector result structure
 
-> The canonical schema lives in [`/schemas/anomaly-result.schema.json`](../../schemas/anomaly-result.schema.json) (pending).
+> The canonical schema lives in [`/schemas/anomaly-result.schema.json`](../../schemas/anomaly-result.schema.json).
 
 ```typescript
 interface AnomalyResult {
@@ -211,5 +211,5 @@ The heuristic detector has a known trade-off: it prefers false positives (legiti
 
 - [Architecture — Layer 3](../architecture.md)
 - [Learning Mode](../learning-mode.md) — how detector thresholds are generated
-- ADR-0006: Heuristics first, ML later (pending)
-- Behavioral tests: [`/packages/core/test/behavioral/anomaly-detection.test.ts`](../../packages/core/test/behavioral/anomaly-detection.test.ts) (pending)
+- ADR-0006: [Heuristics first, ML later](../adrs/0006-heuristics-first.md)
+- Behavioral tests: [`/packages/core/test/behavioral/anomaly-detection.test.ts`](../../packages/core/test/behavioral/anomaly-detection.test.ts) (Paso 3)

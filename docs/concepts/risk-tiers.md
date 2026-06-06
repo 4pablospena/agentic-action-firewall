@@ -150,5 +150,5 @@ The LLM is only invoked for uncatalogued tools, and the result is aggressively c
 ## References
 
 - [Architecture — Layer 1](../architecture.md)
-- Schema: [`/schemas/policy.schema.json`](../../schemas/policy.schema.json) (pending)
-- ADR-0005: 4-tier risk structure (pending)
+- Schema: [`/schemas/policy.schema.json`](../../schemas/policy.schema.json)
+- ADR-0005: [4-tier risk structure](../adrs/0005-four-tier-risk.md)

@@ -1,0 +1,161 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/common.defs.json",
+  "title": "AAF Common Definitions",
+  "description": "Shared $defs referenced by AAF JSON Schemas. See docs/adrs/0001-source-of-truth.md.",
+  "$defs": {
+    "RiskTier": {
+      "type": "string",
+      "enum": ["R1", "R2", "R3", "R4"],
+      "description": "Canonical risk tier. See docs/concepts/risk-tiers.md and ADR-0005."
+    },
+    "IsoDateTime": {
+      "type": "string",
+      "format": "date-time",
+      "description": "ISO 8601 timestamp with millisecond precision."
+    },
+    "UuidV7": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{8}-[0-9a-f]{4}-7[0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$",
+      "description": "UUID version 7 (time-ordered)."
+    },
+    "Sha256Hex": {
+      "type": "string",
+      "pattern": "^[0-9a-f]{64}$",
+      "description": "Lowercase hexadecimal SHA-256 digest."
+    },
+    "ToolName": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*\\.[a-z][a-z0-9_-]*$",
+      "description": "Tool identifier in namespace.action form, e.g. gmail.send."
+    },
+    "ToolNamespace": {
+      "type": "string",
+      "pattern": "^[a-z][a-z0-9_-]*$",
+      "description": "Tool namespace, e.g. gmail."
+    },
+    "ToolCategory": {
+      "type": "string",
+      "enum": ["messaging", "data", "compute", "social", "payment", "storage", "other"],
+      "description": "High-level tool category for observation and rules."
+    },
+    "ComparisonOperator": {
+      "type": "object",
+      "minProperties": 1,
+      "maxProperties": 1,
+      "properties": {
+        "gt": { "type": "number" },
+        "gte": { "type": "number" },
+        "lt": { "type": "number" },
+        "lte": { "type": "number" },
+        "eq": {}
+      },
+      "additionalProperties": false
+    },
+    "ConditionMap": {
+      "type": "object",
+      "description": "Field name to comparison operator, e.g. { batch_size: { gt: 10 } }.",
+      "additionalProperties": {
+        "$ref": "#/$defs/ComparisonOperator"
+      }
+    },
+    "PatternType": {
+      "type": "string",
+      "enum": [
+        "repetition",
+        "loop",
+        "speed",
+        "mass_action",
+        "recipient_escalation",
+        "scope_drift"
+      ],
+      "description": "Anomaly pattern that triggered detection. See docs/concepts/anomaly-detection.md."
+    },
+    "AnomalySeverity": {
+      "type": "string",
+      "enum": ["low", "medium", "high", "critical"]
+    },
+    "DecisionOutcome": {
+      "type": "string",
+      "enum": ["allow", "block", "throttle", "pending"],
+      "description": "Firewall decision outcome recorded in audit log."
+    },
+    "FirewallLayer": {
+      "type": "integer",
+      "enum": [1, 2, 3, 4, 5],
+      "description": "Layer that produced the decision."
+    },
+    "SanitizedArguments": {
+      "type": "object",
+      "description": "Sanitized tool arguments. PII fields omitted per policy. Values must be JSON primitives.",
+      "additionalProperties": {
+        "oneOf": [
+          { "type": "string" },
+          { "type": "number" },
+          { "type": "boolean" },
+          { "type": "null" }
+        ]
+      }
+    },
+    "SuggestedAction": {
+      "oneOf": [
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "allow" }
+          },
+          "required": ["type"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "throttle" },
+            "delay_ms": { "type": "integer", "minimum": 0 }
+          },
+          "required": ["type", "delay_ms"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "block" },
+            "require_approval": { "type": "boolean" }
+          },
+          "required": ["type", "require_approval"],
+          "additionalProperties": false
+        },
+        {
+          "type": "object",
+          "properties": {
+            "type": { "const": "kill_session" },
+            "reason": { "type": "string", "minLength": 1 }
+          },
+          "required": ["type", "reason"],
+          "additionalProperties": false
+        }
+      ]
+    },
+    "ToolSequence": {
+      "type": "object",
+      "description": "Observed tool-call sequence in a session baseline.",
+      "properties": {
+        "tools": {
+          "type": "array",
+          "items": { "$ref": "#/$defs/ToolName" },
+          "minItems": 1
+        },
+        "count": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "frequency_p50": {
+          "type": "number",
+          "minimum": 0
+        }
+      },
+      "required": ["tools", "count", "frequency_p50"],
+      "additionalProperties": false
+    }
+  }
+}

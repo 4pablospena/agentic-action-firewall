@@ -1,0 +1,57 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://agent-firewall.dev/schemas/event.schema.json",
+  "title": "ObservationEvent",
+  "description": "Learning Mode observation event. Canonical spec: docs/learning-mode.md. ADR-0004.",
+  "type": "object",
+  "properties": {
+    "event_id": { "$ref": "common.defs.json#/$defs/UuidV7" },
+    "agent_id": { "type": "string", "minLength": 1 },
+    "session_id": { "type": "string", "minLength": 1 },
+    "timestamp": { "$ref": "common.defs.json#/$defs/IsoDateTime" },
+    "tool_name": { "$ref": "common.defs.json#/$defs/ToolName" },
+    "tool_namespace": { "$ref": "common.defs.json#/$defs/ToolNamespace" },
+    "tool_category": { "$ref": "common.defs.json#/$defs/ToolCategory" },
+    "time_since_last_action_ms": { "type": "integer", "minimum": 0 },
+    "time_since_session_start_ms": { "type": "integer", "minimum": 0 },
+    "session_action_count": { "type": "integer", "minimum": 1 },
+    "recipients": {
+      "type": "array",
+      "items": { "$ref": "common.defs.json#/$defs/Sha256Hex" },
+      "description": "Hashed recipient identifiers (sha256 + local salt)."
+    },
+    "payload_hash": { "$ref": "common.defs.json#/$defs/Sha256Hex" },
+    "payload_embedding": {
+      "type": "array",
+      "items": { "type": "number" },
+      "minItems": 384,
+      "maxItems": 384,
+      "description": "384-dimensional embedding of text payload."
+    },
+    "payload_size_bytes": { "type": "integer", "minimum": 0 },
+    "batch_size": { "type": "integer", "minimum": 1 },
+    "succeeded": { "type": "boolean" },
+    "duration_ms": { "type": "integer", "minimum": 0 },
+    "external_response_hash": { "$ref": "common.defs.json#/$defs/Sha256Hex" }
+  },
+  "required": [
+    "event_id",
+    "agent_id",
+    "session_id",
+    "timestamp",
+    "tool_name",
+    "tool_namespace",
+    "tool_category",
+    "time_since_last_action_ms",
+    "time_since_session_start_ms",
+    "session_action_count",
+    "recipients",
+    "payload_hash",
+    "payload_size_bytes",
+    "batch_size",
+    "succeeded",
+    "duration_ms",
+    "external_response_hash"
+  ],
+  "additionalProperties": false
+}
