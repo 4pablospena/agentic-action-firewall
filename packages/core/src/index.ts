@@ -15,6 +15,7 @@ export {
   guardToolExecution,
   wrapAgentTools,
 } from "./wrap.js";
+export type { GuardOptions } from "./types.js";
 export type {
   AgentTool,
   ApprovalNeededEvent,

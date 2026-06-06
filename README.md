@@ -23,19 +23,31 @@ npm install @agent-firewall/core
 
 ```typescript
 import { Firewall } from '@agent-firewall/core';
+import { createSlackApprovalChannel, createWebApiSlackClient } from '@agent-firewall/slack-channel';
 import { wrapLangChainTools } from '@agent-firewall/langchain';
 // or: wrapClaudeTools from '@agent-firewall/claude-sdk'
 // or: wrapOpenAITools from '@agent-firewall/openai'
 
+const slack = createSlackApprovalChannel(
+  {
+    botToken: process.env.SLACK_BOT_TOKEN!,
+    channelId: process.env.SLACK_APPROVAL_CHANNEL!,
+    mfaApproverIds: ['U12345678'], // R4 "Approve (MFA verified)" allowlist
+  },
+  await createWebApiSlackClient(process.env.SLACK_BOT_TOKEN!),
+);
+
 const firewall = new Firewall({
   policies: './firewall.yml',
   onBlock: async (event) => notifyUser(event),
-  onApprovalNeeded: async (event) => notifyApprover(event),
+  onApprovalNeeded: (event) => slack.onApprovalNeeded(event),
 });
 
 const context = { agentId: 'my-agent', sessionId: 'sess-001' };
 const protectedTools = wrapLangChainTools(firewall, [gmailTool, linkedinTool], context);
 ```
+
+Wire Slack interactivity to `slack.handleInteraction(payload)` from your HTTP server (Hono, Express, etc.). Verify `X-Slack-Signature` in production before calling the handler.
 
 ## Documentation
 
@@ -57,9 +69,9 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 ## Project status
 
-Pre-alpha. Core firewall engine, CLI, and MVP wrappers are implemented. See [roadmap](./docs/overview.md#roadmap).
+Pre-alpha. Core firewall engine, CLI, MVP wrappers, and Slack approval channel are implemented. See [roadmap](./docs/overview.md#roadmap).
 
-Monorepo: `packages/core`, `packages/cli`, `packages/langchain`, `packages/claude-sdk`, `packages/openai`.
+Monorepo: `packages/core`, `packages/cli`, `packages/langchain`, `packages/claude-sdk`, `packages/openai`, `packages/slack-channel`.
 
 ### Development
 

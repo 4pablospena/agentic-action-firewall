@@ -23,7 +23,7 @@ fills that gap.
 ═══════════════════════════════════════════════════════════════════════════
 ## Project status
 
-Pre-alpha. Core firewall, CLI, and MVP framework wrappers (LangChain, Claude SDK, OpenAI) are implemented. Learning Mode and Slack channel are pending.
+Pre-alpha. Phase 0 MVP is implemented: core firewall, CLI, framework wrappers (LangChain, Claude SDK, OpenAI), and Slack approval channel. Learning Mode is pending.
 
 ═══════════════════════════════════════════════════════════════════════════
 ## Architecture in one paragraph
@@ -76,7 +76,7 @@ packages/                          # Level 5 — Implementation
   claude-sdk/                      # @agent-firewall/claude-sdk
   openai/                          # @agent-firewall/openai
   nuxt/                            # Nuxt 3 integration module (Phase 1)
-  slack-channel/                   # Slack approval channel (pending)
+  slack-channel/                   # @agent-firewall/slack-channel
 
 apps/                              # Frontend applications (Phase 1+)
   dashboard/                       # Nuxt 3 dashboard for Pro/Team users

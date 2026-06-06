@@ -44,7 +44,15 @@ export class Firewall {
   }
 
   wrap<T extends AgentTool>(tools: T[], options?: WrapOptions): T[] {
-    return wrapAgentTools(this, tools, options);
+    const cancelWindowMs =
+      (this.resolvedConfig.policies.approval?.r2?.cancel_window_seconds ?? 30) * 1000;
+    return wrapAgentTools(this, tools, {
+      ...options,
+      guard: {
+        cancelWindowMs,
+        ...options?.guard,
+      },
+    });
   }
 
   async activateKillSwitch(scope: KillSwitchScope, reason: string): Promise<void> {

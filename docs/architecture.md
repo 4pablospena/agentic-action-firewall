@@ -181,6 +181,8 @@ const agent = new ClaudeAgent({ tools: protectedTools });
 await agent.run('Send a follow-up email to my prospects');
 ```
 
+For Slack-backed approvals, use `@agent-firewall/slack-channel` (`packages/slack-channel/`). `createSlackApprovalChannel()` returns `{ onApprovalNeeded, handleInteraction }`; wire `handleInteraction` to your Slack interactivity HTTP endpoint (signature verification required in production — not included in MVP).
+
 ## Official wrappers
 
 MVP wrappers are TypeScript-only ([ADR-0002](./adrs/0002-typescript-first.md)). Each package exposes a thin adapter that maps framework tools to `ToolCall` and delegates to `@agent-firewall/core`.
@@ -196,6 +198,7 @@ MVP wrappers are TypeScript-only ([ADR-0002](./adrs/0002-typescript-first.md)). 
 | Microsoft AutoGen           | `@agent-firewall/autogen`        | —                            | Phase 1      |
 | Hermes Framework            | `@agent-firewall/hermes`         | —                            | Phase 1      |
 | Custom (function-style)     | `@agent-firewall/core`           | `packages/core/`             | Implemented  |
+| Slack approval channel      | `@agent-firewall/slack-channel`  | `packages/slack-channel/`    | Implemented  |
 
 ```typescript
 import { wrapLangChainTools } from '@agent-firewall/langchain';

@@ -73,13 +73,21 @@ export interface WrapContext {
   payloadEmbedding?: number[];
 }
 
+export interface GuardOptions {
+  /** Wait for R2 cancel window, re-evaluate once, then execute if allowed. Default: false. */
+  waitForR2CancelWindow?: boolean;
+  /** Injected by Firewall.wrap from policy; used when waitForR2CancelWindow is true. */
+  cancelWindowMs?: number;
+}
+
 export interface WrapOptions {
-  context: WrapContext;
+  context?: WrapContext;
   mapCall?: (
     tool: AgentTool,
     args: Record<string, unknown>,
     ctx: WrapContext,
   ) => Partial<ToolCall>;
+  guard?: GuardOptions;
 }
 
 export const DEFAULT_WRAP_CONTEXT: WrapContext = {
