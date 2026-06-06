@@ -1,4 +1,9 @@
-import { NotImplementedError } from "./errors.js";
+import { AuditLog } from "./layers/audit-log.js";
+import { approvePending } from "./layers/approval.js";
+import { KillSwitch } from "./layers/kill-switch.js";
+import { recordRateLimitState } from "./layers/rate-limit.js";
+import { evaluatePipeline } from "./pipeline.js";
+import { SessionState } from "./session-state.js";
 import type {
   AgentTool,
   ApproveOptions,
@@ -9,39 +14,96 @@ import type {
   ToolCall,
 } from "./types.js";
 
-export class Firewall {
-  constructor(private readonly config: FirewallConfig) {}
+export class FirewallBlockedError extends Error {
+  constructor(public readonly decision: FirewallDecision) {
+    super(decision.reason);
+    this.name = "FirewallBlockedError";
+  }
+}
 
-  async evaluate(_call: ToolCall): Promise<FirewallDecision> {
-    throw new NotImplementedError("Firewall.evaluate");
+export class Firewall {
+  private readonly auditLog: AuditLog;
+  private readonly killSwitch = new KillSwitch();
+  private readonly state = new SessionState();
+
+  constructor(private readonly config: FirewallConfig) {
+    this.auditLog = new AuditLog(config.signingKey);
+  }
+
+  async evaluate(call: ToolCall): Promise<FirewallDecision> {
+    return evaluatePipeline(call, {
+      config: this.config,
+      state: this.state,
+      auditLog: this.auditLog,
+      killSwitch: this.killSwitch,
+    });
   }
 
   wrap<T extends AgentTool>(tools: T[]): T[] {
-    throw new NotImplementedError("Firewall.wrap");
+    return tools.map((tool) => ({
+      ...tool,
+      execute: async (args: Record<string, unknown>) => {
+        const decision = await this.evaluate({
+          name: tool.name,
+          arguments: args,
+          agentId: "wrapped-agent",
+          sessionId: "wrapped-session",
+          timestamp: new Date().toISOString(),
+        });
+        if (decision.outcome === "allow") {
+          return tool.execute(args);
+        }
+        throw new FirewallBlockedError(decision);
+      },
+    }));
   }
 
-  async activateKillSwitch(_scope: KillSwitchScope, _reason: string): Promise<void> {
-    throw new NotImplementedError("Firewall.activateKillSwitch");
+  async activateKillSwitch(scope: KillSwitchScope, reason: string): Promise<void> {
+    this.killSwitch.activate(scope, reason);
   }
 
-  isKilled(_scope: KillSwitchScope): boolean {
-    throw new NotImplementedError("Firewall.isKilled");
+  isKilled(scope: KillSwitchScope): boolean {
+    return this.killSwitch.isActive(scope);
   }
 
   async approve(
-    _approvalId: string,
-    _approver: string,
-    _opts?: ApproveOptions,
+    approvalId: string,
+    approver: string,
+    opts?: ApproveOptions,
   ): Promise<FirewallDecision> {
-    throw new NotImplementedError("Firewall.approve");
+    const { pending } = approvePending(
+      approvalId,
+      approver,
+      this.config.policies,
+      this.state,
+      opts,
+    );
+
+    const decision: FirewallDecision = {
+      outcome: "allow",
+      byLayer: 4,
+      reason: `${pending.riskTier} approved by ${approver}`,
+      riskTier: pending.riskTier,
+    };
+
+    await this.auditLog.append(pending.call, pending.riskTier, decision, approver);
+    this.state.recordCall({
+      call: pending.call,
+      riskTier: pending.riskTier,
+      timestampMs: new Date(pending.call.timestamp).getTime(),
+      outcome: "allow",
+    });
+    recordRateLimitState(pending.call, this.state);
+
+    return decision;
   }
 
   getAuditEntries(): AuditEntry[] {
-    throw new NotImplementedError("Firewall.getAuditEntries");
+    return this.auditLog.entries;
   }
 
   async verifyAuditChain(): Promise<boolean> {
-    throw new NotImplementedError("Firewall.verifyAuditChain");
+    return this.auditLog.verifyChain();
   }
 }
 

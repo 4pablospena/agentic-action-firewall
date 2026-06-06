@@ -45,3 +45,6 @@ jobs:
 
       - name: Test
         run: pnpm test
+
+      - name: Behavioral tests
+        run: pnpm test:behavioral

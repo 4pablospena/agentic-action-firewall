@@ -2,7 +2,7 @@
 export const VERSION = "0.0.0";
 
 export { FirewallInternalError, NotImplementedError } from "./errors.js";
-export { Firewall } from "./firewall.js";
+export { FirewallBlockedError, Firewall } from "./firewall.js";
 export type {
   AgentTool,
   ApproveOptions,
