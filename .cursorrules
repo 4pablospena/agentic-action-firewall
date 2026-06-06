@@ -1,0 +1,203 @@
+# Agent Action Firewall — Cursor context
+
+You are helping build Agent Action Firewall (AAF), a runtime protection layer
+for AI agent actions. Read this file fully before any work in this repo.
+
+═══════════════════════════════════════════════════════════════════════════
+## What this project is
+
+AAF is a runtime interception layer that sits between any AI agent and the
+external systems it can manipulate (email, social networks, databases, APIs,
+files, payment services). It inspects, classifies, and authorizes every
+action before execution.
+
+The product solves a real, documented problem: agents that go runaway and
+cause irreversible damage (e.g., the OpenClaw incident in Feb 2026 where an
+agent deleted an entire Gmail inbox despite stop commands; the LangChain
+$47K loop incident in Nov 2025).
+
+Current alternatives in the market (Galileo, Lakera, NeMo Guardrails) filter
+text input/output of LLMs. They do NOT intervene at the action layer. AAF
+fills that gap.
+
+═══════════════════════════════════════════════════════════════════════════
+## Project status
+
+Pre-alpha. We are in the foundational phase: docs and schemas exist; code
+implementation is starting. Do not assume implementation exists unless you
+see it in the repo.
+
+═══════════════════════════════════════════════════════════════════════════
+## Architecture in one paragraph
+
+AAF wraps an agent's tools with a 5-layer pipeline:
+1. Intent Classifier — risk tier (R1–R4)
+2. Rate Limiter & Budget Tracker
+3. Behavioral Anomaly Detector (repetition, loops, velocity, mass actions)
+4. Approval Gate (tier-based human-in-the-loop)
+5. Kill Switch & Immutable Audit Log (Ed25519 signed)
+
+Target total latency: under 200ms at p95.
+
+═══════════════════════════════════════════════════════════════════════════
+## CRITICAL: Source of truth hierarchy
+
+Read docs/adrs/0001-source-of-truth.md and .cursor/rules/source-of-truth.mdc
+before any change. Lower level wins: Intent → Spec → Schema → Tests → Code.
+If a doc and a test disagree, the test wins.
+
+═══════════════════════════════════════════════════════════════════════════
+## Repo structure
+
+docs/                              # Level 2 — Specification
+  README.md                        # Docs navigation and conventions
+  overview.md                      # Product, market, business
+  architecture.md                  # 5-layer technical architecture
+  learning-mode.md                 # Learning Mode spec
+  concepts/
+    risk-tiers.md                  # R1–R4 canonical definition
+    anomaly-detection.md           # Layer 3 detail
+    audit-log.md                   # Layer 5 detail
+  adrs/                            # Architecture Decision Records
+    0001-source-of-truth.md        # READ THIS FIRST
+
+schemas/                           # Level 3 — Contracts (pending)
+  policy.schema.json               # firewall.yml validation
+  event.schema.json                # Observation events
+  baseline.schema.json             # Learning Mode output
+  audit-entry.schema.json          # Layer 5 records
+  anomaly-result.schema.json       # Layer 3 output
+
+packages/                          # Level 5 — Implementation (pending)
+  core/                            # Core firewall engine (framework-agnostic)
+  langchain/                       # LangChain wrapper
+  claude-sdk/                      # Anthropic Claude SDK wrapper
+  openai-agents/                   # OpenAI Agents SDK wrapper (@agent-firewall/openai)
+  nuxt/                            # Nuxt 3 integration module (@agent-firewall/nuxt)
+  slack-channel/                   # Slack approval channel
+  cli/                             # 'aaf' CLI
+
+apps/                              # Frontend applications (Phase 1+)
+  dashboard/                       # Nuxt 3 dashboard for Pro/Team users
+  www/                             # Marketing site and docs portal
+
+═══════════════════════════════════════════════════════════════════════════
+## Tech stack (decided)
+
+### Core packages (framework-agnostic)
+- Language: TypeScript (Node.js 22 LTS) — primary
+- Python 3.12 — secondary (API parity, for LangChain/CrewAI users)
+- Package manager: pnpm with workspaces
+- Tests: Vitest + Playwright
+- Build: tsup or unbuild for libraries
+- Local storage: SQLite via better-sqlite3
+- Distributed storage: Redis 7+ (with RedisJSON)
+- LLM classifier: Claude Haiku 4.5 (default) · GPT-5 nano (alt)
+- Embeddings: Voyage-3-lite or text-embedding-3-small
+- Crypto: @noble/ed25519 (pure JS, no native deps)
+- Audit storage: S3-compatible (Cloudflare R2 default)
+- CI/CD: GitHub Actions + Changesets
+
+### Dashboard and web (Phase 1)
+- Framework: Nuxt 3 (Vue 3, Composition API)
+- UI library: Nuxt UI (built on Tailwind + Radix Vue)
+- Dashboard server: Nitro in apps/dashboard/ (workspace APIs, SSR)
+- Control plane: Hono on Cloudflare Workers (kill switch, edge API — separate)
+- Database: PostgreSQL 16 + Drizzle ORM
+- Auth (Pro): nuxt-auth-utils (sessions) or Sidebase nuxt-auth (OAuth)
+- Auth (Team/Enterprise): WorkOS SSO — Phase 2
+- State: Pinia (Vue's official state)
+- Validation: Zod (shared with backend)
+- Deployment: Cloudflare Pages (preferred) or Vercel
+
+═══════════════════════════════════════════════════════════════════════════
+## Risk tiers (memorize these)
+
+R1 · Low      — Reversible (read email, query DB)               → Auto-allow
+R2 · Medium   — External (send message, post social)             → Notify, cancel window
+R3 · High     — Irreversible (delete, modify, exec code)         → Block until approval
+R4 · Critical — Sensitive (PII, money, credentials)              → Block + MFA, never relaxable
+
+Canonical definition: docs/concepts/risk-tiers.md
+
+═══════════════════════════════════════════════════════════════════════════
+## Coding principles
+
+1. **Default safe**: every default policy should be conservative (block-leaning).
+   The developer relaxes, never the other way around.
+
+2. **Local-first**: the core must work without external services. Cloud is
+   opt-in. Never introduce a hard dependency on a remote service in the core.
+
+3. **Framework-agnostic core**: the core package has zero dependencies on
+   LangChain, Claude SDK, Nuxt, Vue, etc. Wrappers and frontend are separate.
+
+4. **Sub-200ms p95**: every change that touches the hot path must be
+   benchmarked. If you add latency, justify it.
+
+5. **Privacy-preserving**: never store payloads in plaintext. Hash, embed, or
+   sanitize. PII never leaves the device without explicit opt-in.
+
+6. **Auditable**: every firewall decision MUST go through the audit log.
+   No silent allows. No silent blocks.
+
+═══════════════════════════════════════════════════════════════════════════
+## What NOT to do
+
+❌ Do NOT add features requested by hypothetical users. Only build what
+   docs/overview.md roadmap specifies for the current phase.
+
+❌ Do NOT optimize prematurely. 200ms p95 is the target — do not chase 50ms
+   until correctness is proven.
+
+❌ Do NOT introduce new dependencies without strong justification. Each dep
+   is a long-term commitment for an open-source project.
+
+❌ Do NOT add UI/dashboard code to the core packages. Dashboard is Phase 1
+   and lives in apps/dashboard/, not in packages/core/.
+
+❌ Do NOT couple core packages to Nuxt or Vue. If a core feature needs UI,
+   it gets a generic API that any framework can consume.
+
+❌ Do NOT silently mutate behavior. Any change in observable behavior must
+   update tests AND docs.
+
+❌ Do NOT write code without a corresponding behavioral test that defines
+   the expected outcome. Tests come first.
+
+❌ Do NOT use AI to generate code that bypasses the source-of-truth
+   hierarchy. If unsure, ask the developer to clarify the spec first.
+
+═══════════════════════════════════════════════════════════════════════════
+## When you (Cursor) help with code
+
+1. Read the relevant doc in docs/ first. If a relevant ADR exists, read it too.
+2. If the schema in schemas/ exists for the data shape you're touching, use
+   it as the contract.
+3. Write or update the behavioral test BEFORE writing implementation.
+4. Implementation should be the smallest change that makes the test pass.
+5. After changes, propose updating any docs that are now stale.
+
+═══════════════════════════════════════════════════════════════════════════
+## When you (Cursor) help with docs
+
+1. Each doc declares its authority. Don't duplicate content across docs.
+2. Use relative links between docs.
+3. Significant changes (changing behavior, contracts, precedent) require an
+   ADR, not just a doc edit.
+4. Keep code examples real and executable. No pseudo-code passed off as code.
+
+═══════════════════════════════════════════════════════════════════════════
+## Language
+
+All code, comments, docs, commit messages, and PRs are in English.
+The product is open source for an international audience.
+
+═══════════════════════════════════════════════════════════════════════════
+## Communication preferences with the developer
+
+- Be direct. No "great question!" preambles.
+- When something is risky or wrong, say so. Disagree respectfully.
+- If asked to do something that violates these rules, push back and explain.
+- Cite specific files/sections when referencing project decisions.
+- Prefer concrete examples over abstractions.

@@ -61,6 +61,8 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 Pre-alpha. The MVP is under construction. See [roadmap](./docs/overview.md#roadmap).
 
+Phase 1 adds the Pro/Team dashboard (`apps/dashboard/`, Nuxt 3), the Nuxt integration module (`@agent-firewall/nuxt`), and a distributed control plane (Hono on Cloudflare Workers).
+
 ## License
 
 MIT.

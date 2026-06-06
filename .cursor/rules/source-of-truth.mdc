@@ -1,0 +1,62 @@
+---
+description: Source of truth hierarchy. Always active.
+alwaysApply: true
+---
+
+# Source of truth hierarchy
+
+This rule is ALWAYS active. Read it before any change in this repo.
+
+## The 5 levels
+
+Information lives in exactly ONE place. When in doubt, lower wins:
+
+1. **Intent** — Word docs, decks, conversations. The *why*.
+2. **Specification** — `docs/*.md`. The *what*.
+3. **Contracts** — `schemas/*.json`. The *shape*.
+4. **Behavior** — tests in `packages/*/test/` and `apps/*/test/`. The *exact behavior*.
+5. **Code** — `packages/*/src/` and `apps/*/`. *Implementation*.
+
+## Practical rules
+
+- **If a doc and a test disagree:** the test wins. Either the test is wrong
+  (fix it) or the doc is outdated (update it).
+
+- **If a schema and code disagree:** the schema wins UNTIL we explicitly
+  decide to evolve the schema. Schema evolution = new ADR.
+
+- **If you find duplicated information across docs:** raise it. One of them
+  must become a link to the other.
+
+- **If a decision feels too big for a doc edit:** it's an ADR. Open one in
+  `docs/adrs/` using `docs/adrs/TEMPLATE.md`.
+
+## Where each kind of decision lives
+
+| Decision type                          | Lives in                                |
+| -------------------------------------- | --------------------------------------- |
+| Value prop, business model             | `docs/overview.md`                      |
+| Architecture, layers, principles       | `docs/architecture.md`                  |
+| Learning Mode behavior                 | `docs/learning-mode.md`                 |
+| R1–R4 definitions                      | `docs/concepts/risk-tiers.md`           |
+| Anomaly detection patterns             | `docs/concepts/anomaly-detection.md`    |
+| Audit log structure & guarantees       | `docs/concepts/audit-log.md`            |
+| `firewall.yml` exact format            | `schemas/policy.schema.json`            |
+| Behavioral expectations                | `packages/*/test/behavioral/*.test.ts`  |
+| Architectural decisions with tradeoffs | `docs/adrs/`                            |
+| Dashboard UI components                | `apps/dashboard/components/`            |
+| Dashboard server endpoints             | `apps/dashboard/server/api/`            |
+| Nuxt integration module                | `packages/nuxt/`                        |
+| Distributed control plane (edge API)   | `docs/architecture.md` (Hono service)   |
+
+## Red flags to call out
+
+If you (the AI) detect any of these, stop and flag it:
+
+- The user is asking for code that contradicts what `docs/` say.
+- The user is asking for a schema change without an ADR.
+- A test would need to be deleted (not updated) to accommodate a change.
+- New behavior is being added that isn't reflected anywhere in `docs/`.
+- Code in `packages/core/` is importing from Nuxt, Vue, or any framework.
+
+In all these cases, propose updating the spec or opening an ADR FIRST.

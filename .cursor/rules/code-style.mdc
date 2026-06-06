@@ -1,0 +1,127 @@
+---
+description: TypeScript code style and patterns for AAF core packages
+globs: ["packages/**/*.ts", "packages/**/*.tsx"]
+---
+
+# Code style & patterns (core packages)
+
+This rule applies to `packages/*` — the framework-agnostic core, wrappers,
+and CLI. For Nuxt code in `apps/dashboard/`, `apps/www/`, or `packages/nuxt/`,
+see nuxt-dashboard.mdc.
+
+## Language & runtime
+
+- TypeScript strict mode. No `any` without explicit justification in a comment.
+- Node.js 22 LTS as target. Use modern syntax (ES2024+).
+- ESM modules only. No CommonJS in new code.
+
+## Types over comments
+
+````ts
+// ❌ Avoid
+// userId is a UUID v7 string
+function getUser(userId: string) { ... }
+
+// ✅ Prefer
+type UserId = string & { readonly __brand: 'UserId' };
+function getUser(userId: UserId) { ... }
+````
+
+Branded types for IDs, especially: `AgentId`, `SessionId`, `EventId`, `UserId`.
+
+## Import the schema, don't redefine it
+
+Types that exist in `schemas/*.json` are sourced from there. Use JSON Schema
+to TypeScript generation (e.g., `json-schema-to-typescript`) so the runtime
+contract and the compile-time type are the same thing.
+
+````ts
+// ❌ Avoid hand-writing this
+interface AuditEntry {
+  id: string;
+  timestamp: string;
+  // ... drift waiting to happen
+}
+
+// ✅ Prefer generated types
+import type { AuditEntry } from '@/generated/audit-entry';
+````
+
+## Async patterns
+
+- Always async by default. The firewall hot path is async.
+- Use `Promise.all` for parallelizable layer checks where order doesn't matter.
+- Never block the hot path on external services. If something might be slow,
+  it goes off the critical path (background queue, fire-and-forget).
+
+## Error handling
+
+- Throw typed errors. Define them in `packages/core/src/errors.ts`.
+- The firewall never crashes the agent. If the firewall itself fails, it
+  defaults to BLOCK (fail-safe) and logs the internal error to the audit log.
+
+````ts
+class FirewallInternalError extends Error {
+  constructor(public layer: 1 | 2 | 3 | 4 | 5, message: string) {
+    super(`[Layer ${layer}] ${message}`);
+  }
+}
+````
+
+## Naming
+
+- Layer functions: `classifyIntent`, `checkRateLimits`, `detectAnomaly`,
+  `requestApproval`, `recordAudit`. Verb-first, action-oriented.
+- Types: PascalCase for types, camelCase for values.
+- Constants: `SCREAMING_SNAKE_CASE` only for true compile-time constants.
+- Tools and tool categories: lowercase with dots, e.g., `gmail.send`.
+
+## Tests
+
+- Behavioral tests live in `test/behavioral/`. They describe *what* the
+  firewall should do, not *how* it does it.
+- Unit tests live in `test/unit/`. They test internals.
+- Test names start with "should" or "must" and describe observable behavior.
+- Reproduce real incidents as tests: name them after the incident.
+
+````ts
+describe('Layer 3 — mass action detection', () => {
+  it('should block the OpenClaw scenario (50+ deletes in 60s)', async () => {
+    // ...
+  });
+});
+````
+
+## Performance discipline
+
+- Any code in the hot path (intent classification, rate limit check) must
+  have a benchmark in `bench/`.
+- p95 target: under 200ms for the full pipeline. Per-layer targets:
+  - Layer 1: ~30ms
+  - Layer 2: ~5ms
+  - Layer 3: ~80ms
+  - Layer 5: ~10ms
+  - Layer 4: variable (human-in-the-loop)
+
+If you add latency to any layer, you must:
+1. Justify it in the PR description.
+2. Add or update the benchmark.
+3. Update the doc if the target shifts.
+
+## Dependencies
+
+- Each new dependency requires explicit justification.
+- Prefer zero-dep solutions when reasonable (we use `@noble/ed25519` for
+  exactly this reason — no native deps).
+- Never depend on a framework in the core package. Framework integrations
+  are separate packages.
+- **Critical**: core packages must NEVER import from `nuxt`, `vue`,
+  `@vue/*`, `nitropack` or any frontend framework. If you need to share
+  types with the frontend, expose them from `@agent-firewall/core` and let
+  the frontend consume them.
+
+## Comments
+
+- Comments explain *why*, not *what*. The code shows the what.
+- Reference docs when relevant: `// See: docs/concepts/anomaly-detection.md#repeated-message`
+- Reference ADRs when the choice is non-obvious: `// See: ADR-0007`

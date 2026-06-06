@@ -135,14 +135,22 @@ POST /api/v1/kill
 | Embeddings                  | Voyage-3-lite · text-embedding-3-small           | Similarity detection, low cost                 |
 | Cryptographic signature     | Ed25519 via @noble/ed25519                       | Standard, lightweight, no native deps          |
 | Audit storage               | S3-compatible (Cloudflare R2, AWS S3, MinIO)     | Append-only, write-once, predictable cost      |
-| Dashboard (Pro/Team)        | Next.js 15 · React 19 · Tailwind                 | Modern stack, server components, SSR           |
-| Control plane               | Hono (lightweight) on Cloudflare Workers         | Global latency <50ms, automatic scaling        |
+| Dashboard (Pro/Team)        | Nuxt 3 · Vue 3 · Nuxt UI · Nitro                 | UI, workspace APIs, SSR — `apps/dashboard/`      |
+| Nuxt integration module     | `@agent-firewall/nuxt`                           | Drop-in module for third-party Nuxt apps         |
+| Control plane (distributed) | Hono on Cloudflare Workers                       | Kill switch, agent coordination — edge API     |
 | Web database                | PostgreSQL 16 + Drizzle ORM                      | Workspaces, users, subscriptions               |
-| Auth                        | WorkOS (SSO, MFA, audit) · Clerk for dev         | B2B-ready from day 1                           |
+| Auth (Pro / dashboard)      | nuxt-auth-utils · Sidebase nuxt-auth             | Sessions and OAuth for dashboard users         |
+| Auth (Team / Enterprise)    | WorkOS (SSO, MFA, SCIM)                          | B2B identity — Phase 2                         |
 | Notifications               | Slack SDK · Twilio · APNs · FCM · Resend         | Full channel coverage                          |
 | Tests                       | Vitest + Playwright for wrappers                 | TypeScript ecosystem standard                  |
 | CI/CD                       | GitHub Actions + Changesets                      | Automated open source releases                 |
 | Own observability           | OpenTelemetry → Honeycomb                        | Self-observable, no lock-in                    |
+
+The dashboard and the distributed control plane are separate services. **Nitro**
+(in `apps/dashboard/`) serves the Pro/Team UI and workspace APIs (policies,
+incidents, audit viewer). **Hono** on Cloudflare Workers serves the low-latency
+edge API used by agents in the field — kill switch, session flags, and
+coordination — independent of the dashboard deployment cycle.
 
 ## Minimal integration API
 
@@ -180,6 +188,7 @@ await agent.run('Send a follow-up email to my prospects');
 | LangChain (Python · JS)     | `@agent-firewall/langchain`      | Yes — wk 5   |
 | Anthropic Claude SDK        | `@agent-firewall/claude-sdk`     | Yes — wk 5   |
 | OpenAI Agents SDK           | `@agent-firewall/openai`         | Yes — wk 6   |
+| Nuxt 3                      | `@agent-firewall/nuxt`           | Phase 1      |
 | CrewAI                      | `@agent-firewall/crewai`         | Phase 1      |
 | Microsoft AutoGen           | `@agent-firewall/autogen`        | Phase 1      |
 | Hermes Framework            | `@agent-firewall/hermes`         | Phase 1      |

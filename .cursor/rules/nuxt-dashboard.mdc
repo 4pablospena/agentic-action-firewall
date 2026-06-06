@@ -1,0 +1,244 @@
+---
+description: Nuxt 3 patterns and conventions for the AAF dashboard and Nuxt module
+globs: ["apps/dashboard/**/*.vue", "apps/dashboard/**/*.ts", "apps/www/**/*.vue", "apps/www/**/*.ts", "packages/nuxt/**/*.ts", "packages/nuxt/**/*.vue"]
+---
+
+# Nuxt 3 dashboard conventions
+
+This rule applies to:
+- `apps/dashboard/` — Pro/Team dashboard (Nuxt app)
+- `apps/www/` — marketing site and docs portal
+- `packages/nuxt/` — `@agent-firewall/nuxt` integration module for third-party apps
+
+The dashboard and the Nuxt module are separate artifacts. The module is a
+reusable library; the dashboard is the hosted product UI. Both are Phase 1.
+
+## Stack reminder
+
+- Nuxt 3 (latest stable)
+- Vue 3 with Composition API (NEVER Options API in new code)
+- TypeScript strict mode
+- Nuxt UI for components
+- Tailwind via Nuxt UI
+- Pinia for state (only when truly needed — Nuxt's `useState` is often enough)
+- Zod for validation (shared with core packages)
+- Auth (Pro): nuxt-auth-utils (sessions) or Sidebase nuxt-auth (OAuth)
+- Auth (Team/Enterprise): WorkOS SSO — Phase 2
+
+## File organization (Nuxt conventions)
+
+```
+apps/dashboard/
+├── app.vue                       # Root layout
+├── nuxt.config.ts                # Configuration
+├── pages/                        # File-based routing
+│   ├── index.vue
+│   ├── incidents/
+│   │   ├── index.vue
+│   │   └── [id].vue
+│   └── policies/
+├── components/                   # Auto-imported
+│   ├── IncidentCard.vue
+│   └── PolicyEditor.vue
+├── composables/                  # Auto-imported (use* prefix)
+│   ├── useFirewall.ts
+│   └── useAuditLog.ts
+├── server/
+│   ├── api/                      # API routes (Nitro)
+│   │   ├── incidents.get.ts
+│   │   └── policies/[id].patch.ts
+│   ├── middleware/
+│   └── utils/
+├── stores/                       # Pinia stores
+│   └── workspace.ts
+├── utils/                        # Auto-imported helpers
+└── types/
+
+packages/nuxt/                    # @agent-firewall/nuxt — integration module
+├── src/
+│   ├── module.ts                 # defineNuxtModule entry point
+│   └── runtime/
+│       └── plugins/              # Auto-wrap tools via Nuxt plugin
+└── package.json
+```
+
+## Component patterns
+
+### Use `<script setup>` always
+
+````vue
+<script setup lang="ts">
+// ✅ Composition API with <script setup>
+import type { AuditEntry } from '@agent-firewall/core';
+
+const props = defineProps<{
+  entry: AuditEntry;
+}>();
+
+const emit = defineEmits<{
+  approve: [id: string];
+  deny: [id: string];
+}>();
+</script>
+````
+
+### Component naming
+
+- PascalCase file names: `IncidentCard.vue`, `PolicyEditor.vue`
+- Prefix Nuxt UI components with `U`: `UButton`, `UCard`, `UModal`
+- Prefix AAF-specific components: `AAFIncidentCard`, `AAFPolicyEditor`
+
+### Props with types, not runtime declarations
+
+````ts
+// ❌ Avoid
+const props = defineProps({
+  entry: { type: Object, required: true }
+});
+
+// ✅ Prefer
+const props = defineProps<{
+  entry: AuditEntry;
+  showSignature?: boolean;
+}>();
+````
+
+## Composables
+
+- Always prefix with `use`: `useFirewall`, `useAuditLog`, `useApprovalQueue`.
+- Return refs and computed, not raw values.
+- Composables should be pure: no side effects on import.
+
+````ts
+// composables/useAuditLog.ts
+export function useAuditLog(workspaceId: string) {
+  const entries = ref<AuditEntry[]>([]);
+  const isLoading = ref(false);
+
+  const verifiedCount = computed(() =>
+    entries.value.filter(e => e.verified).length
+  );
+
+  async function load() {
+    isLoading.value = true;
+    entries.value = await $fetch(`/api/workspaces/${workspaceId}/audit`);
+    isLoading.value = false;
+  }
+
+  return { entries, isLoading, verifiedCount, load };
+}
+````
+
+## Server routes (Nitro)
+
+- File-based routing in `server/api/`.
+- HTTP method as suffix: `incidents.get.ts`, `policies.post.ts`.
+- Use `defineEventHandler` always.
+- Validate inputs with Zod schemas imported from `@agent-firewall/core`.
+
+````ts
+// server/api/incidents/[id]/approve.post.ts
+import { z } from 'zod';
+
+const ApproveSchema = z.object({
+  approver_id: z.string(),
+  reason: z.string().optional(),
+});
+
+export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id');
+  const body = await readValidatedBody(event, ApproveSchema.parse);
+
+  // Business logic here
+  return { ok: true };
+});
+````
+
+## State management
+
+- Use `useState` from Nuxt for simple shared state across components.
+- Use Pinia only for complex state with actions, getters, and persistence.
+- NEVER use Vuex (deprecated).
+
+````ts
+// ✅ Simple shared state
+const currentWorkspace = useState<Workspace | null>('workspace', () => null);
+
+// ✅ Complex state with Pinia
+export const useIncidentsStore = defineStore('incidents', () => {
+  const list = ref<Incident[]>([]);
+  const filters = reactive({ severity: 'all', status: 'open' });
+
+  const filtered = computed(() => /* ... */);
+
+  return { list, filters, filtered };
+});
+````
+
+## Type sharing with core
+
+The dashboard consumes types from `@agent-firewall/core`. Always import,
+never redefine.
+
+````ts
+// ❌ Avoid
+interface AuditEntry { /* duplicated */ }
+
+// ✅ Prefer
+import type { AuditEntry, Decision } from '@agent-firewall/core';
+````
+
+## Error handling
+
+- Use `createError` from h3 for API errors.
+- Wrap async composables with proper error states.
+- Never silently swallow errors.
+
+````ts
+// server/api/policies/[id].get.ts
+export default defineEventHandler(async (event) => {
+  const id = getRouterParam(event, 'id');
+  const policy = await db.policy.findUnique({ where: { id } });
+
+  if (!policy) {
+    throw createError({
+      statusCode: 404,
+      statusMessage: 'Policy not found',
+    });
+  }
+
+  return policy;
+});
+````
+
+## Performance
+
+- Use `<NuxtLink>` for internal navigation (preloading is automatic).
+- Use `<NuxtImg>` for images (automatic optimization).
+- Lazy-load heavy components: `const HeavyChart = defineAsyncComponent(...)`.
+- Cache server responses where appropriate: `defineCachedEventHandler`.
+
+## SEO and meta
+
+- Use `useSeoMeta` for page-level meta tags.
+- Use `useHead` for more granular control.
+- Marketing pages (`apps/www/`) must have proper meta tags.
+
+````vue
+<script setup>
+useSeoMeta({
+  title: 'Incidents — Agent Action Firewall',
+  description: 'Review and manage agent incidents in real time.',
+});
+</script>
+````
+
+## What NOT to do in Nuxt code
+
+❌ Do NOT use Options API for new components. Composition API only.
+❌ Do NOT use Vuex. Use Pinia or `useState`.
+❌ Do NOT use `defineComponent`. Use `<script setup lang="ts">`.
+❌ Do NOT bypass `$fetch` with raw `fetch`. `$fetch` handles auth, errors, SSR.
+❌ Do NOT put business logic in components. Extract to composables.
+❌ Do NOT import from `vue` directly when Nuxt auto-imports work
+   (`ref`, `computed`, `watch` are auto-imported).

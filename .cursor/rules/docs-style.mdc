@@ -1,0 +1,96 @@
+---
+description: Style and conventions for documentation in /docs
+globs: ["docs/**/*.md"]
+---
+
+# Documentation style
+
+## Every doc declares its authority
+
+The first thing in any doc (after the title) is the authority statement:
+
+````markdown
+# Title
+
+> **Source of truth for:** [what this doc decides]
+> **NOT the source of truth for:** [redirect to where that lives]
+````
+
+If a doc cannot honestly declare what it decides, that doc probably
+shouldn't exist as a separate file.
+
+## Link, don't duplicate
+
+If a section appears in two docs, one must be a link to the other.
+
+````markdown
+# ❌ Bad
+Risk tiers are R1, R2, R3, R4. R1 is reversible actions like reading...
+[content duplicated from concepts/risk-tiers.md]
+
+# ✅ Good
+For canonical definitions of risk tiers, see
+[concepts/risk-tiers.md](./concepts/risk-tiers.md).
+This doc focuses on how Layer 1 applies them.
+````
+
+## Use relative links
+
+All cross-doc links are relative paths. This keeps the repo portable and
+GitHub-renderable. Never link to GitHub URLs from within the repo.
+
+## Structure conventions
+
+- Headings: ATX-style (`#`, `##`, `###`). No setext (`====`).
+- Code blocks: always with language tag (`typescript`, `vue`, `yaml`, `bash`, etc.).
+- Tables: always with header separators. Align columns for readability.
+- Lists: prefer `-` over `*` for unordered; `1.` for ordered.
+
+## Code examples
+
+Real, executable code. No `// pseudo-code` shortcuts in docs that pretend
+to be code.
+
+````markdown
+# ❌ Bad
+```typescript
+// pseudo-code
+firewall.protect(agent);
+```
+
+# ✅ Good
+```typescript
+import { Firewall } from '@agent-firewall/core';
+const firewall = new Firewall({ policies: './firewall.yml' });
+const protectedTools = firewall.wrap([gmailTool]);
+```
+````
+
+## Language
+
+- English. Always English.
+- Active voice over passive.
+- Direct over hedged. "The firewall blocks X" not "X may be blocked by the
+  firewall depending on configuration".
+- Second person ("you") when addressing the developer-reader. First person
+  plural ("we") sparingly, only when describing project decisions.
+
+## When to create a new doc vs extend existing
+
+Create a new doc when:
+- The topic has a clear, isolated authority scope
+- It will be referenced from multiple places
+- A future contributor will plausibly look for it under that name
+
+Extend an existing doc when:
+- The information naturally belongs to an existing scope
+- The new content is < 200 lines
+- Creating a new doc would create cross-link spaghetti
+
+## ADRs are not docs
+
+Architectural Decision Records are a different artifact. They capture a
+decision at a moment in time and rarely change. They are immutable once
+accepted. If a decision changes, write a new ADR that supersedes the old one.
+
+Docs in `docs/*.md` are living documents that evolve with the product.

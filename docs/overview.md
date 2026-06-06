@@ -119,7 +119,7 @@ The current "AI guardrails" market has grown significantly in 2025–2026 but is
 | ----------------------- | ----------- | ------------------------------------------------ | --------------------------------------- |
 | Phase 0 — MVP           | Wk 1–8      | Open source launch · 3 wrappers · Slack          | 200+ GH stars · 10 integrations         |
 | Phase 0b — Adoption     | Wk 8–14     | DevRel · talks · content · external audit        | 5,000 npm installs                      |
-| Phase 1 — Platform      | Wk 15–22    | Dashboard · ML detector · multi-channel          | 50 Pro users · $1,400/mo MRR            |
+| Phase 1 — Platform      | Wk 15–22    | Dashboard (Nuxt 3) · `@agent-firewall/nuxt` · ML detector · multi-channel | 50 Pro users · $1,400/mo MRR            |
 | Phase 1b — Conversion   | Wk 22–28    | Team plan · approval pooling · webhooks          | 10 teams on Team plan                   |
 | Phase 2 — Compliance    | Wk 28–40    | EU AI Act tooling · SSO · audit reports          | 3 enterprise contracts signed           |
 | Phase 2b — Enterprise   | Wk 40–52    | On-premise · SCIM · on-chain notarization        | ARR > $150,000                          |
