@@ -123,13 +123,21 @@ Mitigates runaway token spend (LangChain multi-agent incident).
 
 ## Validation
 
+Validate a policy file against `policy.schema.json` (paths are resolved relative to the current working directory):
+
 ```bash
-cd schemas
-npm install
-npm run validate
+aaf policy validate ./firewall.yml
 ```
 
-Future CLI: `aaf policy validate ./firewall.yml` (Paso 2).
+Validate schema fixtures in CI:
+
+```bash
+cd schemas
+pnpm install
+pnpm run validate
+```
+
+Or from the repo root: `pnpm validate:schemas`
 
 ## Common YAML pitfalls
 

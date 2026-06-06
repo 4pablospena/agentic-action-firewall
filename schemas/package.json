@@ -3,10 +3,17 @@
   "private": true,
   "type": "module",
   "description": "JSON Schema contracts and local validation for Agent Action Firewall",
+  "exports": {
+    ".": {
+      "types": "./lib/validate-policy.d.ts",
+      "import": "./lib/validate-policy.mjs"
+    },
+    "./policy.schema.json": "./policy.schema.json"
+  },
   "scripts": {
     "validate": "node validate.mjs"
   },
-  "devDependencies": {
+  "dependencies": {
     "ajv": "^8.17.1",
     "ajv-formats": "^3.0.1",
     "js-yaml": "^4.1.0"

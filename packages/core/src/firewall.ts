@@ -2,7 +2,8 @@ import { AuditLog } from "./layers/audit-log.js";
 import { approvePending } from "./layers/approval.js";
 import { KillSwitch } from "./layers/kill-switch.js";
 import { recordRateLimitState } from "./layers/rate-limit.js";
-import { evaluatePipeline } from "./pipeline.js";
+import { loadPolicyFromPath } from "./policy/load.js";
+import { evaluatePipeline, type ResolvedFirewallConfig } from "./pipeline.js";
 import { SessionState } from "./session-state.js";
 import type {
   AgentTool,
@@ -11,6 +12,7 @@ import type {
   FirewallConfig,
   FirewallDecision,
   KillSwitchScope,
+  Policy,
   ToolCall,
 } from "./types.js";
 
@@ -22,17 +24,24 @@ export class FirewallBlockedError extends Error {
 }
 
 export class Firewall {
+  private readonly resolvedConfig: ResolvedFirewallConfig;
   private readonly auditLog: AuditLog;
   private readonly killSwitch = new KillSwitch();
   private readonly state = new SessionState();
 
-  constructor(private readonly config: FirewallConfig) {
+  constructor(config: FirewallConfig) {
+    const policies: Policy =
+      typeof config.policies === "string"
+        ? loadPolicyFromPath(config.policies)
+        : config.policies;
+
+    this.resolvedConfig = { ...config, policies };
     this.auditLog = new AuditLog(config.signingKey);
   }
 
   async evaluate(call: ToolCall): Promise<FirewallDecision> {
     return evaluatePipeline(call, {
-      config: this.config,
+      config: this.resolvedConfig,
       state: this.state,
       auditLog: this.auditLog,
       killSwitch: this.killSwitch,
@@ -74,7 +83,7 @@ export class Firewall {
     const { pending } = approvePending(
       approvalId,
       approver,
-      this.config.policies,
+      this.resolvedConfig.policies,
       this.state,
       opts,
     );

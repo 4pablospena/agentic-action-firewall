@@ -21,7 +21,8 @@ pnpm generate:types     # schemas → packages/core/src/generated/
 pnpm typecheck
 pnpm build
 pnpm test
-pnpm test:behavioral   # executable spec — fails until Paso 3b
+pnpm test:behavioral   # 25 enforcement specs
+pnpm exec aaf policy validate ./schemas/fixtures/firewall.example.yml
 ```
 
 CI runs the same checks on every push and pull request (see [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)).

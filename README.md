@@ -25,8 +25,9 @@ npm install @agent-firewall/core
 import { Firewall } from '@agent-firewall/core';
 
 const firewall = new Firewall({
-  policies: './firewall.yml',
+  policies: './firewall.yml', // validated at load time (cwd-relative path)
   onBlock: async (event) => notifyUser(event),
+  onApprovalNeeded: async (event) => notifyApprover(event),
 });
 
 const protectedTools = firewall.wrap([
@@ -59,9 +60,9 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 ## Project status
 
-Pre-alpha. The MVP is under construction. See [roadmap](./docs/overview.md#roadmap).
+Pre-alpha. Core firewall engine and CLI policy validation are implemented. See [roadmap](./docs/overview.md#roadmap).
 
-Monorepo scaffold is in place: `packages/core`, `packages/cli`, schema validation, and CI. Firewall implementation is Paso 3.
+Monorepo: `packages/core` (5-layer pipeline), `packages/cli` (`aaf policy validate`), schema validation, and CI.
 
 ### Development
 
@@ -70,8 +71,10 @@ Requires Node.js 22+ and pnpm 9+.
 ```bash
 pnpm install
 pnpm validate:schemas
+pnpm build
 pnpm test
-pnpm test:behavioral   # fails until Paso 3b — executable spec
+pnpm test:behavioral   # 25 enforcement specs
+pnpm exec aaf policy validate ./schemas/fixtures/firewall.example.yml
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.

@@ -8,6 +8,7 @@ export default defineConfig({
   resolve: {
     alias: {
       "@agent-firewall/core": join(__dirname, "../core/src/index.ts"),
+      "@agent-firewall/schemas": join(__dirname, "../../schemas/lib/validate-policy.mjs"),
     },
   },
   test: {

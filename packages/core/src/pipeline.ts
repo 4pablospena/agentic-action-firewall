@@ -1,6 +1,6 @@
+import { approvePending, checkApprovalGate } from "./layers/approval.js";
 import type { AuditLog } from "./layers/audit-log.js";
 import { detectAnomaly } from "./layers/anomaly.js";
-import { checkApprovalGate } from "./layers/approval.js";
 import { classifyIntent, isR1AutoAllow } from "./layers/intent.js";
 import { KillSwitch } from "./layers/kill-switch.js";
 import {
@@ -11,16 +11,70 @@ import {
 import type { SessionState } from "./session-state.js";
 import { FirewallInternalError } from "./errors.js";
 import type {
+  ApprovalNeededResult,
   FirewallConfig,
   FirewallDecision,
+  Policy,
   ToolCall,
 } from "./types.js";
 
+export interface ResolvedFirewallConfig extends Omit<FirewallConfig, "policies"> {
+  policies: Policy;
+}
+
 export interface PipelineContext {
-  config: FirewallConfig;
+  config: ResolvedFirewallConfig;
   state: SessionState;
   auditLog: AuditLog;
   killSwitch: KillSwitch;
+}
+
+async function invokeCallback<T>(
+  fn: (() => T | Promise<T>) | undefined,
+): Promise<T | undefined> {
+  if (!fn) {
+    return undefined;
+  }
+  try {
+    return await fn();
+  } catch (error) {
+    console.error("[agent-firewall] callback error:", error);
+    return undefined;
+  }
+}
+
+async function applyInlineApproval(
+  ctx: PipelineContext,
+  call: ToolCall,
+  approvalId: string,
+  approver: string,
+  mfaVerified?: boolean,
+): Promise<FirewallDecision> {
+  const { pending } = approvePending(
+    approvalId,
+    approver,
+    ctx.config.policies,
+    ctx.state,
+    mfaVerified === undefined ? undefined : { mfaVerified },
+  );
+
+  const decision: FirewallDecision = {
+    outcome: "allow",
+    byLayer: 4,
+    reason: `${pending.riskTier} approved by ${approver}`,
+    riskTier: pending.riskTier,
+  };
+
+  await ctx.auditLog.append(pending.call, pending.riskTier, decision, approver);
+  ctx.state.recordCall({
+    call: pending.call,
+    riskTier: pending.riskTier,
+    timestampMs: new Date(pending.call.timestamp).getTime(),
+    outcome: "allow",
+  });
+  recordRateLimitState(pending.call, ctx.state);
+
+  return decision;
 }
 
 async function finalizeDecision(
@@ -28,7 +82,7 @@ async function finalizeDecision(
   call: ToolCall,
   decision: FirewallDecision,
 ): Promise<FirewallDecision> {
-  await ctx.auditLog.append(call, decision.riskTier, decision);
+  const auditEntry = await ctx.auditLog.append(call, decision.riskTier, decision);
   ctx.state.recordCall({
     call,
     riskTier: decision.riskTier,
@@ -38,6 +92,43 @@ async function finalizeDecision(
   if (decision.outcome === "allow" || decision.outcome === "pending") {
     recordRateLimitState(call, ctx.state);
   }
+
+  if (decision.outcome === "block") {
+    await invokeCallback(() =>
+      ctx.config.onBlock?.({ call, decision, auditEntry }),
+    );
+    return decision;
+  }
+
+  if (decision.outcome === "pending" && decision.approvalId) {
+    const approvalId = decision.approvalId;
+    const result = await invokeCallback(() =>
+      ctx.config.onApprovalNeeded?.({
+        call,
+        decision,
+        auditEntry,
+        approvalId,
+      }),
+    );
+
+    if (
+      result &&
+      typeof result === "object" &&
+      "approved" in result &&
+      result.approved === true &&
+      decision.riskTier !== "R2"
+    ) {
+      const approved = result as Extract<ApprovalNeededResult, { approved: true }>;
+      return applyInlineApproval(
+        ctx,
+        call,
+        approvalId,
+        approved.approver,
+        approved.mfaVerified,
+      );
+    }
+  }
+
   return decision;
 }
 

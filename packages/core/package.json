@@ -15,19 +15,20 @@
   ],
   "scripts": {
     "build": "tsup",
-    "test": "vitest run test/smoke.test.ts",
+    "test": "vitest run test/smoke.test.ts test/policy-loader.test.ts test/callbacks.test.ts",
     "test:behavioral": "vitest run test/behavioral",
     "typecheck": "tsc --noEmit",
     "generate:types": "node scripts/generate-types.mjs"
   },
   "dependencies": {
+    "@agent-firewall/schemas": "workspace:*",
     "@noble/ed25519": "^2.2.3",
-    "@noble/hashes": "^1.8.0"
+    "@noble/hashes": "^1.8.0",
+    "js-yaml": "^4.1.0"
   },
   "devDependencies": {
     "@types/js-yaml": "^4.0.9",
     "@types/node": "^22.15.21",
-    "js-yaml": "^4.1.0",
     "json-schema-to-typescript": "^15.0.4",
     "tsup": "^8.5.0",
     "typescript": "^5.8.3",

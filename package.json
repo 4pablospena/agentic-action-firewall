@@ -14,9 +14,11 @@
     "test:behavioral": "pnpm --filter @agent-firewall/core test:behavioral",
     "typecheck": "pnpm -r typecheck",
     "generate:types": "pnpm --filter @agent-firewall/core generate:types",
-    "changeset": "changeset"
+    "changeset": "changeset",
+    "aaf": "aaf"
   },
   "devDependencies": {
+    "@agent-firewall/cli": "workspace:*",
     "@changesets/cli": "^2.29.2"
   }
 }

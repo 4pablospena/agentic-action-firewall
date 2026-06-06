@@ -30,11 +30,32 @@ export interface ApproveOptions {
   mfaVerified?: boolean;
 }
 
+export interface BlockEvent {
+  call: ToolCall;
+  decision: FirewallDecision;
+  auditEntry: AuditEntry;
+}
+
+export interface ApprovalNeededEvent {
+  call: ToolCall;
+  decision: FirewallDecision;
+  auditEntry: AuditEntry;
+  approvalId: string;
+}
+
+export type ApprovalNeededResult =
+  | { approved: true; approver: string; mfaVerified?: boolean }
+  | { approved: false; reason?: string };
+
 export interface FirewallConfig {
-  policies: Policy;
+  policies: Policy | string;
   signingKey?: Uint8Array;
   /** When true, no blocking (Learning Mode observation). Default false in enforcement tests. */
   learningMode?: boolean;
+  onBlock?: (event: BlockEvent) => void | Promise<void>;
+  onApprovalNeeded?: (
+    event: ApprovalNeededEvent,
+  ) => void | Promise<void | ApprovalNeededResult>;
 }
 
 export type KillSwitchScope = "all" | `agent:${string}` | `session:${string}`;

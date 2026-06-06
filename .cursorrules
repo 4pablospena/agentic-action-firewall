@@ -23,8 +23,7 @@ fills that gap.
 ═══════════════════════════════════════════════════════════════════════════
 ## Project status
 
-Pre-alpha. Monorepo, schemas, and package scaffolds exist; firewall logic is Paso 3.
-Do not assume full implementation exists unless you see it in the repo.
+Pre-alpha. Core firewall (5-layer pipeline) and CLI policy validation are implemented. Learning Mode, wrappers, and Slack channel are pending.
 
 ═══════════════════════════════════════════════════════════════════════════
 ## Architecture in one paragraph
@@ -71,8 +70,8 @@ schemas/                           # Level 3 — Contracts
   validate.mjs                     # Local AJV validation
 
 packages/                          # Level 5 — Implementation
-  core/                            # @agent-firewall/core — scaffold (Paso 3: firewall)
-  cli/                             # @agent-firewall/cli — scaffold
+  core/                            # @agent-firewall/core — 5-layer firewall engine
+  cli/                             # @agent-firewall/cli — aaf policy validate
   langchain/                       # LangChain wrapper (pending)
   claude-sdk/                      # Anthropic Claude SDK wrapper (pending)
   openai-agents/                   # OpenAI Agents SDK wrapper (pending)
