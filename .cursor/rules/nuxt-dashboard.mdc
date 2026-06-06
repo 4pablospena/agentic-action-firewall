@@ -13,6 +13,8 @@ This rule applies to:
 The dashboard and the Nuxt module are separate artifacts. The module is a
 reusable library; the dashboard is the hosted product UI. Both are Phase 1.
 
+For SOLID layer separation and architecture principles, see `frontend-solid.mdc`.
+
 ## Stack reminder
 
 - Nuxt 3 (latest stable)
