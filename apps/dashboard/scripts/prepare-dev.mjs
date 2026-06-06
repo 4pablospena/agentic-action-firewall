@@ -21,6 +21,20 @@ if (!process.env.DATABASE_URL) {
 
 console.log("Dashboard env loaded from apps/dashboard/.env");
 
+const hasOAuth = Boolean(
+  process.env.NUXT_OAUTH_GITHUB_CLIENT_ID
+  && process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET,
+);
+const devBypass = process.env.NUXT_DEV_AUTH_BYPASS === "true";
+
+if (!hasOAuth && !devBypass) {
+  console.warn(
+    "GitHub OAuth is not configured. Set NUXT_OAUTH_GITHUB_CLIENT_ID/SECRET or NUXT_DEV_AUTH_BYPASS=true in apps/dashboard/.env",
+  );
+} else if (!hasOAuth && devBypass) {
+  console.log("Dev auth bypass enabled — use “Continue as Dev User” on /login");
+}
+
 const migrate = spawnSync(process.execPath, ["scripts/migrate.mjs"], {
   cwd: appRoot,
   stdio: "inherit",

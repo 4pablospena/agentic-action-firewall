@@ -7,13 +7,14 @@ const entries = ref<AuditEntry[]>([]);
 const chainStatus = ref<{ valid: boolean | null; message?: string; entryCount?: number } | null>(null);
 const loading = ref(true);
 const selected = ref<AuditEntry | null>(null);
+const api = useDashboardFetch();
 
 async function load() {
   loading.value = true;
   try {
     const [list, chain] = await Promise.all([
-      $fetch<{ entries: AuditEntry[] }>("/api/v1/audit/entries"),
-      $fetch<{ valid: boolean | null; message?: string; entryCount?: number }>(
+      api<{ entries: AuditEntry[] }>("/api/v1/audit/entries"),
+      api<{ valid: boolean | null; message?: string; entryCount?: number }>(
         "/api/v1/audit/verify-chain",
       ),
     ]);

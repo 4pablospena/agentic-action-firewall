@@ -1,9 +1,0 @@
-{
-  "pid": 60618,
-  "startedAt": 1780780302509,
-  "command": "dev",
-  "cwd": "/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard",
-  "port": 3002,
-  "hostname": "::1",
-  "url": "http://[::1]:3002"
-}

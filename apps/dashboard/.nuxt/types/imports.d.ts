@@ -122,6 +122,7 @@ declare global {
   const useCookie: typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/cookie').useCookie
   const useCssModule: typeof import('vue').useCssModule
   const useCssVars: typeof import('vue').useCssVars
+  const useDashboardFetch: typeof import('../../composables/useDashboardFetch').useDashboardFetch
   const useError: typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/error').useError
   const useFetch: typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/fetch').useFetch
   const useFileUpload: typeof import('../../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+parser@7.29.7_axios@1.17.0_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9__v44za2f5r5g4gw5tgci4nkelka/node_modules/@nuxt/ui/dist/runtime/composables/useFileUpload').useFileUpload
@@ -367,6 +368,7 @@ declare module 'vue' {
     readonly useCookie: UnwrapRef<typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/cookie')['useCookie']>
     readonly useCssModule: UnwrapRef<typeof import('vue')['useCssModule']>
     readonly useCssVars: UnwrapRef<typeof import('vue')['useCssVars']>
+    readonly useDashboardFetch: UnwrapRef<typeof import('../../composables/useDashboardFetch')['useDashboardFetch']>
     readonly useError: UnwrapRef<typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/error')['useError']>
     readonly useFetch: UnwrapRef<typeof import('../../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/composables/fetch')['useFetch']>
     readonly useFileUpload: UnwrapRef<typeof import('../../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+parser@7.29.7_axios@1.17.0_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9__v44za2f5r5g4gw5tgci4nkelka/node_modules/@nuxt/ui/dist/runtime/composables/useFileUpload')['useFileUpload']>

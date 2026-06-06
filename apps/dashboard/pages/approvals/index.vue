@@ -10,11 +10,12 @@ interface PendingRow {
 
 const pending = ref<PendingRow[]>([]);
 const loading = ref(true);
+const api = useDashboardFetch();
 
 async function load() {
   loading.value = true;
   try {
-    const data = await $fetch<{ pending: PendingRow[] }>("/api/v1/approvals/pending");
+    const data = await api<{ pending: PendingRow[] }>("/api/v1/approvals/pending");
     pending.value = data.pending;
   } finally {
     loading.value = false;
@@ -22,7 +23,7 @@ async function load() {
 }
 
 async function respond(id: string, approved: boolean) {
-  await $fetch(`/api/v1/approvals/${id}/respond`, {
+  await api(`/api/v1/approvals/${id}/respond`, {
     method: "POST",
     body: { approved },
   });

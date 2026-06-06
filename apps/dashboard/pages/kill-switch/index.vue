@@ -5,9 +5,10 @@ const scope = ref("all");
 const reason = ref("");
 const events = ref<Array<{ id: string; scope: string; reason: string; createdAt: string }>>([]);
 const loading = ref(false);
+const api = useDashboardFetch();
 
 async function load() {
-  const data = await $fetch<{ events: typeof events.value }>("/api/v1/kill");
+  const data = await api<{ events: typeof events.value }>("/api/v1/kill");
   events.value = data.events.map((e) => ({
     ...e,
     createdAt: String(e.createdAt),
@@ -17,7 +18,7 @@ async function load() {
 async function activate() {
   loading.value = true;
   try {
-    await $fetch("/api/v1/kill", {
+    await api("/api/v1/kill", {
       method: "POST",
       body: { scope: scope.value, reason: reason.value },
     });

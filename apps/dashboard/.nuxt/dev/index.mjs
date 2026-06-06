@@ -942,6 +942,8 @@ const _inlineRuntimeConfig = {
   },
   "public": {
     "appName": "Agent Action Firewall",
+    "devAuthEnabled": true,
+    "oauthConfigured": false,
     "auth": {
       "loadStrategy": "server-first"
     },
@@ -952,9 +954,10 @@ const _inlineRuntimeConfig = {
   },
   "session": {
     "name": "nuxt-session",
-    "password": "replace-with-at-least-32-char-random-string",
+    "password": "local-dev-session-password-min-32-chars",
     "cookie": {
-      "sameSite": "lax"
+      "sameSite": "lax",
+      "secure": false
     }
   },
   "oauth": {
@@ -1264,6 +1267,7 @@ const _inlineRuntimeConfig = {
     }
   },
   "databaseUrl": "postgresql://aaf:aaf@localhost:5432/aaf_dashboard",
+  "devAuthBypass": true,
   "icon": {
     "serverKnownCssClasses": []
   },
@@ -3875,6 +3879,7 @@ const _lazy_2XCaxl = () => Promise.resolve().then(function () { return index_get
 const _lazy_dEkkcN = () => Promise.resolve().then(function () { return index_post$3; });
 const _lazy_YbbJwA = () => Promise.resolve().then(function () { return index_get$1; });
 const _lazy_f1nD6k = () => Promise.resolve().then(function () { return index_post$1; });
+const _lazy_QVFjXO = () => Promise.resolve().then(function () { return dev_get$1; });
 const _lazy_xdX77s = () => Promise.resolve().then(function () { return github_get$1; });
 const _lazy_ZdvDob = () => Promise.resolve().then(function () { return renderer; });
 
@@ -3889,6 +3894,7 @@ const handlers = [
   { route: '/api/v1/kill', handler: _lazy_dEkkcN, lazy: true, middleware: false, method: "post" },
   { route: '/api/v1/policies', handler: _lazy_YbbJwA, lazy: true, middleware: false, method: "get" },
   { route: '/api/v1/policies', handler: _lazy_f1nD6k, lazy: true, middleware: false, method: "post" },
+  { route: '/auth/dev', handler: _lazy_QVFjXO, lazy: true, middleware: false, method: "get" },
   { route: '/auth/github', handler: _lazy_xdX77s, lazy: true, middleware: false, method: "get" },
   { route: '/__nuxt_error', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined },
   { route: '/api/_nuxt_icon/:collection', handler: _MKeQGR, lazy: false, middleware: false, method: undefined },
@@ -4355,6 +4361,24 @@ const index_post = defineEventHandler(async (event) => {
 const index_post$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
   __proto__: null,
   default: index_post
+}, Symbol.toStringTag, { value: 'Module' }));
+
+const dev_get = defineEventHandler(async (event) => {
+  const config = useRuntimeConfig();
+  if (!config.devAuthBypass) {
+    throw createError({ statusCode: 404, statusMessage: "Not found" });
+  }
+  const user = await ensureUserWorkspace({
+    email: "dev@localhost",
+    name: "Dev User"
+  });
+  await setUserSession(event, { user });
+  return sendRedirect(event, "/audit");
+});
+
+const dev_get$1 = /*#__PURE__*/Object.freeze(/*#__PURE__*/Object.defineProperty({
+  __proto__: null,
+  default: dev_get
 }, Symbol.toStringTag, { value: 'Module' }));
 
 const github_get = defineOAuthGitHubEventHandler({

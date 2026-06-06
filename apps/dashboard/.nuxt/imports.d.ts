@@ -30,6 +30,7 @@ export { requestIdleCallback, cancelIdleCallback } from '#app/compat/idle-callba
 export { setInterval } from '#app/compat/interval';
 export { definePageMeta } from '../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/pages/runtime/composables';
 export { defineLazyHydrationComponent } from '#app/composables/lazy-hydration';
+export { useDashboardFetch } from '../composables/useDashboardFetch';
 export { defineLocale, extendLocale } from '../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+parser@7.29.7_axios@1.17.0_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9__v44za2f5r5g4gw5tgci4nkelka/node_modules/@nuxt/ui/dist/runtime/composables/defineLocale';
 export { ShortcutConfig, ShortcutsConfig, ShortcutsOptions } from '../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+parser@7.29.7_axios@1.17.0_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9__v44za2f5r5g4gw5tgci4nkelka/node_modules/@nuxt/ui/dist/runtime/composables/defineShortcuts.d';
 export { extractShortcuts, defineShortcuts } from '../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+parser@7.29.7_axios@1.17.0_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9__v44za2f5r5g4gw5tgci4nkelka/node_modules/@nuxt/ui/dist/runtime/composables/defineShortcuts';

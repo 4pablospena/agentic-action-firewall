@@ -5,9 +5,10 @@ const yaml = ref('version: "1"\nlearning_mode:\n  enabled: false\n');
 const policies = ref<Array<{ id: string; version: string | null; validatedAt: string }>>([]);
 const message = ref("");
 const loading = ref(false);
+const api = useDashboardFetch();
 
 async function load() {
-  const data = await $fetch<{ policies: typeof policies.value }>("/api/v1/policies");
+  const data = await api<{ policies: typeof policies.value }>("/api/v1/policies");
   policies.value = data.policies.map((p) => ({
     id: p.id,
     version: p.version,
@@ -19,7 +20,7 @@ async function upload() {
   loading.value = true;
   message.value = "";
   try {
-    await $fetch("/api/v1/policies", { method: "POST", body: { yaml: yaml.value } });
+    await api("/api/v1/policies", { method: "POST", body: { yaml: yaml.value } });
     message.value = "Policy validated and saved.";
     await load();
   } catch (error: unknown) {

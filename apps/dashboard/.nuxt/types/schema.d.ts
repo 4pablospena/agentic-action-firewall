@@ -18,6 +18,8 @@ import { NuxtModule, ModuleDependencyMeta } from '@nuxt/schema'
 
       cookie: {
          sameSite: string,
+
+         secure: boolean,
       },
    },
 
@@ -523,6 +525,8 @@ import { NuxtModule, ModuleDependencyMeta } from '@nuxt/schema'
 
    databaseUrl: string,
 
+   devAuthBypass: boolean,
+
    nitro: {
       envPrefix: string,
    },
@@ -543,6 +547,10 @@ import { NuxtModule, ModuleDependencyMeta } from '@nuxt/schema'
   }
   interface SharedPublicRuntimeConfig {
    appName: string,
+
+   devAuthEnabled: boolean,
+
+   oauthConfigured: boolean,
 
    auth: {
       loadStrategy: string,
