@@ -21,6 +21,7 @@ pnpm generate:types     # schemas → packages/core/src/generated/
 pnpm typecheck
 pnpm build
 pnpm test
+pnpm test:behavioral   # executable spec — fails until Paso 3b
 ```
 
 CI runs the same checks on every push and pull request (see [`.github/workflows/ci.yml`](./.github/workflows/ci.yml)).

@@ -1,0 +1,74 @@
+version: "1"
+
+learning_mode:
+  enabled: false
+
+tools:
+  gmail.read:
+    risk: R1
+
+  gmail.send:
+    risk: R2
+    rate_limits:
+      per_hour: 20
+      min_interval: 6s
+    anomaly_thresholds:
+      unique_recipients_per_hour: 30
+      payload_similarity: 0.65
+
+  gmail.delete:
+    risk: R3
+    when:
+      batch_size:
+        gt: 10
+    escalate_to: R4
+    require_approval:
+      when:
+        - batch_size:
+            gt: 50
+
+  stripe.charge:
+    risk: R4
+
+  analyzer.run:
+    risk: R1
+
+  verifier.run:
+    risk: R1
+
+anomaly_detection:
+  enabled: true
+  patterns:
+    repetition:
+      enabled: true
+      threshold: 0.92
+      action_if_recipients_gt: 5
+    loop:
+      enabled: true
+      sequence_min_length: 2
+      window_seconds: 60
+      max_occurrences: 3
+    speed:
+      enabled: true
+      max_per_second: 0.33
+    mass_action:
+      enabled: true
+      threshold_per_minute: 50
+      action: pause_and_snapshot
+    recipient_escalation:
+      enabled: true
+      baseline_multiplier: 10
+    scope_drift:
+      enabled: true
+      require_approval_on_first_use: true
+
+approval:
+  r1: auto_allow
+  r2:
+    cancel_window_seconds: 30
+  r4:
+    require_mfa: true
+    relaxable: false
+
+budget:
+  max_cost_per_session_usd: 5

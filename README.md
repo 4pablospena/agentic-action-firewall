@@ -71,6 +71,7 @@ Requires Node.js 22+ and pnpm 9+.
 pnpm install
 pnpm validate:schemas
 pnpm test
+pnpm test:behavioral   # fails until Paso 3b — executable spec
 ```
 
 See [CONTRIBUTING.md](./CONTRIBUTING.md) for the full workflow.

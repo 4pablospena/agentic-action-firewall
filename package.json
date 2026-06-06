@@ -11,6 +11,7 @@
     "validate:schemas": "pnpm --filter @agent-firewall/schemas validate",
     "build": "pnpm -r build",
     "test": "pnpm -r test",
+    "test:behavioral": "pnpm --filter @agent-firewall/core test:behavioral",
     "typecheck": "pnpm -r typecheck",
     "generate:types": "pnpm --filter @agent-firewall/core generate:types",
     "changeset": "changeset"

@@ -398,4 +398,4 @@ Detect changes in system prompt or tools. Notify: "Want to re-learn the baseline
 - ADR-0004: [72h observation window](../adrs/0004-observation-window.md)
 - Schema: [`/schemas/baseline.schema.json`](../schemas/baseline.schema.json) — includes `ToolSequence` definition in `common.defs.json`
 - Schema: [`/schemas/event.schema.json`](../schemas/event.schema.json)
-- Behavioral tests: [`/packages/core/test/behavioral/learning-mode.test.ts`](../packages/core/test/behavioral/learning-mode.test.ts) (Paso 3)
+- Behavioral tests: [`/packages/core/test/behavioral/`](../packages/core/test/behavioral/) (enforcement layers — Paso 3a spec; Learning Mode tests deferred)
