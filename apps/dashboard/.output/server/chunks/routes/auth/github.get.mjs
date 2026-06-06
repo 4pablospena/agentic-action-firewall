@@ -15,7 +15,6 @@ import 'node:events';
 import 'node:buffer';
 import '@iconify/utils';
 import 'consola';
-import 'node:module';
 
 const github_get = defineOAuthGitHubEventHandler({
   config: {

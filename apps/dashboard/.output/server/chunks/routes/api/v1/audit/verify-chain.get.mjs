@@ -19,7 +19,6 @@ import 'node:events';
 import 'node:buffer';
 import '@iconify/utils';
 import 'consola';
-import 'node:module';
 
 ed.etc.sha512Sync = (...messages) => sha512(ed.etc.concatBytes(...messages));
 var GENESIS_HASH = "0".repeat(64);

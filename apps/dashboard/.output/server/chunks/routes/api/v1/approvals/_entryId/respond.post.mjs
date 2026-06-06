@@ -15,7 +15,6 @@ import 'node:events';
 import 'node:buffer';
 import '@iconify/utils';
 import 'consola';
-import 'node:module';
 
 const respond_post = defineEventHandler(async (event) => {
   var _a;
