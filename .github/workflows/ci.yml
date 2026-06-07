@@ -82,8 +82,16 @@ jobs:
       - name: Install dependencies
         run: pnpm install --frozen-lockfile
 
+      - name: Build core
+        run: pnpm --filter @agent-firewall/core build
+
       - name: Control plane Redis integration
         run: pnpm --filter @agent-firewall/control-plane test:integration
+        env:
+          REDIS_URL: redis://localhost:6379
+
+      - name: Core remote kill switch (Redis)
+        run: pnpm --filter @agent-firewall/core exec vitest run test/behavioral/kill-switch-remote-redis.test.ts
         env:
           REDIS_URL: redis://localhost:6379
 

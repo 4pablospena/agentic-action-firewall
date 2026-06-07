@@ -12,8 +12,10 @@
     "build": "pnpm -r build",
     "test": "pnpm -r test",
     "test:behavioral": "pnpm --filter @agent-firewall/core test:behavioral",
+    "test:integration": "pnpm --filter @agent-firewall/control-plane test:integration",
     "typecheck": "pnpm build && pnpm -r typecheck",
     "generate:types": "pnpm --filter @agent-firewall/core generate:types",
+    "dev:dashboard": "pnpm --filter @agent-firewall/dashboard dev",
     "changeset": "changeset",
     "aaf": "aaf"
   },

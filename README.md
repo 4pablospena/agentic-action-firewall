@@ -69,7 +69,7 @@ Significant decisions are documented as ADRs (Architecture Decision Records) in 
 
 ## Project status
 
-Pre-alpha. Phase 0 MVP and Phase 1 dashboard foundation (Nuxt 3, Postgres, OAuth) are implemented. Learning Mode and control-plane ML/multi-channel are pending — see [phase-1-deferred.md](./docs/phase-1-deferred.md).
+Pre-alpha. Phase 0 MVP and Phase 1 (dashboard, Learning Mode, control plane, ONNX ML detector, multi-channel notifications) are implemented. See [phase-1-deferred.md](./docs/phase-1-deferred.md) for slice status and Phase 1b backlog.
 
 ### Development
 
@@ -80,7 +80,7 @@ pnpm install
 pnpm validate:schemas
 pnpm build
 pnpm test
-pnpm test:behavioral   # 25 enforcement specs
+pnpm test:behavioral   # 32 enforcement specs
 pnpm exec aaf policy validate ./schemas/fixtures/firewall.example.yml
 ```
 
@@ -89,8 +89,13 @@ pnpm exec aaf policy validate ./schemas/fixtures/firewall.example.yml
 ```bash
 docker compose up -d
 cp apps/dashboard/.env.example apps/dashboard/.env   # set OAuth + session password
-pnpm --filter @agent-firewall/dashboard db:migrate
-pnpm --filter @agent-firewall/dashboard dev
+pnpm --filter @agent-firewall/dashboard dev          # auto-builds workspace deps on first run
+```
+
+Or from the repo root:
+
+```bash
+pnpm dev:dashboard
 ```
 
 Open `http://localhost:3000/login`. Ingest audit entries via `POST /api/v1/audit/entries` (session cookie or future API key).

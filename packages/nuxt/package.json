@@ -15,6 +15,7 @@
   ],
   "scripts": {
     "build": "nuxt-module-build build",
+    "prepare": "nuxt-module-build build --stub",
     "dev": "nuxt-module-build build --stub",
     "test": "vitest run",
     "typecheck": "tsc --noEmit"

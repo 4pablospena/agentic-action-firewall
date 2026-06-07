@@ -1,11 +1,32 @@
 import { spawnSync } from "node:child_process";
+import { existsSync } from "node:fs";
 import { dirname, join } from "node:path";
 import { fileURLToPath } from "node:url";
 import { loadDashboardEnv } from "./load-env.mjs";
 
 const appRoot = join(dirname(fileURLToPath(import.meta.url)), "..");
+const repoRoot = join(appRoot, "../..");
+
+function ensureWorkspaceDepsBuilt() {
+  const coreDist = join(repoRoot, "packages/core/dist/index.js");
+  const nuxtDist = join(repoRoot, "packages/nuxt/dist/module.mjs");
+  if (existsSync(coreDist) && existsSync(nuxtDist)) {
+    return;
+  }
+
+  console.log("Building workspace dependencies for dashboard dev...");
+  const build = spawnSync(
+    "pnpm",
+    ["--filter", "...@agent-firewall/dashboard", "build"],
+    { cwd: repoRoot, stdio: "inherit", env: process.env },
+  );
+  if (build.status !== 0) {
+    process.exit(build.status ?? 1);
+  }
+}
 
 loadDashboardEnv();
+ensureWorkspaceDepsBuilt();
 
 const sessionPassword = process.env.NUXT_SESSION_PASSWORD ?? "";
 if (sessionPassword.length < 32) {

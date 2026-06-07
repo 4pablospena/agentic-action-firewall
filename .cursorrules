@@ -23,7 +23,7 @@ fills that gap.
 ═══════════════════════════════════════════════════════════════════════════
 ## Project status
 
-Pre-alpha. Phase 0 MVP and Phase 1 dashboard (`apps/dashboard/`) are implemented. `@agent-firewall/nuxt` module ships composables for audit ingest. Learning Mode, control plane, ML detector, and multi-channel are pending.
+Pre-alpha. Phase 0 MVP and Phase 1 are implemented: dashboard (`apps/dashboard/`), `@agent-firewall/nuxt`, Learning Mode (SQLite + review UI), control plane (Redis/Workers), ONNX ML detector (synthetic bootstrap), and multi-channel notifications. Phase 1b backlog: Team SSO, approval pooling — see `docs/phase-1-deferred.md`.
 
 ═══════════════════════════════════════════════════════════════════════════
 ## Architecture in one paragraph

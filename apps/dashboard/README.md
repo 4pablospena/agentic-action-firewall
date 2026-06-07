@@ -18,8 +18,10 @@ From the repository root:
 docker compose up -d
 cp apps/dashboard/.env.example apps/dashboard/.env
 pnpm install
-pnpm --filter @agent-firewall/dashboard dev
+pnpm dev:dashboard
 ```
+
+`pnpm dev` auto-builds workspace packages (`@agent-firewall/core`, `@agent-firewall/nuxt`) on first run if `dist/` is missing.
 
 Open [http://localhost:3000/login](http://localhost:3000/login).
 

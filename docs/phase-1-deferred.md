@@ -1,6 +1,6 @@
-# Phase 1 — deferred slices (5–7)
+# Phase 1 — slices 5–7 & Learning Mode (status)
 
-The dashboard MVP (slices 0–4) ships first. Status below reflects implementation progress.
+Phase 1 dashboard MVP (slices 0–4) and the deferred slices below are **implemented**. This doc tracks what shipped and what remains for Phase 1b.
 
 ## Slice 5 — Control plane (Hono + Redis) — **implemented**
 
@@ -8,7 +8,7 @@ The dashboard MVP (slices 0–4) ships first. Status below reflects implementati
 - Redis in [`docker-compose.yml`](../docker-compose.yml)
 - Dashboard forwards kill events via [`sync-kill-switch.ts`](../apps/dashboard/server/utils/sync-kill-switch.ts)
 - Core remote check: [`kill-switch-remote.ts`](../packages/core/src/layers/kill-switch-remote.ts)
-- CI: `control-plane-integration` job with Redis service
+- CI: `control-plane-integration` job (Redis) + core `kill-switch-remote-redis` behavioral test
 - ADR: [`0009-redis-control-plane.md`](adrs/0009-redis-control-plane.md)
 
 Cloudflare Workers deployment wiring (`wrangler.toml`) is in-repo; production secrets remain ops work.
