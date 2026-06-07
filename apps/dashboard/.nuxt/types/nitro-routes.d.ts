@@ -31,10 +31,7 @@ declare module "nitropack/types" {
       'get': Simplify<Serialize<Awaited<ReturnType<typeof import('../../server/routes/auth/github.get').default>>>>
     }
     '/__nuxt_error': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
-    }
-    '/api/_nuxt_icon/:collection': {
-      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../../../node_modules/.pnpm/@nuxt+icon@1.15.0_magicast@0.5.3_vite@7.3.5_@types+node@22.19.20_jiti@2.7.0_lightningcss@1.32_txmkqwkklciovcdsh3yupovboe/node_modules/@nuxt/icon/dist/runtime/server/api').default>>>>
+      'default': Simplify<Serialize<Awaited<ReturnType<typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/handlers/renderer').default>>>>
     }
     '/api/_auth/session': {
       'delete': Simplify<Serialize<Awaited<ReturnType<typeof import('../../../../node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/server/api/session.delete').default>>>>

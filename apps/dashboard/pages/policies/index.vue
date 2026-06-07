@@ -35,28 +35,37 @@ await load();
 
 <template>
   <div class="space-y-6">
-    <div>
-      <h1 class="text-2xl font-semibold">Policies</h1>
-      <p class="text-sm text-gray-400">Upload and validate firewall.yml against the JSON Schema.</p>
-    </div>
+    <p class="text-sm text-muted-foreground">
+      Upload and validate firewall.yml against the JSON Schema.
+    </p>
 
-    <UCard>
-      <UTextarea v-model="yaml" :rows="16" class="font-mono text-sm" />
-      <template #footer>
-        <UButton :loading="loading" @click="upload">Validate &amp; save</UButton>
-      </template>
-    </UCard>
+    <Card>
+      <CardContent class="space-y-4 pt-6">
+        <Textarea v-model="yaml" :rows="16" class="font-mono text-sm" />
+      </CardContent>
+      <CardFooter>
+        <Button :disabled="loading" @click="upload">
+          {{ loading ? "Saving…" : "Validate & save" }}
+        </Button>
+      </CardFooter>
+    </Card>
 
-    <UAlert v-if="message" :title="message" />
+    <Alert v-if="message">
+      <AlertTitle>{{ message }}</AlertTitle>
+    </Alert>
 
-    <UCard>
-      <template #header>Saved policies</template>
-      <ul class="space-y-2 text-sm">
-        <li v-for="policy in policies" :key="policy.id">
-          v{{ policy.version ?? "?" }} · {{ policy.validatedAt }}
-        </li>
-        <li v-if="policies.length === 0" class="text-gray-400">None yet.</li>
-      </ul>
-    </UCard>
+    <Card>
+      <CardHeader>
+        <CardTitle class="text-base">Saved policies</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul class="space-y-2 text-sm">
+          <li v-for="policy in policies" :key="policy.id">
+            v{{ policy.version ?? "?" }} · {{ policy.validatedAt }}
+          </li>
+          <li v-if="policies.length === 0" class="text-muted-foreground">None yet.</li>
+        </ul>
+      </CardContent>
+    </Card>
   </div>
 </template>

@@ -1,4 +1,4 @@
-import { d as defineEventHandler, r as requireSessionUser, u as useDb, K as workspaces, e as auditEntries } from '../../../../nitro/nitro.mjs';
+import { d as defineEventHandler, r as requireSessionUser, u as useDb, I as workspaces, e as auditEntries } from '../../../../nitro/nitro.mjs';
 import { eq, asc } from 'drizzle-orm';
 import * as ed from '@noble/ed25519';
 import { sha256 } from '@noble/hashes/sha256';
@@ -17,8 +17,6 @@ import 'node:https';
 import 'node:crypto';
 import 'node:events';
 import 'node:buffer';
-import '@iconify/utils';
-import 'consola';
 
 ed.etc.sha512Sync = (...messages) => sha512(ed.etc.concatBytes(...messages));
 var GENESIS_HASH = "0".repeat(64);

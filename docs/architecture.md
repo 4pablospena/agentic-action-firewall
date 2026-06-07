@@ -53,12 +53,12 @@ The five layers apply sequentially. The target total latency is **under 200ms at
 
 Every tool call is automatically classified into one of four risk categories. See [`concepts/risk-tiers.md`](./concepts/risk-tiers.md) for the canonical definition.
 
-| Tier | Level    | Description                                                          |
-| ---- | -------- | -------------------------------------------------------------------- |
-| R1   | Low      | Reversible — read email, query DB, list files                        |
-| R2   | Medium   | External — send a message, post on social, call a webhook            |
-| R3   | High     | Irreversible — delete data, modify config, execute code              |
-| R4   | Critical | Sensitive — touches PII, credentials, financial transactions         |
+| Tier | Level    | Description                                                  |
+| ---- | -------- | ------------------------------------------------------------ |
+| R1   | Low      | Reversible — read email, query DB, list files                |
+| R2   | Medium   | External — send a message, post on social, call a webhook    |
+| R3   | High     | Irreversible — delete data, modify config, execute code      |
+| R4   | Critical | Sensitive — touches PII, credentials, financial transactions |
 
 Classification combines static rules (based on tool name and parameters) with a lightweight LLM for ambiguous cases.
 
@@ -78,25 +78,25 @@ Enforces frequency limits segmented by dimension. Unlike traditional rate limite
 
 The core layer of the product. Detects anomalous behavioral patterns before they become real damage. See [`concepts/anomaly-detection.md`](./concepts/anomaly-detection.md).
 
-| Pattern                       | Detection                                                                              | Default action                     |
-| ----------------------------- | -------------------------------------------------------------------------------------- | ---------------------------------- |
-| Repeated message              | Cosine similarity > 0.92 over embeddings of last N actions                             | Block if > 5 recipients            |
-| Tool loop                     | Same tool-call sequence observed 3+ times in 60s                                       | Exponential throttle               |
-| Recipient escalation          | Recipient list grows > 10x relative to session baseline                                | Block + notify                     |
-| Scope drift                   | Agent calls tools outside the initially declared scope                                 | Block + require approval           |
-| Superhuman velocity           | More than 1 external action every 3 seconds sustained for > 1 min                      | Throttle to human velocity         |
-| Mass actions                  | Delete/modify operations on > 50 items in < 60s                                        | Pause + snapshot + approval        |
+| Pattern              | Detection                                                         | Default action              |
+| -------------------- | ----------------------------------------------------------------- | --------------------------- |
+| Repeated message     | Cosine similarity > 0.92 over embeddings of last N actions        | Block if > 5 recipients     |
+| Tool loop            | Same tool-call sequence observed 3+ times in 60s                  | Exponential throttle        |
+| Recipient escalation | Recipient list grows > 10x relative to session baseline           | Block + notify              |
+| Scope drift          | Agent calls tools outside the initially declared scope            | Block + require approval    |
+| Superhuman velocity  | More than 1 external action every 3 seconds sustained for > 1 min | Throttle to human velocity  |
+| Mass actions         | Delete/modify operations on > 50 items in < 60s                   | Pause + snapshot + approval |
 
 ### Layer 4 — Approval Gate
 
 Implements selective human-in-the-loop. The most common critique of approval systems is that they generate alert fatigue. AAF solves this with tier-based approval.
 
-| Tier              | Default behavior                                      | Configurable                            |
-| ----------------- | ----------------------------------------------------- | --------------------------------------- |
-| R1 · Reversible   | Auto-approve, log only                                | Paranoid mode: log + notify             |
-| R2 · External     | Notify the user, 30s cancellation window              | 0–120s configurable                     |
-| R3 · Irreversible | Block until explicit approval                         | Pre-authorized approval by pattern      |
-| R4 · Critical     | Always block, approval requires MFA                   | Not relaxable without admin override    |
+| Tier              | Default behavior                         | Configurable                         |
+| ----------------- | ---------------------------------------- | ------------------------------------ |
+| R1 · Reversible   | Auto-approve, log only                   | Paranoid mode: log + notify          |
+| R2 · External     | Notify the user, 30s cancellation window | 0–120s configurable                  |
+| R3 · Irreversible | Block until explicit approval            | Pre-authorized approval by pattern   |
+| R4 · Critical     | Always block, approval requires MFA      | Not relaxable without admin override |
 
 **Notification channels:** Slack (MVP), SMS via Twilio, iOS/Android push, email fallback, webhook.
 
@@ -125,26 +125,26 @@ POST /api/v1/kill
 
 ## Technology stack
 
-| Layer                       | Technology                                       | Justification                                  |
-| --------------------------- | ------------------------------------------------ | ---------------------------------------------- |
-| Core runtime                | TypeScript + Node.js 22 LTS                      | Universal, broad ecosystem                     |
-| Alternative runtime         | Python 3.12 (API parity)                         | LangChain and CrewAI are Python-first          |
-| Local storage               | SQLite via better-sqlite3                        | Zero infra, fast lookup, embedded              |
-| Distributed storage         | Redis 7+ (with RedisJSON module)                 | Pub/sub for kill switch, atomic ops            |
-| LLM classifier              | Claude Haiku 4.5 (default) · GPT-5 nano          | Minimal cost, latency <100ms                   |
-| Embeddings                  | Voyage-3-lite · text-embedding-3-small           | Similarity detection, low cost                 |
-| Cryptographic signature     | Ed25519 via @noble/ed25519                       | Standard, lightweight, no native deps          |
-| Audit storage               | S3-compatible (Cloudflare R2, AWS S3, MinIO)     | Append-only, write-once, predictable cost      |
-| Dashboard (Pro/Team)        | Nuxt 3 · Vue 3 · Nuxt UI · Nitro                 | UI, workspace APIs, SSR — `apps/dashboard/`      |
-| Nuxt integration module     | `@agent-firewall/nuxt`                           | Drop-in module for third-party Nuxt apps         |
-| Control plane (distributed) | Hono on Cloudflare Workers                       | Kill switch, agent coordination — edge API     |
-| Web database                | PostgreSQL 16 + Drizzle ORM                      | Workspaces, users, subscriptions               |
-| Auth (Pro / dashboard)      | nuxt-auth-utils · Sidebase nuxt-auth             | Sessions and OAuth for dashboard users         |
-| Auth (Team / Enterprise)    | WorkOS (SSO, MFA, SCIM)                          | B2B identity — Phase 2                         |
-| Notifications               | Slack SDK · Twilio · APNs · FCM · Resend         | Full channel coverage                          |
-| Tests                       | Vitest + Playwright for wrappers                 | TypeScript ecosystem standard                  |
-| CI/CD                       | GitHub Actions + Changesets                      | Automated open source releases                 |
-| Own observability           | OpenTelemetry → Honeycomb                        | Self-observable, no lock-in                    |
+| Layer                       | Technology                                   | Justification                               |
+| --------------------------- | -------------------------------------------- | ------------------------------------------- |
+| Core runtime                | TypeScript + Node.js 22 LTS                  | Universal, broad ecosystem                  |
+| Alternative runtime         | Python 3.12 (API parity)                     | LangChain and CrewAI are Python-first       |
+| Local storage               | SQLite via better-sqlite3                    | Zero infra, fast lookup, embedded           |
+| Distributed storage         | Redis 7+ (with RedisJSON module)             | Pub/sub for kill switch, atomic ops         |
+| LLM classifier              | Claude Haiku 4.5 (default) · GPT-5 nano      | Minimal cost, latency <100ms                |
+| Embeddings                  | Voyage-3-lite · text-embedding-3-small       | Similarity detection, low cost              |
+| Cryptographic signature     | Ed25519 via @noble/ed25519                   | Standard, lightweight, no native deps       |
+| Audit storage               | S3-compatible (Cloudflare R2, AWS S3, MinIO) | Append-only, write-once, predictable cost   |
+| Dashboard (Pro/Team)        | Nuxt 3 · Vue 3 · shadcn-vue · Nitro          | UI, workspace APIs, SSR — `apps/dashboard/` |
+| Nuxt integration module     | `@agent-firewall/nuxt`                       | Drop-in module for third-party Nuxt apps    |
+| Control plane (distributed) | Hono on Cloudflare Workers                   | Kill switch, agent coordination — edge API  |
+| Web database                | PostgreSQL 16 + Drizzle ORM                  | Workspaces, users, subscriptions            |
+| Auth (Pro / dashboard)      | nuxt-auth-utils · Sidebase nuxt-auth         | Sessions and OAuth for dashboard users      |
+| Auth (Team / Enterprise)    | WorkOS (SSO, MFA, SCIM)                      | B2B identity — Phase 2                      |
+| Notifications               | Slack SDK · Twilio · APNs · FCM · Resend     | Full channel coverage                       |
+| Tests                       | Vitest + Playwright for wrappers             | TypeScript ecosystem standard               |
+| CI/CD                       | GitHub Actions + Changesets                  | Automated open source releases              |
+| Own observability           | OpenTelemetry → Honeycomb                    | Self-observable, no lock-in                 |
 
 The dashboard and the distributed control plane are separate services. **Nitro**
 (in `apps/dashboard/`) serves the Pro/Team UI and workspace APIs (policies,
@@ -155,12 +155,12 @@ coordination — independent of the dashboard deployment cycle.
 ## Minimal integration API
 
 ```typescript
-import { Firewall } from '@agent-firewall/core';
-import { ClaudeAgent } from '@anthropic-ai/agent-sdk';
+import { Firewall } from "@agent-firewall/core";
+import { ClaudeAgent } from "@anthropic-ai/agent-sdk";
 
 // 1. Configure the firewall with policies
 const firewall = new Firewall({
-  policies: './firewall.yml',
+  policies: "./firewall.yml",
   onBlock: async (event) => {
     await notifyUser(event);
   },
@@ -170,15 +170,11 @@ const firewall = new Firewall({
 });
 
 // 2. Wrap the agent's tools
-const protectedTools = firewall.wrap([
-  gmailTool,
-  linkedinTool,
-  databaseTool,
-]);
+const protectedTools = firewall.wrap([gmailTool, linkedinTool, databaseTool]);
 
 // 3. Use normally — the agent doesn't know the firewall exists
 const agent = new ClaudeAgent({ tools: protectedTools });
-await agent.run('Send a follow-up email to my prospects');
+await agent.run("Send a follow-up email to my prospects");
 ```
 
 For Slack-backed approvals, use `@agent-firewall/slack-channel` (`packages/slack-channel/`). `createSlackApprovalChannel()` returns `{ onApprovalNeeded, handleInteraction }`; wire `handleInteraction` to your Slack interactivity HTTP endpoint (signature verification required in production — not included in MVP).
@@ -187,27 +183,27 @@ For Slack-backed approvals, use `@agent-firewall/slack-channel` (`packages/slack
 
 MVP wrappers are TypeScript-only ([ADR-0002](./adrs/0002-typescript-first.md)). Each package exposes a thin adapter that maps framework tools to `ToolCall` and delegates to `@agent-firewall/core`.
 
-| Framework                   | Package                          | Path                         | MVP status   |
-| --------------------------- | -------------------------------- | ---------------------------- | ------------ |
-| LangChain (JS)              | `@agent-firewall/langchain`      | `packages/langchain/`        | Implemented  |
-| Anthropic Claude SDK        | `@agent-firewall/claude-sdk`     | `packages/claude-sdk/`       | Implemented  |
-| OpenAI Agents SDK           | `@agent-firewall/openai`         | `packages/openai/`           | Implemented  |
-| LangChain (Python)          | `@agent-firewall/langchain`      | —                            | Phase 1      |
-| Nuxt 3                      | `@agent-firewall/nuxt`           | —                            | Phase 1      |
-| CrewAI                      | `@agent-firewall/crewai`         | —                            | Phase 1      |
-| Microsoft AutoGen           | `@agent-firewall/autogen`        | —                            | Phase 1      |
-| Hermes Framework            | `@agent-firewall/hermes`         | —                            | Phase 1      |
-| Custom (function-style)     | `@agent-firewall/core`           | `packages/core/`             | Implemented  |
-| Slack approval channel      | `@agent-firewall/slack-channel`  | `packages/slack-channel/`    | Implemented  |
-| Pro dashboard               | `@agent-firewall/dashboard`      | `apps/dashboard/`            | Implemented (MVP) |
-| Nuxt integration module     | `@agent-firewall/nuxt`           | `packages/nuxt/`             | Implemented (MVP) |
+| Framework               | Package                         | Path                      | MVP status        |
+| ----------------------- | ------------------------------- | ------------------------- | ----------------- |
+| LangChain (JS)          | `@agent-firewall/langchain`     | `packages/langchain/`     | Implemented       |
+| Anthropic Claude SDK    | `@agent-firewall/claude-sdk`    | `packages/claude-sdk/`    | Implemented       |
+| OpenAI Agents SDK       | `@agent-firewall/openai`        | `packages/openai/`        | Implemented       |
+| LangChain (Python)      | `@agent-firewall/langchain`     | —                         | Phase 1           |
+| Nuxt 3                  | `@agent-firewall/nuxt`          | —                         | Phase 1           |
+| CrewAI                  | `@agent-firewall/crewai`        | —                         | Phase 1           |
+| Microsoft AutoGen       | `@agent-firewall/autogen`       | —                         | Phase 1           |
+| Hermes Framework        | `@agent-firewall/hermes`        | —                         | Phase 1           |
+| Custom (function-style) | `@agent-firewall/core`          | `packages/core/`          | Implemented       |
+| Slack approval channel  | `@agent-firewall/slack-channel` | `packages/slack-channel/` | Implemented       |
+| Pro dashboard           | `@agent-firewall/dashboard`     | `apps/dashboard/`         | Implemented (MVP) |
+| Nuxt integration module | `@agent-firewall/nuxt`          | `packages/nuxt/`          | Implemented (MVP) |
 
 ```typescript
-import { wrapLangChainTools } from '@agent-firewall/langchain';
+import { wrapLangChainTools } from "@agent-firewall/langchain";
 
 const protectedTools = wrapLangChainTools(firewall, tools, {
-  agentId: 'my-agent',
-  sessionId: 'sess-001',
+  agentId: "my-agent",
+  sessionId: "sess-001",
 });
 ```
 

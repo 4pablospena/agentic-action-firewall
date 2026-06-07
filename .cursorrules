@@ -101,7 +101,7 @@ apps/                              # Frontend applications (Phase 1+)
 
 ### Dashboard and web (Phase 1)
 - Framework: Nuxt 3 (Vue 3, Composition API)
-- UI library: Nuxt UI (built on Tailwind + Radix Vue)
+- UI library: shadcn-vue via shadcn-nuxt (Material Dashboard shell, light/dark)
 - Dashboard server: Nitro in apps/dashboard/ (workspace APIs, SSR)
 - Control plane: Hono on Cloudflare Workers (kill switch, edge API — separate)
 - Database: PostgreSQL 16 + Drizzle ORM

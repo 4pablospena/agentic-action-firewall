@@ -5,8 +5,8 @@ import { resolve, dirname, join } from 'node:path';
 import crypto$1 from 'node:crypto';
 import { parentPort, threadId } from 'node:worker_threads';
 import { escapeHtml } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@vue+shared@3.5.35/node_modules/@vue/shared/dist/shared.cjs.js';
-import viteNodeEntry_mjs from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_sxwnkk5nrc24d2zw2usfp6enw4/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
-import { viteNodeFetch } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_sxwnkk5nrc24d2zw2usfp6enw4/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
+import viteNodeEntry_mjs from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_xqiocssh7r7m4odeetjrrlzshy/node_modules/@nuxt/vite-builder/dist/vite-node-entry.mjs';
+import { viteNodeFetch } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_xqiocssh7r7m4odeetjrrlzshy/node_modules/@nuxt/vite-builder/dist/vite-node.mjs';
 import { eq, sql, and, desc, asc } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/drizzle-orm@0.44.7_postgres@3.4.9/node_modules/drizzle-orm/index.js';
 import { validateAuditEntry } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/schemas/lib/validate-audit.mjs';
 import { verifyAuditChainEntries } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/packages/core/dist/index.js';
@@ -42,12 +42,10 @@ import { AsyncLocalStorage } from 'node:async_hooks';
 import { stringify, uneval } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/devalue@5.8.1/node_modules/devalue/index.js';
 import { captureRawStackTrace, parseRawStackTrace } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/errx@0.1.0/node_modules/errx/dist/index.js';
 import { isVNode, isRef, toValue } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/vue@3.5.35_typescript@5.9.3/node_modules/vue/index.mjs';
-import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_sxwnkk5nrc24d2zw2usfp6enw4/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
+import _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+vite-builder@3.21.7_@types+node@22.19.20_lightningcss@1.32.0_magicast@0.5.3_nuxt@3.21.7_xqiocssh7r7m4odeetjrrlzshy/node_modules/@nuxt/vite-builder/dist/fix-stacktrace.mjs';
 import { promises } from 'node:fs';
 import { fileURLToPath } from 'node:url';
-import { dirname as dirname$1, resolve as resolve$1, basename } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
-import { getIcons } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@iconify+utils@2.3.0/node_modules/@iconify/utils/lib/index.mjs';
-import { collections } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.nuxt/nuxt-icon-server-bundle.mjs';
+import { dirname as dirname$1, resolve as resolve$1 } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/pathe@2.0.3/node_modules/pathe/dist/index.mjs';
 import { createHooks } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/hookable@6.1.1/node_modules/hookable/dist/index.mjs';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/server.mjs';
 import { DeprecationsPlugin, PromisesPlugin, TemplateParamsPlugin, AliasSortingPlugin } from 'file:///Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/unhead@2.1.15/node_modules/unhead/dist/plugins.mjs';
@@ -74,7 +72,7 @@ function normalizeFsKey (item) {
   return `${prefix}-${hash}`
 }
 
-const _47Users_47pablosuarezpena_47projects_47agentic_45action_45firewall_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_643_4621_467_db0_640_463_464_drizzle_45orm_640_4644_467_postgres_643_464_469___drizzle_45orm_640_4644_467_po_z6qmcmo26dzbddq74ldtubl5vi_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
+const _47Users_47pablosuarezpena_47projects_47agentic_45action_45firewall_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_643_4621_467_db0_640_463_464_drizzle_45orm_640_4644_467_postgres_643_464_469___drizzle_45orm_640_4644_467_po_njzfr3gokuegh2uq5gz4nsitvm_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js = defineDriver(
   /**
    * @param {{ base?: string }} opts
    */
@@ -106,7 +104,7 @@ storage.mount('/assets', assets$1);
 
 storage.mount('root', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard","watchOptions":{"ignored":[null]}}));
 storage.mount('src', unstorage_47drivers_47fs({"driver":"fs","readOnly":true,"base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/server","watchOptions":{"ignored":[null]}}));
-storage.mount('cache:nuxt:payload', _47Users_47pablosuarezpena_47projects_47agentic_45action_45firewall_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_643_4621_467_db0_640_463_464_drizzle_45orm_640_4644_467_postgres_643_464_469___drizzle_45orm_640_4644_467_po_z6qmcmo26dzbddq74ldtubl5vi_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.nuxt/cache/nuxt/payload"}));
+storage.mount('cache:nuxt:payload', _47Users_47pablosuarezpena_47projects_47agentic_45action_45firewall_47node_modules_47_46pnpm_47_64nuxt_43nitro_45server_643_4621_467_db0_640_463_464_drizzle_45orm_640_4644_467_postgres_643_464_469___drizzle_45orm_640_4644_467_po_njzfr3gokuegh2uq5gz4nsitvm_47node_modules_47_64nuxt_47nitro_45server_47dist_47runtime_47utils_47cache_45driver_46js({"driver":"/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/cache-driver.js","base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.nuxt/cache/nuxt/payload"}));
 storage.mount('build', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.nuxt"}));
 storage.mount('cache', unstorage_47drivers_47fs({"driver":"fs","readOnly":false,"base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.nuxt/cache"}));
 storage.mount('data', unstorage_47drivers_47fs({"driver":"fs","base":"/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/.data/kv"}));
@@ -634,235 +632,7 @@ function cloneWithProxy(obj, overrides) {
 const cachedEventHandler = defineCachedEventHandler;
 
 const inlineAppConfig = {
-  "nuxt": {},
-  "ui": {
-    "colors": {
-      "primary": "green",
-      "secondary": "blue",
-      "success": "green",
-      "info": "blue",
-      "warning": "yellow",
-      "error": "red",
-      "neutral": "slate"
-    },
-    "icons": {
-      "arrowLeft": "i-lucide-arrow-left",
-      "arrowRight": "i-lucide-arrow-right",
-      "check": "i-lucide-check",
-      "chevronDoubleLeft": "i-lucide-chevrons-left",
-      "chevronDoubleRight": "i-lucide-chevrons-right",
-      "chevronDown": "i-lucide-chevron-down",
-      "chevronLeft": "i-lucide-chevron-left",
-      "chevronRight": "i-lucide-chevron-right",
-      "chevronUp": "i-lucide-chevron-up",
-      "close": "i-lucide-x",
-      "ellipsis": "i-lucide-ellipsis",
-      "external": "i-lucide-arrow-up-right",
-      "file": "i-lucide-file",
-      "folder": "i-lucide-folder",
-      "folderOpen": "i-lucide-folder-open",
-      "loading": "i-lucide-loader-circle",
-      "minus": "i-lucide-minus",
-      "plus": "i-lucide-plus",
-      "search": "i-lucide-search",
-      "upload": "i-lucide-upload"
-    }
-  },
-  "icon": {
-    "provider": "server",
-    "class": "",
-    "aliases": {},
-    "iconifyApiEndpoint": "https://api.iconify.design",
-    "localApiEndpoint": "/api/_nuxt_icon",
-    "fallbackToApi": true,
-    "cssSelectorPrefix": "i-",
-    "cssWherePseudo": true,
-    "cssLayer": "components",
-    "mode": "css",
-    "attrs": {
-      "aria-hidden": true
-    },
-    "collections": [
-      "academicons",
-      "akar-icons",
-      "ant-design",
-      "arcticons",
-      "basil",
-      "bi",
-      "bitcoin-icons",
-      "bpmn",
-      "brandico",
-      "bx",
-      "bxl",
-      "bxs",
-      "bytesize",
-      "carbon",
-      "catppuccin",
-      "cbi",
-      "charm",
-      "ci",
-      "cib",
-      "cif",
-      "cil",
-      "circle-flags",
-      "circum",
-      "clarity",
-      "codicon",
-      "covid",
-      "cryptocurrency",
-      "cryptocurrency-color",
-      "dashicons",
-      "devicon",
-      "devicon-plain",
-      "ei",
-      "el",
-      "emojione",
-      "emojione-monotone",
-      "emojione-v1",
-      "entypo",
-      "entypo-social",
-      "eos-icons",
-      "ep",
-      "et",
-      "eva",
-      "f7",
-      "fa",
-      "fa-brands",
-      "fa-regular",
-      "fa-solid",
-      "fa6-brands",
-      "fa6-regular",
-      "fa6-solid",
-      "fad",
-      "fe",
-      "feather",
-      "file-icons",
-      "flag",
-      "flagpack",
-      "flat-color-icons",
-      "flat-ui",
-      "flowbite",
-      "fluent",
-      "fluent-emoji",
-      "fluent-emoji-flat",
-      "fluent-emoji-high-contrast",
-      "fluent-mdl2",
-      "fontelico",
-      "fontisto",
-      "formkit",
-      "foundation",
-      "fxemoji",
-      "gala",
-      "game-icons",
-      "geo",
-      "gg",
-      "gis",
-      "gravity-ui",
-      "gridicons",
-      "grommet-icons",
-      "guidance",
-      "healthicons",
-      "heroicons",
-      "heroicons-outline",
-      "heroicons-solid",
-      "hugeicons",
-      "humbleicons",
-      "ic",
-      "icomoon-free",
-      "icon-park",
-      "icon-park-outline",
-      "icon-park-solid",
-      "icon-park-twotone",
-      "iconamoon",
-      "iconoir",
-      "icons8",
-      "il",
-      "ion",
-      "iwwa",
-      "jam",
-      "la",
-      "lets-icons",
-      "line-md",
-      "logos",
-      "ls",
-      "lucide",
-      "lucide-lab",
-      "mage",
-      "majesticons",
-      "maki",
-      "map",
-      "marketeq",
-      "material-symbols",
-      "material-symbols-light",
-      "mdi",
-      "mdi-light",
-      "medical-icon",
-      "memory",
-      "meteocons",
-      "mi",
-      "mingcute",
-      "mono-icons",
-      "mynaui",
-      "nimbus",
-      "nonicons",
-      "noto",
-      "noto-v1",
-      "octicon",
-      "oi",
-      "ooui",
-      "openmoji",
-      "oui",
-      "pajamas",
-      "pepicons",
-      "pepicons-pencil",
-      "pepicons-pop",
-      "pepicons-print",
-      "ph",
-      "pixelarticons",
-      "prime",
-      "ps",
-      "quill",
-      "radix-icons",
-      "raphael",
-      "ri",
-      "rivet-icons",
-      "si-glyph",
-      "simple-icons",
-      "simple-line-icons",
-      "skill-icons",
-      "solar",
-      "streamline",
-      "streamline-emojis",
-      "subway",
-      "svg-spinners",
-      "system-uicons",
-      "tabler",
-      "tdesign",
-      "teenyicons",
-      "token",
-      "token-branded",
-      "topcoat",
-      "twemoji",
-      "typcn",
-      "uil",
-      "uim",
-      "uis",
-      "uit",
-      "uiw",
-      "unjs",
-      "vaadin",
-      "vs",
-      "vscode-icons",
-      "websymbol",
-      "weui",
-      "whh",
-      "wi",
-      "wpf",
-      "zmdi",
-      "zondicons"
-    ],
-    "fetchTimeout": 1500
-  }
+  "nuxt": {}
 };
 
 
@@ -919,14 +689,6 @@ const _inlineRuntimeConfig = {
     "routeRules": {
       "/__nuxt_error": {
         "cache": false
-      },
-      "/_fonts/**": {
-        "headers": {
-          "cache-control": "public, max-age=31536000, immutable"
-        },
-        "cache": {
-          "maxAge": 31536000
-        }
       },
       "/_nuxt/builds/meta/**": {
         "headers": {
@@ -1268,9 +1030,6 @@ const _inlineRuntimeConfig = {
   },
   "databaseUrl": "postgresql://aaf:aaf@localhost:5432/aaf_dashboard",
   "devAuthBypass": true,
-  "icon": {
-    "serverKnownCssClasses": []
-  },
   "hash": {
     "scrypt": {}
   },
@@ -1299,12 +1058,7 @@ function useRuntimeConfig(event) {
   event.context.nitro.runtimeConfig = runtimeConfig;
   return runtimeConfig;
 }
-const _sharedAppConfig = _deepFreeze(klona(appConfig));
-function useAppConfig(event) {
-  {
-    return _sharedAppConfig;
-  }
-}
+_deepFreeze(klona(appConfig));
 function _deepFreeze(object) {
   const propNames = Object.getOwnPropertyNames(object);
   for (const name of propNames) {
@@ -2682,7 +2436,7 @@ if (!window.__NUXT_DEVTOOLS_TIME_METRIC__) {
 window.__NUXT_DEVTOOLS_TIME_METRIC__.appInit = Date.now()
 `;
 
-const _Wahb9vqq2hhxtP3q11PhhovMzcd6nFMVJINKao7RTsQ = (function(nitro) {
+const _VYessEcsl6RIzY6PxMt9FbTOknZi7qEstqmcz6RoT0 = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script$1}<\/script>`);
   });
@@ -2710,7 +2464,7 @@ const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initi
 
 const appRootTag = "div";
 
-const appRootAttrs = {"id":"__nuxt","class":"isolate"};
+const appRootAttrs = {"id":"__nuxt"};
 
 const appTeleportTag = "div";
 
@@ -2730,7 +2484,7 @@ const asyncContext = getContext("nuxt-dev", {
 	asyncContext: true,
 	AsyncLocalStorage
 });
-const _n_90CPBPT_SbdH6zH7hBFArwvs6i6HL9zrQ4bZJ9g = (nitroApp) => {
+const _er7Ab_XIeCjJHLgMrtIcYHl5lNqC6IOThArobegie0 = (nitroApp) => {
 	const handler = nitroApp.h3App.handler;
 	nitroApp.h3App.handler = (event) => {
 		return asyncContext.callAsync({
@@ -2807,17 +2561,17 @@ function onConsoleLog(callback) {
 
 const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
 
-const _82xMKV4FoLz75CaHKiqFeIjzJV892tCYdm3lhW9J7qc = (function(nitro) {
+const _HO4PldLc5lfbdyCgM_ArQxxGNevzyxg7DyFQAe3Mgjc = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
 });
 
 const plugins = [
-  _Wahb9vqq2hhxtP3q11PhhovMzcd6nFMVJINKao7RTsQ,
+  _VYessEcsl6RIzY6PxMt9FbTOknZi7qEstqmcz6RoT0,
 _taXTeOsBQ_MsJ0cUfXrPCN8OPD0m3HKdaxRIn3X6b8I,
-_n_90CPBPT_SbdH6zH7hBFArwvs6i6HL9zrQ4bZJ9g,
-_82xMKV4FoLz75CaHKiqFeIjzJV892tCYdm3lhW9J7qc,
+_er7Ab_XIeCjJHLgMrtIcYHl5lNqC6IOThArobegie0,
+_HO4PldLc5lfbdyCgM_ArQxxGNevzyxg7DyFQAe3Mgjc,
 _wH6JrtIxmaSoA8lCPWFnE9z4lQeXW6H5z3l5aymEQw
 ];
 
@@ -2828,7 +2582,7 @@ function readAsset (id) {
   return promises.readFile(resolve$1(serverDir, assets[id].path))
 }
 
-const publicAssetBases = {"/_nuxt/builds/meta/":{"maxAge":31536000},"/_nuxt/builds/":{"maxAge":1},"/_fonts/":{"maxAge":31536000}};
+const publicAssetBases = {"/_nuxt/builds/meta/":{"maxAge":31536000},"/_nuxt/builds/":{"maxAge":1}};
 
 function isPublicAssetURL(id = '') {
   if (assets[id]) {
@@ -3168,39 +2922,6 @@ function defineOAuthGitHubEventHandler({ config, onSuccess, onError }) {
   });
 }
 
-const sessionHooks = createHooks();
-async function getUserSession(event) {
-  const session = await _useSession(event);
-  return {
-    ...session.data,
-    id: session.id
-  };
-}
-async function setUserSession(event, data, config) {
-  const session = await _useSession(event, config);
-  await session.update(defu$1(data, session.data));
-  return session.data;
-}
-async function clearUserSession(event, config) {
-  const session = await _useSession(event, config);
-  await sessionHooks.callHookParallel("clear", session.data, event);
-  await session.clear();
-  return true;
-}
-let sessionConfig;
-function _useSession(event, config = {}) {
-  if (!sessionConfig) {
-    const runtimeConfig = useRuntimeConfig(isEvent(event) ? event : void 0);
-    const envSessionPassword = `${runtimeConfig.nitro?.envPrefix || "NUXT_"}SESSION_PASSWORD`;
-    sessionConfig = defu$1({ password: process.env[envSessionPassword] }, runtimeConfig.session);
-    if (!sessionConfig.password) {
-      console.error(`[nuxt-auth-utils] ${envSessionPassword} environment variable or runtimeConfig.session.password was not set.`);
-    }
-  }
-  const finalConfig = defu$1(config, sessionConfig);
-  return useSession(event, finalConfig);
-}
-
 const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   email: text("email").notNull().unique(),
@@ -3370,65 +3091,38 @@ async function ingestAuditEntry(workspaceId, body) {
   return entry;
 }
 
-const warnOnceSet = /* @__PURE__ */ new Set();
-const DEFAULT_ENDPOINT = "https://api.iconify.design";
-const _MKeQGR = defineCachedEventHandler(async (event) => {
-  const url = getRequestURL(event);
-  if (!url)
-    return createError({ status: 400, message: "Invalid icon request" });
-  const options = useAppConfig().icon;
-  const collectionName = event.context.params?.collection?.replace(/\.json$/, "");
-  const collection = collectionName ? await collections[collectionName]?.() : null;
-  const apiEndPoint = options.iconifyApiEndpoint || DEFAULT_ENDPOINT;
-  const icons = url.searchParams.get("icons")?.split(",");
-  if (collection) {
-    if (icons?.length) {
-      const data = getIcons(
-        collection,
-        icons
-      );
-      consola$1.debug(`[Icon] serving ${(icons || []).map((i) => "`" + collectionName + ":" + i + "`").join(",")} from bundled collection`);
-      return data;
-    }
-  } else {
-    if (collectionName && !warnOnceSet.has(collectionName) && apiEndPoint === DEFAULT_ENDPOINT) {
-      consola$1.warn([
-        `[Icon] Collection \`${collectionName}\` is not found locally`,
-        `We suggest to install it via \`npm i -D @iconify-json/${collectionName}\` to provide the best end-user experience.`
-      ].join("\n"));
-      warnOnceSet.add(collectionName);
-    }
-  }
-  if (options.fallbackToApi === true || options.fallbackToApi === "server-only") {
-    const apiUrl = new URL("./" + basename(url.pathname) + url.search, apiEndPoint);
-    consola$1.debug(`[Icon] fetching ${(icons || []).map((i) => "`" + collectionName + ":" + i + "`").join(",")} from iconify api`);
-    if (apiUrl.host !== new URL(apiEndPoint).host) {
-      return createError({ status: 400, message: "Invalid icon request" });
-    }
-    try {
-      const data = await $fetch(apiUrl.href);
-      return data;
-    } catch (e) {
-      consola$1.error(e);
-      if (e.status === 404)
-        return createError({ status: 404 });
-      else
-        return createError({ status: 500, message: "Failed to fetch fallback icon" });
+const sessionHooks = createHooks();
+async function getUserSession(event) {
+  const session = await _useSession(event);
+  return {
+    ...session.data,
+    id: session.id
+  };
+}
+async function setUserSession(event, data, config) {
+  const session = await _useSession(event, config);
+  await session.update(defu$1(data, session.data));
+  return session.data;
+}
+async function clearUserSession(event, config) {
+  const session = await _useSession(event, config);
+  await sessionHooks.callHookParallel("clear", session.data, event);
+  await session.clear();
+  return true;
+}
+let sessionConfig;
+function _useSession(event, config = {}) {
+  if (!sessionConfig) {
+    const runtimeConfig = useRuntimeConfig(isEvent(event) ? event : void 0);
+    const envSessionPassword = `${runtimeConfig.nitro?.envPrefix || "NUXT_"}SESSION_PASSWORD`;
+    sessionConfig = defu$1({ password: process.env[envSessionPassword] }, runtimeConfig.session);
+    if (!sessionConfig.password) {
+      console.error(`[nuxt-auth-utils] ${envSessionPassword} environment variable or runtimeConfig.session.password was not set.`);
     }
   }
-  return createError({ status: 404 });
-}, {
-  group: "nuxt",
-  name: "icon",
-  getKey(event) {
-    const collection = event.context.params?.collection?.replace(/\.json$/, "") || "unknown";
-    const icons = String(getQuery$1(event).icons || "");
-    return `${collection}_${icons.split(",")[0]}_${icons.length}_${hash$1(icons)}`;
-  },
-  swr: true,
-  maxAge: 60 * 60 * 24 * 7
-  // 1 week
-});
+  const finalConfig = defu$1(config, sessionConfig);
+  return useSession(event, finalConfig);
+}
 
 const _p_Pg7j = eventHandler(async (event) => {
   await clearUserSession(event);
@@ -3481,6 +3175,8 @@ function filterIslandProps(props) {
 function computeIslandHash(name, filteredProps, context, source) {
   return hash$1([name, filteredProps, context, source]).replace(/[-_]/g, "");
 }
+
+const NUXT_RUNTIME_PAYLOAD_EXTRACTION = false;
 
 // @__NO_SIDE_EFFECTS__
 function createHead(options = {}) {
@@ -3881,7 +3577,7 @@ const _lazy_YbbJwA = () => Promise.resolve().then(function () { return index_get
 const _lazy_f1nD6k = () => Promise.resolve().then(function () { return index_post$1; });
 const _lazy_QVFjXO = () => Promise.resolve().then(function () { return dev_get$1; });
 const _lazy_xdX77s = () => Promise.resolve().then(function () { return github_get$1; });
-const _lazy_ZdvDob = () => Promise.resolve().then(function () { return renderer; });
+const _lazy_dmNkZS = () => Promise.resolve().then(function () { return renderer; });
 
 const handlers = [
   { route: '', handler: _kdIoWv, lazy: false, middleware: true, method: undefined },
@@ -3896,13 +3592,11 @@ const handlers = [
   { route: '/api/v1/policies', handler: _lazy_f1nD6k, lazy: true, middleware: false, method: "post" },
   { route: '/auth/dev', handler: _lazy_QVFjXO, lazy: true, middleware: false, method: "get" },
   { route: '/auth/github', handler: _lazy_xdX77s, lazy: true, middleware: false, method: "get" },
-  { route: '/__nuxt_error', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _MKeQGR, lazy: false, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_dmNkZS, lazy: true, middleware: false, method: undefined },
   { route: '/api/_auth/session', handler: _p_Pg7j, lazy: false, middleware: false, method: "delete" },
   { route: '/api/_auth/session', handler: _dLzMld, lazy: false, middleware: false, method: "get" },
   { route: '/__nuxt_island/**', handler: handler$1, lazy: false, middleware: false, method: undefined },
-  { route: '/_fonts/**', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_dmNkZS, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -4464,7 +4158,6 @@ const HAS_APP_TELEPORTS = !!(appTeleportAttrs.id);
 const APP_TELEPORT_OPEN_TAG = HAS_APP_TELEPORTS ? `<${appTeleportTag}${propsToString(appTeleportAttrs)}>` : "";
 const APP_TELEPORT_CLOSE_TAG = HAS_APP_TELEPORTS ? `</${appTeleportTag}>` : "";
 const PAYLOAD_URL_RE = /^[^?]*\/_payload.json(?:\?.*)?$/ ;
-const PAYLOAD_FILENAME = "_payload.json" ;
 const handler = defineRenderHandler((event) => {
 	
 	const ssrError = event.path.startsWith("/__nuxt_error") ? getQuery$1(event) : null;
@@ -4499,14 +4192,13 @@ async function renderRoute(event, ssrError) {
 		ssrContext.noSSR = true;
 	}
 	
-	const _PAYLOAD_EXTRACTION = !ssrContext.noSSR && ((routeOptions.isr || routeOptions.cache));
-	const isRenderingPayload = (_PAYLOAD_EXTRACTION || routeOptions.prerender) && PAYLOAD_URL_RE.test(ssrContext.url);
+	!ssrContext.noSSR && (NUXT_RUNTIME_PAYLOAD_EXTRACTION);
+	const isRenderingPayload = (routeOptions.prerender) && PAYLOAD_URL_RE.test(ssrContext.url);
 	if (isRenderingPayload) {
 		const url = ssrContext.url.substring(0, ssrContext.url.lastIndexOf("/")) || "/";
 		ssrContext.url = url;
 		event._path = event.node.req.url = url;
 	}
-	const payloadURL = _PAYLOAD_EXTRACTION ? joinURL(ssrContext.runtimeConfig.app.cdnURL || ssrContext.runtimeConfig.app.baseURL, ssrContext.url.replace(/\?.*$/, ""), PAYLOAD_FILENAME) + "?" + ssrContext.runtimeConfig.app.buildId : undefined;
 	
 	const renderer = await getRenderer(ssrContext);
 	const _rendered = await renderer.renderToString(ssrContext).catch(async (error) => {
@@ -4543,15 +4235,6 @@ async function renderRoute(event, ssrError) {
 	const NO_SCRIPTS = routeOptions.noScripts;
 	
 	const { styles, scripts } = getRequestDependencies(ssrContext, renderer.rendererContext);
-	
-	if (_PAYLOAD_EXTRACTION && !NO_SCRIPTS) {
-		ssrContext.head.push({ link: [{
-			rel: "preload",
-			as: "fetch",
-			crossorigin: "anonymous",
-			href: payloadURL
-		} ] }, headEntryOptions);
-	}
 	if (ssrContext["~preloadManifest"] && !NO_SCRIPTS) {
 		ssrContext.head.push({ link: [{
 			rel: "preload",
@@ -4599,11 +4282,7 @@ async function renderRoute(event, ssrError) {
 		ssrContext.head.push({ link: getPreloadLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		ssrContext.head.push({ link: getPrefetchLinks(ssrContext, renderer.rendererContext) }, headEntryOptions);
 		
-		ssrContext.head.push({ script: _PAYLOAD_EXTRACTION ? renderPayloadJsonScript({
-			ssrContext,
-			data: splitPayload(ssrContext).initial,
-			src: payloadURL
-		})  : renderPayloadJsonScript({
+		ssrContext.head.push({ script: renderPayloadJsonScript({
 			ssrContext,
 			data: ssrContext.payload
 		})  }, {

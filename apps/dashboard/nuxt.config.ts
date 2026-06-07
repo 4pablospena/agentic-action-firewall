@@ -1,9 +1,30 @@
+import tailwindcss from "@tailwindcss/vite";
 import { defineNuxtConfig } from "nuxt/config";
 
 export default defineNuxtConfig({
   compatibilityDate: "2025-01-01",
   devtools: { enabled: true },
-  modules: ["@nuxt/ui", "nuxt-auth-utils", "@agent-firewall/nuxt"],
+  modules: [
+    "@nuxtjs/color-mode",
+    "shadcn-nuxt",
+    "nuxt-auth-utils",
+    "@agent-firewall/nuxt",
+  ],
+  colorMode: {
+    classSuffix: "",
+    preference: "system",
+    fallback: "light",
+  },
+  shadcn: {
+    prefix: "",
+    componentDir: "./components/ui",
+  },
+  components: [
+    {
+      path: "~/components/layout",
+      pathPrefix: false,
+    },
+  ],
   agentFirewall: {
     apiUrl: process.env.NUXT_PUBLIC_AAF_API_URL ?? "",
     apiKey: process.env.NUXT_PUBLIC_AAF_API_KEY ?? "",
@@ -35,6 +56,9 @@ export default defineNuxtConfig({
   },
   nitro: {
     preset: "node-server",
+  },
+  vite: {
+    plugins: [tailwindcss()],
   },
   typescript: {
     strict: true,

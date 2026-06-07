@@ -35,29 +35,29 @@ await load();
 
 <template>
   <div class="space-y-6">
-    <div>
-      <h1 class="text-2xl font-semibold">Approvals</h1>
-      <p class="text-sm text-gray-400">
-        Pending actions awaiting human review. Remote agent sync requires webhook/polling (Phase 1b).
-      </p>
-    </div>
+    <p class="text-sm text-muted-foreground">
+      Pending actions awaiting human review. Remote agent sync requires webhook/polling (Phase 1b).
+    </p>
 
-    <div v-if="loading" class="text-gray-400">Loading…</div>
-    <div v-else-if="pending.length === 0" class="text-gray-400">No pending approvals.</div>
+    <div v-if="loading" class="text-muted-foreground">Loading…</div>
+    <div v-else-if="pending.length === 0" class="text-muted-foreground">No pending approvals.</div>
     <div v-else class="space-y-4">
-      <UCard v-for="item in pending" :key="item.id">
-        <div class="flex flex-wrap items-start justify-between gap-4">
-          <div>
+      <Card v-for="item in pending" :key="item.id">
+        <CardContent class="flex flex-wrap items-start justify-between gap-4 p-6">
+          <div class="space-y-2">
             <p class="font-medium">{{ item.entry.tool_call.name }}</p>
-            <p class="text-sm text-gray-400">{{ item.entry.decision.reason }}</p>
-            <p class="text-xs text-gray-500">{{ item.entry.agent_id }} · {{ item.entry.tool_call.risk_class }}</p>
+            <p class="text-sm text-muted-foreground">{{ item.entry.decision.reason }}</p>
+            <div class="flex flex-wrap items-center gap-2 text-xs text-muted-foreground">
+              <span>{{ item.entry.agent_id }}</span>
+              <RiskBadge :tier="item.entry.tool_call.risk_class" />
+            </div>
           </div>
           <div class="flex gap-2">
-            <UButton color="success" @click="respond(item.id, true)">Approve</UButton>
-            <UButton color="error" variant="soft" @click="respond(item.id, false)">Deny</UButton>
+            <Button @click="respond(item.id, true)">Approve</Button>
+            <Button variant="destructive" @click="respond(item.id, false)">Deny</Button>
           </div>
-        </div>
-      </UCard>
+        </CardContent>
+      </Card>
     </div>
   </div>
 </template>
