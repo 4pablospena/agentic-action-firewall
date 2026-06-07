@@ -13,8 +13,6 @@ import 'node:https';
 import 'node:crypto';
 import 'node:events';
 import 'node:buffer';
-import '@iconify/utils';
-import 'consola';
 
 const pending_get = defineEventHandler(async (event) => {
   const user = await requireSessionUser(event);

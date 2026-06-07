@@ -13,8 +13,6 @@ import 'node:https';
 import 'node:crypto';
 import 'node:events';
 import 'node:buffer';
-import '@iconify/utils';
-import 'consola';
 
 const github_get = defineOAuthGitHubEventHandler({
   config: {

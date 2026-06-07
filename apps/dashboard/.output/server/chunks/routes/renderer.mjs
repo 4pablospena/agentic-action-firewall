@@ -1,5 +1,5 @@
 import { createRenderer, getRequestDependencies, getPreloadLinks, getPrefetchLinks } from 'vue-bundle-renderer/runtime';
-import { L as buildAssetsURL, M as publicAssetsURL, l as useRuntimeConfig, C as encodePath, N as defineRenderHandler, O as getQuery, c as createError, P as getRouteRules, Q as getResponseStatusText, R as getResponseStatus, S as useNitroApp } from '../nitro/nitro.mjs';
+import { J as buildAssetsURL, K as publicAssetsURL, l as useRuntimeConfig, o as encodePath, L as defineRenderHandler, M as getQuery, c as createError, N as getRouteRules, O as getResponseStatusText, P as getResponseStatus, Q as useNitroApp } from '../nitro/nitro.mjs';
 import { renderToString } from 'vue/server-renderer';
 import { createHead as createHead$1, propsToString, renderSSRHead } from 'unhead/server';
 import { stringify, uneval } from 'devalue';
@@ -80,7 +80,7 @@ const appHead = {"meta":[{"name":"viewport","content":"width=device-width, initi
 
 const appRootTag = "div";
 
-const appRootAttrs = {"id":"__nuxt","class":"isolate"};
+const appRootAttrs = {"id":"__nuxt"};
 
 const appTeleportTag = "div";
 
@@ -242,7 +242,7 @@ async function renderInlineStyles(usedModules) {
 
 const renderSSRHeadOptions = {"omitLineBreaks":false};
 
-const entryIds = ["../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_brxmoededtdlr6v545vs7ozhaq/node_modules/nuxt/dist/app/entry.js"];
+const entryIds = ["../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/entry.js"];
 
 // @ts-expect-error private property consumed by vite-generated url helpers
 globalThis.__buildAssetsURL = buildAssetsURL;

@@ -12,8 +12,6 @@ import https, { Server } from 'node:https';
 import nodeCrypto, { createHash } from 'node:crypto';
 import { EventEmitter } from 'node:events';
 import { Buffer as Buffer$1 } from 'node:buffer';
-import { getIcons } from '@iconify/utils';
-import { consola } from 'consola';
 
 const subtle = nodeCrypto.webcrypto?.subtle || {};
 const randomUUID = () => {
@@ -456,7 +454,7 @@ function tryDecode(str, decode2) {
 }
 
 const fieldContentRegExp = /^[\u0009\u0020-\u007E\u0080-\u00FF]+$/;
-function serialize$2(name, value, options) {
+function serialize$1(name, value, options) {
   const opt = options || {};
   const enc = opt.encode || encodeURIComponent;
   if (typeof enc !== "function") {
@@ -1200,7 +1198,7 @@ var unseal = async (_crypto, sealed, password, options) => {
   return null;
 };
 
-function o(n){throw new Error(`${n} is not implemented yet!`)}let i$1 = class i extends EventEmitter{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o("Readable.asyncIterator")}iterator(e){throw o("Readable.iterator")}map(e,t){throw o("Readable.map")}filter(e,t){throw o("Readable.filter")}forEach(e,t){throw o("Readable.forEach")}reduce(e,t,r){throw o("Readable.reduce")}find(e,t){throw o("Readable.find")}findIndex(e,t){throw o("Readable.findIndex")}some(e,t){throw o("Readable.some")}toArray(e){throw o("Readable.toArray")}every(e,t){throw o("Readable.every")}flatMap(e,t){throw o("Readable.flatMap")}drop(e,t){throw o("Readable.drop")}take(e,t){throw o("Readable.take")}asIndexedPairs(e){throw o("Readable.asIndexedPairs")}};let l$1 = class l extends EventEmitter{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c$1=class c{allowHalfOpen=true;_destroy;constructor(e=new i$1,t=new l$1){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _(){return Object.assign(c$1.prototype,i$1.prototype),Object.assign(c$1.prototype,l$1.prototype),c$1}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_();class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}}class y extends i$1{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$1{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R(n={}){const e=new E,t=Array.isArray(n)||H(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S=new Set([101,204,205,304]);async function b(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C(n,e,t={}){try{const r=await b(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
+function o(n){throw new Error(`${n} is not implemented yet!`)}let i$1 = class i extends EventEmitter{__unenv__={};readableEncoding=null;readableEnded=true;readableFlowing=false;readableHighWaterMark=0;readableLength=0;readableObjectMode=false;readableAborted=false;readableDidRead=false;closed=false;errored=null;readable=false;destroyed=false;static from(e,t){return new i(t)}constructor(e){super();}_read(e){}read(e){}setEncoding(e){return this}pause(){return this}resume(){return this}isPaused(){return  true}unpipe(e){return this}unshift(e,t){}wrap(e){return this}push(e,t){return  false}_destroy(e,t){this.removeAllListeners();}destroy(e){return this.destroyed=true,this._destroy(e),this}pipe(e,t){return {}}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return this.destroy(),Promise.resolve()}async*[Symbol.asyncIterator](){throw o("Readable.asyncIterator")}iterator(e){throw o("Readable.iterator")}map(e,t){throw o("Readable.map")}filter(e,t){throw o("Readable.filter")}forEach(e,t){throw o("Readable.forEach")}reduce(e,t,r){throw o("Readable.reduce")}find(e,t){throw o("Readable.find")}findIndex(e,t){throw o("Readable.findIndex")}some(e,t){throw o("Readable.some")}toArray(e){throw o("Readable.toArray")}every(e,t){throw o("Readable.every")}flatMap(e,t){throw o("Readable.flatMap")}drop(e,t){throw o("Readable.drop")}take(e,t){throw o("Readable.take")}asIndexedPairs(e){throw o("Readable.asIndexedPairs")}};let l$1 = class l extends EventEmitter{__unenv__={};writable=true;writableEnded=false;writableFinished=false;writableHighWaterMark=0;writableLength=0;writableObjectMode=false;writableCorked=0;closed=false;errored=null;writableNeedDrain=false;writableAborted=false;destroyed=false;_data;_encoding="utf8";constructor(e){super();}pipe(e,t){return {}}_write(e,t,r){if(this.writableEnded){r&&r();return}if(this._data===void 0)this._data=e;else {const s=typeof this._data=="string"?Buffer$1.from(this._data,this._encoding||t||"utf8"):this._data,a=typeof e=="string"?Buffer$1.from(e,t||this._encoding||"utf8"):e;this._data=Buffer$1.concat([s,a]);}this._encoding=t,r&&r();}_writev(e,t){}_destroy(e,t){}_final(e){}write(e,t,r){const s=typeof t=="string"?this._encoding:"utf8",a=typeof t=="function"?t:typeof r=="function"?r:void 0;return this._write(e,s,a),true}setDefaultEncoding(e){return this}end(e,t,r){const s=typeof e=="function"?e:typeof t=="function"?t:typeof r=="function"?r:void 0;if(this.writableEnded)return s&&s(),this;const a=e===s?void 0:e;if(a){const u=t===s?void 0:t;this.write(a,u,s);}return this.writableEnded=true,this.writableFinished=true,this.emit("close"),this.emit("finish"),this}cork(){}uncork(){}destroy(e){return this.destroyed=true,delete this._data,this.removeAllListeners(),this}compose(e,t){throw new Error("Method not implemented.")}[Symbol.asyncDispose](){return Promise.resolve()}};const c=class{allowHalfOpen=true;_destroy;constructor(e=new i$1,t=new l$1){Object.assign(this,e),Object.assign(this,t),this._destroy=m(e._destroy,t._destroy);}};function _(){return Object.assign(c.prototype,i$1.prototype),Object.assign(c.prototype,l$1.prototype),c}function m(...n){return function(...e){for(const t of n)t(...e);}}const g=_();class A extends g{__unenv__={};bufferSize=0;bytesRead=0;bytesWritten=0;connecting=false;destroyed=false;pending=false;localAddress="";localPort=0;remoteAddress="";remoteFamily="";remotePort=0;autoSelectFamilyAttemptedAddresses=[];readyState="readOnly";constructor(e){super();}write(e,t,r){return  false}connect(e,t,r){return this}end(e,t,r){return this}setEncoding(e){return this}pause(){return this}resume(){return this}setTimeout(e,t){return this}setNoDelay(e){return this}setKeepAlive(e,t){return this}address(){return {}}unref(){return this}ref(){return this}destroySoon(){this.destroy();}resetAndDestroy(){const e=new Error("ERR_SOCKET_CLOSED");return e.code="ERR_SOCKET_CLOSED",this.destroy(e),this}}class y extends i$1{aborted=false;httpVersion="1.1";httpVersionMajor=1;httpVersionMinor=1;complete=true;connection;socket;headers={};trailers={};method="GET";url="/";statusCode=200;statusMessage="";closed=false;errored=null;readable=false;constructor(e){super(),this.socket=this.connection=e||new A;}get rawHeaders(){const e=this.headers,t=[];for(const r in e)if(Array.isArray(e[r]))for(const s of e[r])t.push(r,s);else t.push(r,e[r]);return t}get rawTrailers(){return []}setTimeout(e,t){return this}get headersDistinct(){return p(this.headers)}get trailersDistinct(){return p(this.trailers)}}function p(n){const e={};for(const[t,r]of Object.entries(n))t&&(e[t]=(Array.isArray(r)?r:[r]).filter(Boolean));return e}class w extends l$1{statusCode=200;statusMessage="";upgrading=false;chunkedEncoding=false;shouldKeepAlive=false;useChunkedEncodingByDefault=false;sendDate=false;finished=false;headersSent=false;strictContentLength=false;connection=null;socket=null;req;_headers={};constructor(e){super(),this.req=e;}assignSocket(e){e._httpMessage=this,this.socket=e,this.connection=e,this.emit("socket",e),this._flush();}_flush(){this.flushHeaders();}detachSocket(e){}writeContinue(e){}writeHead(e,t,r){e&&(this.statusCode=e),typeof t=="string"&&(this.statusMessage=t,t=void 0);const s=r||t;if(s&&!Array.isArray(s))for(const a in s)this.setHeader(a,s[a]);return this.headersSent=true,this}writeProcessing(){}setTimeout(e,t){return this}appendHeader(e,t){e=e.toLowerCase();const r=this._headers[e],s=[...Array.isArray(r)?r:[r],...Array.isArray(t)?t:[t]].filter(Boolean);return this._headers[e]=s.length>1?s:s[0],this}setHeader(e,t){return this._headers[e.toLowerCase()]=t,this}setHeaders(e){for(const[t,r]of Object.entries(e))this.setHeader(t,r);return this}getHeader(e){return this._headers[e.toLowerCase()]}getHeaders(){return this._headers}getHeaderNames(){return Object.keys(this._headers)}hasHeader(e){return e.toLowerCase()in this._headers}removeHeader(e){delete this._headers[e.toLowerCase()];}addTrailers(e){}flushHeaders(){}writeEarlyHints(e,t){typeof t=="function"&&t();}}const E=(()=>{const n=function(){};return n.prototype=Object.create(null),n})();function R(n={}){const e=new E,t=Array.isArray(n)||H(n)?n:Object.entries(n);for(const[r,s]of t)if(s){if(e[r]===void 0){e[r]=s;continue}e[r]=[...Array.isArray(e[r])?e[r]:[e[r]],...Array.isArray(s)?s:[s]];}return e}function H(n){return typeof n?.entries=="function"}function v(n={}){if(n instanceof Headers)return n;const e=new Headers;for(const[t,r]of Object.entries(n))if(r!==void 0){if(Array.isArray(r)){for(const s of r)e.append(t,String(s));continue}e.set(t,String(r));}return e}const S=new Set([101,204,205,304]);async function b(n,e){const t=new y,r=new w(t);t.url=e.url?.toString()||"/";let s;if(!t.url.startsWith("/")){const d=new URL(t.url);s=d.host,t.url=d.pathname+d.search+d.hash;}t.method=e.method||"GET",t.headers=R(e.headers||{}),t.headers.host||(t.headers.host=e.host||s||"localhost"),t.connection.encrypted=t.connection.encrypted||e.protocol==="https",t.body=e.body||null,t.__unenv__=e.context,await n(t,r);let a=r._data;(S.has(r.statusCode)||t.method.toUpperCase()==="HEAD")&&(a=null,delete r._headers["content-length"]);const u={status:r.statusCode,statusText:r.statusMessage,headers:r._headers,body:a};return t.destroy(),r.destroy(),u}async function C(n,e,t={}){try{const r=await b(n,{url:e,...t});return new Response(r.body,{status:r.status,statusText:r.statusText,headers:v(r.headers)})}catch(r){return new Response(r.toString(),{status:Number.parseInt(r.statusCode||r.code)||500,statusText:r.statusText})}}
 
 function hasProp(obj, prop) {
   try {
@@ -1615,7 +1613,7 @@ function setCookie(event, name, value, serializeOptions = {}) {
   if (!serializeOptions.path) {
     serializeOptions = { path: "/", ...serializeOptions };
   }
-  const newCookie = serialize$2(name, value, serializeOptions);
+  const newCookie = serialize$1(name, value, serializeOptions);
   const currentCookies = splitCookiesString(
     event.node.res.getHeader("set-cookie")
   );
@@ -3320,10 +3318,10 @@ function createNodeFetch() {
     return l(input, { ...nodeFetchOptions, ...init });
   };
 }
-const fetch$1 = globalThis.fetch ? (...args) => globalThis.fetch(...args) : createNodeFetch();
+const fetch = globalThis.fetch ? (...args) => globalThis.fetch(...args) : createNodeFetch();
 const Headers$1 = globalThis.Headers || s$1;
 const AbortController = globalThis.AbortController || i;
-const ofetch = createFetch({ fetch: fetch$1, Headers: Headers$1, AbortController });
+const ofetch = createFetch({ fetch, Headers: Headers$1, AbortController });
 const $fetch$1 = ofetch;
 
 function wrapToPromise(value) {
@@ -4110,13 +4108,7 @@ function useStorage(base = "") {
   return base ? prefixStorage(storage, base) : storage;
 }
 
-function serialize$1(o){return typeof o=="string"?`'${o}'`:new c().serialize(o)}const c=/*@__PURE__*/function(){class o{#t=new Map;compare(t,r){const e=typeof t,n=typeof r;return e==="string"&&n==="string"?t.localeCompare(r):e==="number"&&n==="number"?t-r:String.prototype.localeCompare.call(this.serialize(t,true),this.serialize(r,true))}serialize(t,r){if(t===null)return "null";switch(typeof t){case "string":return r?t:`'${t}'`;case "bigint":return `${t}n`;case "object":return this.$object(t);case "function":return this.$function(t)}return String(t)}serializeObject(t){const r=Object.prototype.toString.call(t);if(r!=="[object Object]")return this.serializeBuiltInType(r.length<10?`unknown:${r}`:r.slice(8,-1),t);const e=t.constructor,n=e===Object||e===void 0?"":e.name;if(n!==""&&globalThis[n]===e)return this.serializeBuiltInType(n,t);if(typeof t.toJSON=="function"){const i=t.toJSON();return n+(i!==null&&typeof i=="object"?this.$object(i):`(${this.serialize(i)})`)}return this.serializeObjectEntries(n,Object.entries(t))}serializeBuiltInType(t,r){const e=this["$"+t];if(e)return e.call(this,r);if(typeof r?.entries=="function")return this.serializeObjectEntries(t,r.entries());throw new Error(`Cannot serialize ${t}`)}serializeObjectEntries(t,r){const e=Array.from(r).sort((i,a)=>this.compare(i[0],a[0]));let n=`${t}{`;for(let i=0;i<e.length;i++){const[a,l]=e[i];n+=`${this.serialize(a,true)}:${this.serialize(l)}`,i<e.length-1&&(n+=",");}return n+"}"}$object(t){let r=this.#t.get(t);return r===void 0&&(this.#t.set(t,`#${this.#t.size}`),r=this.serializeObject(t),this.#t.set(t,r)),r}$function(t){const r=Function.prototype.toString.call(t);return r.slice(-15)==="[native code] }"?`${t.name||""}()[native]`:`${t.name}(${t.length})${r.replace(/\s*\n\s*/g,"")}`}$Array(t){let r="[";for(let e=0;e<t.length;e++)r+=this.serialize(t[e]),e<t.length-1&&(r+=",");return r+"]"}$Date(t){try{return `Date(${t.toISOString()})`}catch{return "Date(null)"}}$ArrayBuffer(t){return `ArrayBuffer[${new Uint8Array(t).join(",")}]`}$Set(t){return `Set${this.$Array(Array.from(t).sort((r,e)=>this.compare(r,e)))}`}$Map(t){return this.serializeObjectEntries("Map",t.entries())}}for(const s of ["Error","RegExp","URL"])o.prototype["$"+s]=function(t){return `${s}(${t})`};for(const s of ["Int8Array","Uint8Array","Uint8ClampedArray","Int16Array","Uint16Array","Int32Array","Uint32Array","Float32Array","Float64Array"])o.prototype["$"+s]=function(t){return `${s}[${t.join(",")}]`};for(const s of ["BigInt64Array","BigUint64Array"])o.prototype["$"+s]=function(t){return `${s}[${t.join("n,")}${t.length>0?"n":""}]`};return o}();
-
 const e=globalThis.process?.getBuiltinModule?.("crypto")?.hash,r="sha256",s="base64url";function digest(t){if(e)return e(r,t,s);const o=createHash(r).update(t);return globalThis.process?.versions?.webcontainer?o.digest().toString(s):o.digest(s)}
-
-function hash$1(input) {
-  return digest(serialize$1(input));
-}
 
 const Hasher = /* @__PURE__ */ (() => {
   class Hasher2 {
@@ -4719,235 +4711,7 @@ function klona(x) {
 }
 
 const inlineAppConfig = {
-  "nuxt": {},
-  "ui": {
-    "colors": {
-      "primary": "green",
-      "secondary": "blue",
-      "success": "green",
-      "info": "blue",
-      "warning": "yellow",
-      "error": "red",
-      "neutral": "slate"
-    },
-    "icons": {
-      "arrowLeft": "i-lucide-arrow-left",
-      "arrowRight": "i-lucide-arrow-right",
-      "check": "i-lucide-check",
-      "chevronDoubleLeft": "i-lucide-chevrons-left",
-      "chevronDoubleRight": "i-lucide-chevrons-right",
-      "chevronDown": "i-lucide-chevron-down",
-      "chevronLeft": "i-lucide-chevron-left",
-      "chevronRight": "i-lucide-chevron-right",
-      "chevronUp": "i-lucide-chevron-up",
-      "close": "i-lucide-x",
-      "ellipsis": "i-lucide-ellipsis",
-      "external": "i-lucide-arrow-up-right",
-      "file": "i-lucide-file",
-      "folder": "i-lucide-folder",
-      "folderOpen": "i-lucide-folder-open",
-      "loading": "i-lucide-loader-circle",
-      "minus": "i-lucide-minus",
-      "plus": "i-lucide-plus",
-      "search": "i-lucide-search",
-      "upload": "i-lucide-upload"
-    }
-  },
-  "icon": {
-    "provider": "server",
-    "class": "",
-    "aliases": {},
-    "iconifyApiEndpoint": "https://api.iconify.design",
-    "localApiEndpoint": "/api/_nuxt_icon",
-    "fallbackToApi": true,
-    "cssSelectorPrefix": "i-",
-    "cssWherePseudo": true,
-    "cssLayer": "components",
-    "mode": "css",
-    "attrs": {
-      "aria-hidden": true
-    },
-    "collections": [
-      "academicons",
-      "akar-icons",
-      "ant-design",
-      "arcticons",
-      "basil",
-      "bi",
-      "bitcoin-icons",
-      "bpmn",
-      "brandico",
-      "bx",
-      "bxl",
-      "bxs",
-      "bytesize",
-      "carbon",
-      "catppuccin",
-      "cbi",
-      "charm",
-      "ci",
-      "cib",
-      "cif",
-      "cil",
-      "circle-flags",
-      "circum",
-      "clarity",
-      "codicon",
-      "covid",
-      "cryptocurrency",
-      "cryptocurrency-color",
-      "dashicons",
-      "devicon",
-      "devicon-plain",
-      "ei",
-      "el",
-      "emojione",
-      "emojione-monotone",
-      "emojione-v1",
-      "entypo",
-      "entypo-social",
-      "eos-icons",
-      "ep",
-      "et",
-      "eva",
-      "f7",
-      "fa",
-      "fa-brands",
-      "fa-regular",
-      "fa-solid",
-      "fa6-brands",
-      "fa6-regular",
-      "fa6-solid",
-      "fad",
-      "fe",
-      "feather",
-      "file-icons",
-      "flag",
-      "flagpack",
-      "flat-color-icons",
-      "flat-ui",
-      "flowbite",
-      "fluent",
-      "fluent-emoji",
-      "fluent-emoji-flat",
-      "fluent-emoji-high-contrast",
-      "fluent-mdl2",
-      "fontelico",
-      "fontisto",
-      "formkit",
-      "foundation",
-      "fxemoji",
-      "gala",
-      "game-icons",
-      "geo",
-      "gg",
-      "gis",
-      "gravity-ui",
-      "gridicons",
-      "grommet-icons",
-      "guidance",
-      "healthicons",
-      "heroicons",
-      "heroicons-outline",
-      "heroicons-solid",
-      "hugeicons",
-      "humbleicons",
-      "ic",
-      "icomoon-free",
-      "icon-park",
-      "icon-park-outline",
-      "icon-park-solid",
-      "icon-park-twotone",
-      "iconamoon",
-      "iconoir",
-      "icons8",
-      "il",
-      "ion",
-      "iwwa",
-      "jam",
-      "la",
-      "lets-icons",
-      "line-md",
-      "logos",
-      "ls",
-      "lucide",
-      "lucide-lab",
-      "mage",
-      "majesticons",
-      "maki",
-      "map",
-      "marketeq",
-      "material-symbols",
-      "material-symbols-light",
-      "mdi",
-      "mdi-light",
-      "medical-icon",
-      "memory",
-      "meteocons",
-      "mi",
-      "mingcute",
-      "mono-icons",
-      "mynaui",
-      "nimbus",
-      "nonicons",
-      "noto",
-      "noto-v1",
-      "octicon",
-      "oi",
-      "ooui",
-      "openmoji",
-      "oui",
-      "pajamas",
-      "pepicons",
-      "pepicons-pencil",
-      "pepicons-pop",
-      "pepicons-print",
-      "ph",
-      "pixelarticons",
-      "prime",
-      "ps",
-      "quill",
-      "radix-icons",
-      "raphael",
-      "ri",
-      "rivet-icons",
-      "si-glyph",
-      "simple-icons",
-      "simple-line-icons",
-      "skill-icons",
-      "solar",
-      "streamline",
-      "streamline-emojis",
-      "subway",
-      "svg-spinners",
-      "system-uicons",
-      "tabler",
-      "tdesign",
-      "teenyicons",
-      "token",
-      "token-branded",
-      "topcoat",
-      "twemoji",
-      "typcn",
-      "uil",
-      "uim",
-      "uis",
-      "uit",
-      "uiw",
-      "unjs",
-      "vaadin",
-      "vs",
-      "vscode-icons",
-      "websymbol",
-      "weui",
-      "whh",
-      "wi",
-      "wpf",
-      "zmdi",
-      "zondicons"
-    ],
-    "fetchTimeout": 1500
-  }
+  "nuxt": {}
 };
 
 
@@ -5053,7 +4817,7 @@ function _expandFromEnv(value) {
 const _inlineRuntimeConfig = {
   "app": {
     "baseURL": "/",
-    "buildId": "98ba7308-dbc0-4862-b55f-2b1c025d95d2",
+    "buildId": "a8a5fb4c-f7b9-4f9b-b54b-c825534d74fc",
     "buildAssetsDir": "/_nuxt/",
     "cdnURL": ""
   },
@@ -5071,11 +4835,6 @@ const _inlineRuntimeConfig = {
       "/_nuxt/builds/**": {
         "headers": {
           "cache-control": "public, max-age=1, immutable"
-        }
-      },
-      "/_fonts/**": {
-        "headers": {
-          "cache-control": "public, max-age=31536000, immutable"
         }
       },
       "/_nuxt/**": {
@@ -5413,9 +5172,6 @@ const _inlineRuntimeConfig = {
   },
   "databaseUrl": "postgresql://aaf:aaf@localhost:5432/aaf_dashboard",
   "devAuthBypass": true,
-  "icon": {
-    "serverKnownCssClasses": []
-  },
   "hash": {
     "scrypt": {}
   },
@@ -5444,12 +5200,7 @@ function useRuntimeConfig(event) {
   event.context.nitro.runtimeConfig = runtimeConfig;
   return runtimeConfig;
 }
-const _sharedAppConfig = _deepFreeze(klona(appConfig));
-function useAppConfig(event) {
-  {
-    return _sharedAppConfig;
-  }
-}
+_deepFreeze(klona(appConfig));
 function _deepFreeze(object) {
   const propNames = Object.getOwnPropertyNames(object);
   for (const name of propNames) {
@@ -5894,7 +5645,7 @@ const _taXTeOsBQ_MsJ0cUfXrPCN8OPD0m3HKdaxRIn3X6b8I = defineNitroPlugin((nitroApp
 
 const script = "\"use strict\";(()=>{const t=window,e=document.documentElement,c=[\"dark\",\"light\"],n=getStorageValue(\"localStorage\",\"nuxt-color-mode\")||\"system\";let i=n===\"system\"?u():n;const r=e.getAttribute(\"data-color-mode-forced\");r&&(i=r),l(i),t[\"__NUXT_COLOR_MODE__\"]={preference:n,value:i,getColorScheme:u,addColorScheme:l,removeColorScheme:d};function l(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.add(s):e.className+=\" \"+s,a&&e.setAttribute(\"data-\"+a,o)}function d(o){const s=\"\"+o+\"\",a=\"\";e.classList?e.classList.remove(s):e.className=e.className.replace(new RegExp(s,\"g\"),\"\"),a&&e.removeAttribute(\"data-\"+a)}function f(o){return t.matchMedia(\"(prefers-color-scheme\"+o+\")\")}function u(){if(t.matchMedia&&f(\"\").media!==\"not all\"){for(const o of c)if(f(\":\"+o).matches)return o}return\"light\"}})();function getStorageValue(t,e){switch(t){case\"localStorage\":return window.localStorage.getItem(e);case\"sessionStorage\":return window.sessionStorage.getItem(e);case\"cookie\":return getCookie(e);default:return null}}function getCookie(t){const c=(\"; \"+window.document.cookie).split(\"; \"+t+\"=\");if(c.length===2)return c.pop()?.split(\";\").shift()}";
 
-const _82xMKV4FoLz75CaHKiqFeIjzJV892tCYdm3lhW9J7qc = (function(nitro) {
+const _HO4PldLc5lfbdyCgM_ArQxxGNevzyxg7DyFQAe3Mgjc = (function(nitro) {
   nitro.hooks.hook("render:html", (htmlContext) => {
     htmlContext.head.push(`<script>${script}<\/script>`);
   });
@@ -5902,142 +5653,219 @@ const _82xMKV4FoLz75CaHKiqFeIjzJV892tCYdm3lhW9J7qc = (function(nitro) {
 
 const plugins = [
   _taXTeOsBQ_MsJ0cUfXrPCN8OPD0m3HKdaxRIn3X6b8I,
-_82xMKV4FoLz75CaHKiqFeIjzJV892tCYdm3lhW9J7qc
+_HO4PldLc5lfbdyCgM_ArQxxGNevzyxg7DyFQAe3Mgjc
 ];
 
 const assets = {
-  "/_nuxt/-K5W1bA3.js": {
+  "/_nuxt/0lkzBHU0.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"6a2-7YLdbZMg1SI5JsCSxq5qBQUYfwo\"",
-    "mtime": "2026-06-06T21:30:27.305Z",
-    "size": 1698,
-    "path": "../public/_nuxt/-K5W1bA3.js"
+    "etag": "\"3f9-xh1yQjjIpqoyoWI0mGxnHj17YWo\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
+    "size": 1017,
+    "path": "../public/_nuxt/0lkzBHU0.js"
   },
-  "/_nuxt/CGAfPknT.js": {
+  "/_nuxt/8Fpx1ess.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"16f4-lpiFDOVxUW2SsNG/k2ajRA3Yg1M\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 5876,
-    "path": "../public/_nuxt/CGAfPknT.js"
+    "etag": "\"7ef-JpW4L18/6hX+C5F5Jj6+7+aydlg\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 2031,
+    "path": "../public/_nuxt/8Fpx1ess.js"
   },
-  "/_nuxt/BmVX0BB7.js": {
+  "/_nuxt/BGhggQaJ.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"c4a-jc3h+MascF9Em/O59UKkA1z0FfU\"",
-    "mtime": "2026-06-06T21:30:27.303Z",
-    "size": 3146,
-    "path": "../public/_nuxt/BmVX0BB7.js"
+    "etag": "\"1d35-K8t2pW63lVVFtKlN9CSomeYZUmg\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 7477,
+    "path": "../public/_nuxt/BGhggQaJ.js"
   },
-  "/_nuxt/-oheYecw.js": {
+  "/_nuxt/BeMiQGhS.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"4a-n/YKAwwchtu2eQWf3IZX7gEktKw\"",
-    "mtime": "2026-06-06T21:30:27.305Z",
-    "size": 74,
-    "path": "../public/_nuxt/-oheYecw.js"
+    "etag": "\"67b-Au++k7Xw2dX286n766KRxfDGhtY\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 1659,
+    "path": "../public/_nuxt/BeMiQGhS.js"
   },
-  "/_nuxt/CJdfYoTM.js": {
+  "/_nuxt/BgoeFC2c.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"d2a-3yAuh4KA5xciDzvsSvhLS1jWfls\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 3370,
-    "path": "../public/_nuxt/CJdfYoTM.js"
+    "etag": "\"495-yRXBez/SqkdSJGfFIbtU2XafDOo\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 1173,
+    "path": "../public/_nuxt/BgoeFC2c.js"
   },
-  "/_nuxt/CSNFdv7e.js": {
+  "/_nuxt/ANjlVI1j.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2eb-Pit2v+YXtZtD9NGG68iYR+H3ju0\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 747,
-    "path": "../public/_nuxt/CSNFdv7e.js"
+    "etag": "\"769-EZoOBXA39oU7bXUbsQdIQ5C6L54\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 1897,
+    "path": "../public/_nuxt/ANjlVI1j.js"
   },
-  "/_nuxt/Dc1xS9Jz.js": {
+  "/_nuxt/B2UUasch.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"e7c-ZYcJu8+PDauGK+rpGN+ShJqjOkE\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 3708,
-    "path": "../public/_nuxt/Dc1xS9Jz.js"
+    "etag": "\"6ede-yVKIM5XB2MJF0xrJ7lbqw7mJ+ew\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 28382,
+    "path": "../public/_nuxt/B2UUasch.js"
   },
-  "/_nuxt/Dt7x2Pt1.js": {
+  "/_nuxt/BgmgDeAA.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2771-5IRjUU59qvq/2W4dVWsyhKiTxWE\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 10097,
-    "path": "../public/_nuxt/Dt7x2Pt1.js"
+    "etag": "\"f7-B+5sttknTdfzUDHPB9pGwKJz5dQ\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 247,
+    "path": "../public/_nuxt/BgmgDeAA.js"
   },
-  "/_nuxt/Dtb8-qWI.js": {
+  "/_nuxt/BtY8nW2Q.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"4da-Pi9Qmc6AFUDQZA+ha/nrLFvJENg\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 1242,
-    "path": "../public/_nuxt/Dtb8-qWI.js"
+    "etag": "\"14b-+blNKo+9lUyaG76/q/9UZL19YRM\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 331,
+    "path": "../public/_nuxt/BtY8nW2Q.js"
   },
-  "/_nuxt/DxsOhiRK.js": {
+  "/_nuxt/C3Gzw-PV.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"c9-iwi5cytwqmxfP6vR58o1oKTtVlQ\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
+    "etag": "\"3287-R51naZUmYqqQ6GXdTeRUbriZyxc\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 12935,
+    "path": "../public/_nuxt/C3Gzw-PV.js"
+  },
+  "/_nuxt/CEkScF_U.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"47a-0w0SqxoMiTQXjYHATCSXIVCnRd4\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 1146,
+    "path": "../public/_nuxt/CEkScF_U.js"
+  },
+  "/_nuxt/BwGkNfYB.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"d35-fJialczkqGZH+DJLozFX/acZPyQ\"",
+    "mtime": "2026-06-07T16:57:58.519Z",
+    "size": 3381,
+    "path": "../public/_nuxt/BwGkNfYB.js"
+  },
+  "/_nuxt/CXnDUkAy.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4b1f-5bzWrhPpCiNUmrrU1sPzHwyos68\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 19231,
+    "path": "../public/_nuxt/CXnDUkAy.js"
+  },
+  "/_nuxt/CzXX-Jgc.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"92a-VST3i7JidIGE/ZmKpW4OjDVNIjc\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 2346,
+    "path": "../public/_nuxt/CzXX-Jgc.js"
+  },
+  "/_nuxt/CUnpRTrc.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"227-sKjTGI4wkP14xQZ2TEgFmiL4jn4\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 551,
+    "path": "../public/_nuxt/CUnpRTrc.js"
+  },
+  "/_nuxt/DDgWkK88.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"c9-BS+ewGdedplGjYE2XbWEq09ckQc\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
     "size": 201,
-    "path": "../public/_nuxt/DxsOhiRK.js"
+    "path": "../public/_nuxt/DDgWkK88.js"
   },
-  "/_nuxt/HRwhwT3_.js": {
+  "/_nuxt/CZUD60xC.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"3321-hDzxs3ByqMtr2LMd+I4BYISiVPM\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 13089,
-    "path": "../public/_nuxt/HRwhwT3_.js"
+    "etag": "\"aab-4fySkCMkY+S5gpnahpNQ4yhw/qY\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 2731,
+    "path": "../public/_nuxt/CZUD60xC.js"
   },
-  "/_nuxt/_FJtIBX5.js": {
+  "/_nuxt/DDodq_5m.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"2c0-MxqfWsW5+QOOwpfFan1lHep9GfY\"",
-    "mtime": "2026-06-06T21:30:27.305Z",
-    "size": 704,
-    "path": "../public/_nuxt/_FJtIBX5.js"
+    "etag": "\"d40-qJA4YnDfN+AnbbhGALuQSg9Z8aU\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 3392,
+    "path": "../public/_nuxt/DDodq_5m.js"
   },
-  "/_nuxt/error-404.2Kgs23iY.css": {
+  "/_nuxt/Qmdf3oAH.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1e2b-dqOuo4v4LGWCRv6qsIujJUJA/CY\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 7723,
+    "path": "../public/_nuxt/Qmdf3oAH.js"
+  },
+  "/_nuxt/CrdlGtPG.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"2da49-hgIQcZqq/gcoySYthV6hk3gtgP4\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 186953,
+    "path": "../public/_nuxt/CrdlGtPG.js"
+  },
+  "/_nuxt/bJ2DlqDD.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"eb2-aE0+rLn34ZHzHDaMNS1+K500zK0\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
+    "size": 3762,
+    "path": "../public/_nuxt/bJ2DlqDD.js"
+  },
+  "/_nuxt/error-404.C4MN0Iqq.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"dca-JbXaZWTTml/S3Jkl0M5YUyB0YeU\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
+    "etag": "\"dca-9KcqRQQH9Uz6hp7zDuJIyPXZCg4\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
     "size": 3530,
-    "path": "../public/_nuxt/error-404.2Kgs23iY.css"
+    "path": "../public/_nuxt/error-404.C4MN0Iqq.css"
   },
-  "/_nuxt/error-500.B0_jPke4.css": {
+  "/_nuxt/WDhCmG9g.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"1615-mflHYbYK7o2pbI/StIzUjYMTYz8\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 5653,
+    "path": "../public/_nuxt/WDhCmG9g.js"
+  },
+  "/_nuxt/DTF5Usy-.js": {
+    "type": "text/javascript; charset=utf-8",
+    "etag": "\"4b-sbYBGKDYUg2KBwmS8pKohW6J/Rk\"",
+    "mtime": "2026-06-07T16:57:58.520Z",
+    "size": 75,
+    "path": "../public/_nuxt/DTF5Usy-.js"
+  },
+  "/_nuxt/error-500.9ELN5HR7.css": {
     "type": "text/css; charset=utf-8",
-    "etag": "\"75a-jvhF0ZKdI6RfrRq3PxG0+IlaFG4\"",
-    "mtime": "2026-06-06T21:30:27.305Z",
+    "etag": "\"75a-oORroONGiSJ08N8v3aeUrJsSWyI\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
     "size": 1882,
-    "path": "../public/_nuxt/error-500.B0_jPke4.css"
+    "path": "../public/_nuxt/error-500.9ELN5HR7.css"
   },
-  "/_nuxt/nT285cR7.js": {
+  "/_nuxt/h92ohoX8.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"567-pI1ARsKv1waIAN5sGwmscuRvPyE\"",
-    "mtime": "2026-06-06T21:30:27.305Z",
-    "size": 1383,
-    "path": "../public/_nuxt/nT285cR7.js"
+    "etag": "\"122-bIk+r8dBf0bAMvQeLD9mPC1b8CE\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
+    "size": 290,
+    "path": "../public/_nuxt/h92ohoX8.js"
   },
-  "/_nuxt/quhYjOnJ.js": {
+  "/_nuxt/vk-wsC0s.js": {
     "type": "text/javascript; charset=utf-8",
-    "etag": "\"6d0-inBku4h2CoKowOg4Vnt3/sQsbuQ\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 1744,
-    "path": "../public/_nuxt/quhYjOnJ.js"
+    "etag": "\"243-gsXCFA1DUAnyPT+Ula1nvByYB/w\"",
+    "mtime": "2026-06-07T16:57:58.521Z",
+    "size": 579,
+    "path": "../public/_nuxt/vk-wsC0s.js"
+  },
+  "/_nuxt/builds/meta/a8a5fb4c-f7b9-4f9b-b54b-c825534d74fc.json": {
+    "type": "application/json",
+    "etag": "\"58-6DGprGO4S7VsmBxDGUnhXpXnaX0\"",
+    "mtime": "2026-06-07T16:57:58.512Z",
+    "size": 88,
+    "path": "../public/_nuxt/builds/meta/a8a5fb4c-f7b9-4f9b-b54b-c825534d74fc.json"
   },
   "/_nuxt/builds/latest.json": {
     "type": "application/json",
-    "etag": "\"47-pQa+sNm9RVjnIvjCv+LLMRcyZGQ\"",
-    "mtime": "2026-06-06T21:30:27.301Z",
+    "etag": "\"47-+ZbrkBvmpecBuNQt2+j4i/T9j68\"",
+    "mtime": "2026-06-07T16:57:58.515Z",
     "size": 71,
     "path": "../public/_nuxt/builds/latest.json"
   },
-  "/_nuxt/builds/meta/98ba7308-dbc0-4862-b55f-2b1c025d95d2.json": {
+  "/_nuxt/builds/meta/dev.json": {
     "type": "application/json",
-    "etag": "\"58-ilXlR1ERUi+YyoCsIvU67EwIqZk\"",
-    "mtime": "2026-06-06T21:30:27.299Z",
-    "size": 88,
-    "path": "../public/_nuxt/builds/meta/98ba7308-dbc0-4862-b55f-2b1c025d95d2.json"
-  },
-  "/_nuxt/MaxSPIzo.js": {
-    "type": "text/javascript; charset=utf-8",
-    "etag": "\"555e3-seTXFNgODY9Fx8/kEJ97hZZBK8I\"",
-    "mtime": "2026-06-06T21:30:27.304Z",
-    "size": 349667,
-    "path": "../public/_nuxt/MaxSPIzo.js"
+    "etag": "\"37-6kw85YMEFWm3cxAvM5YMj5RdeR0\"",
+    "mtime": "2026-06-07T16:57:58.512Z",
+    "size": 55,
+    "path": "../public/_nuxt/builds/meta/dev.json"
   }
 };
 
@@ -6143,25 +5971,13 @@ const dirname = function(p) {
   }
   return segments.join("/") || (isAbsolute(p) ? "/" : ".");
 };
-const basename = function(p, extension) {
-  const segments = normalizeWindowsPath(p).split("/");
-  let lastSegment = "";
-  for (let i = segments.length - 1; i >= 0; i--) {
-    const val = segments[i];
-    if (val) {
-      lastSegment = val;
-      break;
-    }
-  }
-  return extension && lastSegment.endsWith(extension) ? lastSegment.slice(0, -extension.length) : lastSegment;
-};
 
 function readAsset (id) {
   const serverDir = dirname(fileURLToPath(globalThis._importMeta_.url));
   return promises.readFile(resolve(serverDir, assets[id].path))
 }
 
-const publicAssetBases = {"/_nuxt/builds/meta/":{"maxAge":31536000},"/_nuxt/builds/":{"maxAge":1},"/_fonts/":{"maxAge":31536000},"/_nuxt/":{"maxAge":31536000}};
+const publicAssetBases = {"/_nuxt/builds/meta/":{"maxAge":31536000},"/_nuxt/builds/":{"maxAge":1},"/_nuxt/":{"maxAge":31536000}};
 
 function isPublicAssetURL(id = '') {
   if (assets[id]) {
@@ -6242,6 +6058,179 @@ const _kdIoWv = eventHandler((event) => {
   }
   return readAsset(id);
 });
+
+function flatHooks(configHooks, hooks = {}, parentName) {
+	for (const key in configHooks) {
+		const subHook = configHooks[key];
+		const name = parentName ? `${parentName}:${key}` : key;
+		if (typeof subHook === "object" && subHook !== null) flatHooks(subHook, hooks, name);
+		else if (typeof subHook === "function") hooks[name] = subHook;
+	}
+	return hooks;
+}
+const createTask = /* @__PURE__ */ (() => {
+	if (console.createTask) return console.createTask;
+	const defaultTask = { run: (fn) => fn() };
+	return () => defaultTask;
+})();
+function callHooks(hooks, args, startIndex, task) {
+	for (let i = startIndex; i < hooks.length; i += 1) try {
+		const result = task ? task.run(() => hooks[i](...args)) : hooks[i](...args);
+		if (result && typeof result.then === "function") return Promise.resolve(result).then(() => callHooks(hooks, args, i + 1, task));
+	} catch (error) {
+		return Promise.reject(error);
+	}
+}
+function serialTaskCaller(hooks, args, name) {
+	if (hooks.length > 0) return callHooks(hooks, args, 0, createTask(name));
+}
+function parallelTaskCaller(hooks, args, name) {
+	if (hooks.length > 0) {
+		const task = createTask(name);
+		return Promise.all(hooks.map((hook) => task.run(() => hook(...args))));
+	}
+}
+function callEachWith(callbacks, arg0) {
+	for (const callback of [...callbacks]) callback(arg0);
+}
+var Hookable = class {
+	_hooks;
+	_before;
+	_after;
+	_deprecatedHooks;
+	_deprecatedMessages;
+	constructor() {
+		this._hooks = {};
+		this._before = void 0;
+		this._after = void 0;
+		this._deprecatedMessages = void 0;
+		this._deprecatedHooks = {};
+		this.hook = this.hook.bind(this);
+		this.callHook = this.callHook.bind(this);
+		this.callHookWith = this.callHookWith.bind(this);
+	}
+	hook(name, function_, options = {}) {
+		if (!name || typeof function_ !== "function") return () => {};
+		const originalName = name;
+		let dep;
+		while (this._deprecatedHooks[name]) {
+			dep = this._deprecatedHooks[name];
+			name = dep.to;
+		}
+		if (dep && !options.allowDeprecated) {
+			let message = dep.message;
+			if (!message) message = `${originalName} hook has been deprecated` + (dep.to ? `, please use ${dep.to}` : "");
+			if (!this._deprecatedMessages) this._deprecatedMessages = /* @__PURE__ */ new Set();
+			if (!this._deprecatedMessages.has(message)) {
+				console.warn(message);
+				this._deprecatedMessages.add(message);
+			}
+		}
+		if (!function_.name) try {
+			Object.defineProperty(function_, "name", {
+				get: () => "_" + name.replace(/\W+/g, "_") + "_hook_cb",
+				configurable: true
+			});
+		} catch {}
+		this._hooks[name] = this._hooks[name] || [];
+		this._hooks[name].push(function_);
+		return () => {
+			if (function_) {
+				this.removeHook(name, function_);
+				function_ = void 0;
+			}
+		};
+	}
+	hookOnce(name, function_) {
+		let _unreg;
+		let _function = (...arguments_) => {
+			if (typeof _unreg === "function") _unreg();
+			_unreg = void 0;
+			_function = void 0;
+			return function_(...arguments_);
+		};
+		_unreg = this.hook(name, _function);
+		return _unreg;
+	}
+	removeHook(name, function_) {
+		const hooks = this._hooks[name];
+		if (hooks) {
+			const index = hooks.indexOf(function_);
+			if (index !== -1) hooks.splice(index, 1);
+			if (hooks.length === 0) this._hooks[name] = void 0;
+		}
+	}
+	clearHook(name) {
+		this._hooks[name] = void 0;
+	}
+	deprecateHook(name, deprecated) {
+		this._deprecatedHooks[name] = typeof deprecated === "string" ? { to: deprecated } : deprecated;
+		const _hooks = this._hooks[name] || [];
+		this._hooks[name] = void 0;
+		for (const hook of _hooks) this.hook(name, hook);
+	}
+	deprecateHooks(deprecatedHooks) {
+		for (const name in deprecatedHooks) this.deprecateHook(name, deprecatedHooks[name]);
+	}
+	addHooks(configHooks) {
+		const hooks = flatHooks(configHooks);
+		const removeFns = Object.keys(hooks).map((key) => this.hook(key, hooks[key]));
+		return () => {
+			for (const unreg of removeFns) unreg();
+			removeFns.length = 0;
+		};
+	}
+	removeHooks(configHooks) {
+		const hooks = flatHooks(configHooks);
+		for (const key in hooks) this.removeHook(key, hooks[key]);
+	}
+	removeAllHooks() {
+		this._hooks = {};
+	}
+	callHook(name, ...args) {
+		return this.callHookWith(serialTaskCaller, name, args);
+	}
+	callHookParallel(name, ...args) {
+		return this.callHookWith(parallelTaskCaller, name, args);
+	}
+	callHookWith(caller, name, args) {
+		const event = this._before || this._after ? {
+			name,
+			args,
+			context: {}
+		} : void 0;
+		if (this._before) callEachWith(this._before, event);
+		const result = caller(this._hooks[name] ? [...this._hooks[name]] : [], args, name);
+		if (result instanceof Promise) return result.finally(() => {
+			if (this._after && event) callEachWith(this._after, event);
+		});
+		if (this._after && event) callEachWith(this._after, event);
+		return result;
+	}
+	beforeEach(function_) {
+		this._before = this._before || [];
+		this._before.push(function_);
+		return () => {
+			if (this._before !== void 0) {
+				const index = this._before.indexOf(function_);
+				if (index !== -1) this._before.splice(index, 1);
+			}
+		};
+	}
+	afterEach(function_) {
+		this._after = this._after || [];
+		this._after.push(function_);
+		return () => {
+			if (this._after !== void 0) {
+				const index = this._after.indexOf(function_);
+				if (index !== -1) this._after.splice(index, 1);
+			}
+		};
+	}
+};
+function createHooks() {
+	return new Hookable();
+}
 
 function defineNitroPlugin(def) {
   return def;
@@ -6468,212 +6457,6 @@ function defineOAuthGitHubEventHandler({ config, onSuccess, onError }) {
   });
 }
 
-function flatHooks(configHooks, hooks = {}, parentName) {
-	for (const key in configHooks) {
-		const subHook = configHooks[key];
-		const name = parentName ? `${parentName}:${key}` : key;
-		if (typeof subHook === "object" && subHook !== null) flatHooks(subHook, hooks, name);
-		else if (typeof subHook === "function") hooks[name] = subHook;
-	}
-	return hooks;
-}
-const createTask = /* @__PURE__ */ (() => {
-	if (console.createTask) return console.createTask;
-	const defaultTask = { run: (fn) => fn() };
-	return () => defaultTask;
-})();
-function callHooks(hooks, args, startIndex, task) {
-	for (let i = startIndex; i < hooks.length; i += 1) try {
-		const result = task ? task.run(() => hooks[i](...args)) : hooks[i](...args);
-		if (result && typeof result.then === "function") return Promise.resolve(result).then(() => callHooks(hooks, args, i + 1, task));
-	} catch (error) {
-		return Promise.reject(error);
-	}
-}
-function serialTaskCaller(hooks, args, name) {
-	if (hooks.length > 0) return callHooks(hooks, args, 0, createTask(name));
-}
-function parallelTaskCaller(hooks, args, name) {
-	if (hooks.length > 0) {
-		const task = createTask(name);
-		return Promise.all(hooks.map((hook) => task.run(() => hook(...args))));
-	}
-}
-function callEachWith(callbacks, arg0) {
-	for (const callback of [...callbacks]) callback(arg0);
-}
-var Hookable = class {
-	_hooks;
-	_before;
-	_after;
-	_deprecatedHooks;
-	_deprecatedMessages;
-	constructor() {
-		this._hooks = {};
-		this._before = void 0;
-		this._after = void 0;
-		this._deprecatedMessages = void 0;
-		this._deprecatedHooks = {};
-		this.hook = this.hook.bind(this);
-		this.callHook = this.callHook.bind(this);
-		this.callHookWith = this.callHookWith.bind(this);
-	}
-	hook(name, function_, options = {}) {
-		if (!name || typeof function_ !== "function") return () => {};
-		const originalName = name;
-		let dep;
-		while (this._deprecatedHooks[name]) {
-			dep = this._deprecatedHooks[name];
-			name = dep.to;
-		}
-		if (dep && !options.allowDeprecated) {
-			let message = dep.message;
-			if (!message) message = `${originalName} hook has been deprecated` + (dep.to ? `, please use ${dep.to}` : "");
-			if (!this._deprecatedMessages) this._deprecatedMessages = /* @__PURE__ */ new Set();
-			if (!this._deprecatedMessages.has(message)) {
-				console.warn(message);
-				this._deprecatedMessages.add(message);
-			}
-		}
-		if (!function_.name) try {
-			Object.defineProperty(function_, "name", {
-				get: () => "_" + name.replace(/\W+/g, "_") + "_hook_cb",
-				configurable: true
-			});
-		} catch {}
-		this._hooks[name] = this._hooks[name] || [];
-		this._hooks[name].push(function_);
-		return () => {
-			if (function_) {
-				this.removeHook(name, function_);
-				function_ = void 0;
-			}
-		};
-	}
-	hookOnce(name, function_) {
-		let _unreg;
-		let _function = (...arguments_) => {
-			if (typeof _unreg === "function") _unreg();
-			_unreg = void 0;
-			_function = void 0;
-			return function_(...arguments_);
-		};
-		_unreg = this.hook(name, _function);
-		return _unreg;
-	}
-	removeHook(name, function_) {
-		const hooks = this._hooks[name];
-		if (hooks) {
-			const index = hooks.indexOf(function_);
-			if (index !== -1) hooks.splice(index, 1);
-			if (hooks.length === 0) this._hooks[name] = void 0;
-		}
-	}
-	clearHook(name) {
-		this._hooks[name] = void 0;
-	}
-	deprecateHook(name, deprecated) {
-		this._deprecatedHooks[name] = typeof deprecated === "string" ? { to: deprecated } : deprecated;
-		const _hooks = this._hooks[name] || [];
-		this._hooks[name] = void 0;
-		for (const hook of _hooks) this.hook(name, hook);
-	}
-	deprecateHooks(deprecatedHooks) {
-		for (const name in deprecatedHooks) this.deprecateHook(name, deprecatedHooks[name]);
-	}
-	addHooks(configHooks) {
-		const hooks = flatHooks(configHooks);
-		const removeFns = Object.keys(hooks).map((key) => this.hook(key, hooks[key]));
-		return () => {
-			for (const unreg of removeFns) unreg();
-			removeFns.length = 0;
-		};
-	}
-	removeHooks(configHooks) {
-		const hooks = flatHooks(configHooks);
-		for (const key in hooks) this.removeHook(key, hooks[key]);
-	}
-	removeAllHooks() {
-		this._hooks = {};
-	}
-	callHook(name, ...args) {
-		return this.callHookWith(serialTaskCaller, name, args);
-	}
-	callHookParallel(name, ...args) {
-		return this.callHookWith(parallelTaskCaller, name, args);
-	}
-	callHookWith(caller, name, args) {
-		const event = this._before || this._after ? {
-			name,
-			args,
-			context: {}
-		} : void 0;
-		if (this._before) callEachWith(this._before, event);
-		const result = caller(this._hooks[name] ? [...this._hooks[name]] : [], args, name);
-		if (result instanceof Promise) return result.finally(() => {
-			if (this._after && event) callEachWith(this._after, event);
-		});
-		if (this._after && event) callEachWith(this._after, event);
-		return result;
-	}
-	beforeEach(function_) {
-		this._before = this._before || [];
-		this._before.push(function_);
-		return () => {
-			if (this._before !== void 0) {
-				const index = this._before.indexOf(function_);
-				if (index !== -1) this._before.splice(index, 1);
-			}
-		};
-	}
-	afterEach(function_) {
-		this._after = this._after || [];
-		this._after.push(function_);
-		return () => {
-			if (this._after !== void 0) {
-				const index = this._after.indexOf(function_);
-				if (index !== -1) this._after.splice(index, 1);
-			}
-		};
-	}
-};
-function createHooks() {
-	return new Hookable();
-}
-
-const sessionHooks = createHooks();
-async function getUserSession(event) {
-  const session = await _useSession(event);
-  return {
-    ...session.data,
-    id: session.id
-  };
-}
-async function setUserSession(event, data, config) {
-  const session = await _useSession(event, config);
-  await session.update(defu(data, session.data));
-  return session.data;
-}
-async function clearUserSession(event, config) {
-  const session = await _useSession(event, config);
-  await sessionHooks.callHookParallel("clear", session.data, event);
-  await session.clear();
-  return true;
-}
-let sessionConfig;
-function _useSession(event, config = {}) {
-  if (!sessionConfig) {
-    const runtimeConfig = useRuntimeConfig(isEvent(event) ? event : void 0);
-    const envSessionPassword = `${runtimeConfig.nitro?.envPrefix || "NUXT_"}SESSION_PASSWORD`;
-    sessionConfig = defu({ password: process.env[envSessionPassword] }, runtimeConfig.session);
-    if (!sessionConfig.password) {
-      console.error(`[nuxt-auth-utils] ${envSessionPassword} environment variable or runtimeConfig.session.password was not set.`);
-    }
-  }
-  const finalConfig = defu(config, sessionConfig);
-  return useSession(event, finalConfig);
-}
-
 const users = pgTable("users", {
   id: uuid("id").defaultRandom().primaryKey(),
   email: text("email").notNull().unique(),
@@ -6897,59 +6680,38 @@ async function ingestAuditEntry(workspaceId, body) {
   return entry;
 }
 
-const collections = {
-};
-
-const DEFAULT_ENDPOINT = "https://api.iconify.design";
-const _MKeQGR = defineCachedEventHandler(async (event) => {
-  const url = getRequestURL(event);
-  if (!url)
-    return createError$1({ status: 400, message: "Invalid icon request" });
-  const options = useAppConfig().icon;
-  const collectionName = event.context.params?.collection?.replace(/\.json$/, "");
-  const collection = collectionName ? await collections[collectionName]?.() : null;
-  const apiEndPoint = options.iconifyApiEndpoint || DEFAULT_ENDPOINT;
-  const icons = url.searchParams.get("icons")?.split(",");
-  if (collection) {
-    if (icons?.length) {
-      const data = getIcons(
-        collection,
-        icons
-      );
-      consola.debug(`[Icon] serving ${(icons || []).map((i) => "`" + collectionName + ":" + i + "`").join(",")} from bundled collection`);
-      return data;
+const sessionHooks = createHooks();
+async function getUserSession(event) {
+  const session = await _useSession(event);
+  return {
+    ...session.data,
+    id: session.id
+  };
+}
+async function setUserSession(event, data, config) {
+  const session = await _useSession(event, config);
+  await session.update(defu(data, session.data));
+  return session.data;
+}
+async function clearUserSession(event, config) {
+  const session = await _useSession(event, config);
+  await sessionHooks.callHookParallel("clear", session.data, event);
+  await session.clear();
+  return true;
+}
+let sessionConfig;
+function _useSession(event, config = {}) {
+  if (!sessionConfig) {
+    const runtimeConfig = useRuntimeConfig(isEvent(event) ? event : void 0);
+    const envSessionPassword = `${runtimeConfig.nitro?.envPrefix || "NUXT_"}SESSION_PASSWORD`;
+    sessionConfig = defu({ password: process.env[envSessionPassword] }, runtimeConfig.session);
+    if (!sessionConfig.password) {
+      console.error(`[nuxt-auth-utils] ${envSessionPassword} environment variable or runtimeConfig.session.password was not set.`);
     }
   }
-  if (options.fallbackToApi === true || options.fallbackToApi === "server-only") {
-    const apiUrl = new URL("./" + basename(url.pathname) + url.search, apiEndPoint);
-    consola.debug(`[Icon] fetching ${(icons || []).map((i) => "`" + collectionName + ":" + i + "`").join(",")} from iconify api`);
-    if (apiUrl.host !== new URL(apiEndPoint).host) {
-      return createError$1({ status: 400, message: "Invalid icon request" });
-    }
-    try {
-      const data = await $fetch(apiUrl.href);
-      return data;
-    } catch (e) {
-      consola.error(e);
-      if (e.status === 404)
-        return createError$1({ status: 404 });
-      else
-        return createError$1({ status: 500, message: "Failed to fetch fallback icon" });
-    }
-  }
-  return createError$1({ status: 404 });
-}, {
-  group: "nuxt",
-  name: "icon",
-  getKey(event) {
-    const collection = event.context.params?.collection?.replace(/\.json$/, "") || "unknown";
-    const icons = String(getQuery(event).icons || "");
-    return `${collection}_${icons.split(",")[0]}_${icons.length}_${hash$1(icons)}`;
-  },
-  swr: true,
-  maxAge: 60 * 60 * 24 * 7
-  // 1 week
-});
+  const finalConfig = defu(config, sessionConfig);
+  return useSession(event, finalConfig);
+}
 
 const _p_Pg7j = eventHandler(async (event) => {
   await clearUserSession(event);
@@ -6978,7 +6740,7 @@ const _lazy_YbbJwA = () => import('../routes/api/v1/index.get2.mjs');
 const _lazy_f1nD6k = () => import('../routes/api/v1/index.post2.mjs');
 const _lazy_QVFjXO = () => import('../routes/auth/dev.get.mjs');
 const _lazy_xdX77s = () => import('../routes/auth/github.get.mjs');
-const _lazy_ZdvDob = () => import('../routes/renderer.mjs').then(function (n) { return n.r; });
+const _lazy_dmNkZS = () => import('../routes/renderer.mjs').then(function (n) { return n.r; });
 
 const handlers = [
   { route: '', handler: _kdIoWv, lazy: false, middleware: true, method: undefined },
@@ -6993,12 +6755,11 @@ const handlers = [
   { route: '/api/v1/policies', handler: _lazy_f1nD6k, lazy: true, middleware: false, method: "post" },
   { route: '/auth/dev', handler: _lazy_QVFjXO, lazy: true, middleware: false, method: "get" },
   { route: '/auth/github', handler: _lazy_xdX77s, lazy: true, middleware: false, method: "get" },
-  { route: '/__nuxt_error', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined },
-  { route: '/api/_nuxt_icon/:collection', handler: _MKeQGR, lazy: false, middleware: false, method: undefined },
+  { route: '/__nuxt_error', handler: _lazy_dmNkZS, lazy: true, middleware: false, method: undefined },
   { route: '/api/_auth/session', handler: _p_Pg7j, lazy: false, middleware: false, method: "delete" },
   { route: '/api/_auth/session', handler: _dLzMld, lazy: false, middleware: false, method: "get" },
   { route: '/__nuxt_island/**', handler: _SxA8c9, lazy: false, middleware: false, method: undefined },
-  { route: '/**', handler: _lazy_ZdvDob, lazy: true, middleware: false, method: undefined }
+  { route: '/**', handler: _lazy_dmNkZS, lazy: true, middleware: false, method: undefined }
 ];
 
 function createNitroApp() {
@@ -7414,5 +7175,5 @@ trapUnhandledNodeErrors();
 setupGracefulShutdown(listener, nitroApp);
 const nodeServer = {};
 
-export { $fetch$1 as $, sanitizeStatusCode as A, parseURL as B, encodePath as C, decodePath as D, getContext as E, withTrailingSlash as F, withoutTrailingSlash as G, baseURL as H, createHooks$1 as I, executeAsync as J, workspaces as K, buildAssetsURL as L, publicAssetsURL as M, defineRenderHandler as N, getQuery as O, getRouteRules as P, getResponseStatusText as Q, getResponseStatus as R, useNitroApp as S, nodeServer as T, auditList as a, readBody as b, createError$1 as c, defineEventHandler as d, auditEntries as e, approvalResponses as f, getRouterParam as g, ensureUserWorkspace as h, ingestAuditEntry as i, sendRedirect as j, killSwitchEvents as k, useRuntimeConfig as l, defineOAuthGitHubEventHandler as m, defu as n, klona as o, policies as p, hasProtocol as q, requireSessionUser as r, setUserSession as s, isScriptProtocol as t, useDb as u, joinURL as v, parseQuery as w, appendResponseHeader as x, defuFn as y, withQuery as z };
+export { $fetch$1 as $, getContext as A, baseURL as B, defu as C, createHooks$1 as D, executeAsync as E, parseQuery as F, withTrailingSlash as G, withoutTrailingSlash as H, workspaces as I, buildAssetsURL as J, publicAssetsURL as K, defineRenderHandler as L, getQuery as M, getRouteRules as N, getResponseStatusText as O, getResponseStatus as P, useNitroApp as Q, nodeServer as R, auditList as a, readBody as b, createError$1 as c, defineEventHandler as d, auditEntries as e, approvalResponses as f, getRouterParam as g, ensureUserWorkspace as h, ingestAuditEntry as i, sendRedirect as j, killSwitchEvents as k, useRuntimeConfig as l, defineOAuthGitHubEventHandler as m, parseURL as n, encodePath as o, policies as p, decodePath as q, requireSessionUser as r, setUserSession as s, hasProtocol as t, useDb as u, isScriptProtocol as v, joinURL as w, withQuery as x, appendResponseHeader as y, sanitizeStatusCode as z };
 //# sourceMappingURL=nitro.mjs.map

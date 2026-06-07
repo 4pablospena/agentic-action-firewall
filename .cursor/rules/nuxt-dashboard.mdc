@@ -1,11 +1,20 @@
 ---
 description: Nuxt 3 patterns and conventions for the AAF dashboard and Nuxt module
-globs: ["apps/dashboard/**/*.vue", "apps/dashboard/**/*.ts", "apps/www/**/*.vue", "apps/www/**/*.ts", "packages/nuxt/**/*.ts", "packages/nuxt/**/*.vue"]
+globs:
+  [
+    "apps/dashboard/**/*.vue",
+    "apps/dashboard/**/*.ts",
+    "apps/www/**/*.vue",
+    "apps/www/**/*.ts",
+    "packages/nuxt/**/*.ts",
+    "packages/nuxt/**/*.vue",
+  ]
 ---
 
 # Nuxt 3 dashboard conventions
 
 This rule applies to:
+
 - `apps/dashboard/` — Pro/Team dashboard (Nuxt app)
 - `apps/www/` — marketing site and docs portal
 - `packages/nuxt/` — `@agent-firewall/nuxt` integration module for third-party apps
@@ -68,10 +77,10 @@ packages/nuxt/                    # @agent-firewall/nuxt — integration module
 
 ### Use `<script setup>` always
 
-````vue
+```vue
 <script setup lang="ts">
 // ✅ Composition API with <script setup>
-import type { AuditEntry } from '@agent-firewall/core';
+import type { AuditEntry } from "@agent-firewall/core";
 
 const props = defineProps<{
   entry: AuditEntry;
@@ -82,7 +91,7 @@ const emit = defineEmits<{
   deny: [id: string];
 }>();
 </script>
-````
+```
 
 ### Component naming
 
@@ -92,10 +101,10 @@ const emit = defineEmits<{
 
 ### Props with types, not runtime declarations
 
-````ts
+```ts
 // ❌ Avoid
 const props = defineProps({
-  entry: { type: Object, required: true }
+  entry: { type: Object, required: true },
 });
 
 // ✅ Prefer
@@ -103,7 +112,7 @@ const props = defineProps<{
   entry: AuditEntry;
   showSignature?: boolean;
 }>();
-````
+```
 
 ## Composables
 
@@ -111,14 +120,14 @@ const props = defineProps<{
 - Return refs and computed, not raw values.
 - Composables should be pure: no side effects on import.
 
-````ts
+```ts
 // composables/useAuditLog.ts
 export function useAuditLog(workspaceId: string) {
   const entries = ref<AuditEntry[]>([]);
   const isLoading = ref(false);
 
-  const verifiedCount = computed(() =>
-    entries.value.filter(e => e.verified).length
+  const verifiedCount = computed(
+    () => entries.value.filter((e) => e.verified).length,
   );
 
   async function load() {
@@ -129,7 +138,7 @@ export function useAuditLog(workspaceId: string) {
 
   return { entries, isLoading, verifiedCount, load };
 }
-````
+```
 
 ## Server routes (Nitro)
 
@@ -138,9 +147,9 @@ export function useAuditLog(workspaceId: string) {
 - Use `defineEventHandler` always.
 - Validate inputs with Zod schemas imported from `@agent-firewall/core`.
 
-````ts
+```ts
 // server/api/incidents/[id]/approve.post.ts
-import { z } from 'zod';
+import { z } from "zod";
 
 const ApproveSchema = z.object({
   approver_id: z.string(),
@@ -148,13 +157,13 @@ const ApproveSchema = z.object({
 });
 
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id');
+  const id = getRouterParam(event, "id");
   const body = await readValidatedBody(event, ApproveSchema.parse);
 
   // Business logic here
   return { ok: true };
 });
-````
+```
 
 ## State management
 
@@ -162,7 +171,7 @@ export default defineEventHandler(async (event) => {
 - Use Pinia only for complex state with actions, getters, and persistence.
 - NEVER use Vuex (deprecated).
 
-````ts
+```ts
 // ✅ Simple shared state
 const currentWorkspace = useState<Workspace | null>('workspace', () => null);
 
@@ -175,20 +184,22 @@ export const useIncidentsStore = defineStore('incidents', () => {
 
   return { list, filters, filtered };
 });
-````
+```
 
 ## Type sharing with core
 
 The dashboard consumes types from `@agent-firewall/core`. Always import,
 never redefine.
 
-````ts
+```ts
 // ❌ Avoid
-interface AuditEntry { /* duplicated */ }
+interface AuditEntry {
+  /* duplicated */
+}
 
 // ✅ Prefer
-import type { AuditEntry, Decision } from '@agent-firewall/core';
-````
+import type { AuditEntry, Decision } from "@agent-firewall/core";
+```
 
 ## Error handling
 
@@ -196,22 +207,22 @@ import type { AuditEntry, Decision } from '@agent-firewall/core';
 - Wrap async composables with proper error states.
 - Never silently swallow errors.
 
-````ts
+```ts
 // server/api/policies/[id].get.ts
 export default defineEventHandler(async (event) => {
-  const id = getRouterParam(event, 'id');
+  const id = getRouterParam(event, "id");
   const policy = await db.policy.findUnique({ where: { id } });
 
   if (!policy) {
     throw createError({
       statusCode: 404,
-      statusMessage: 'Policy not found',
+      statusMessage: "Policy not found",
     });
   }
 
   return policy;
 });
-````
+```
 
 ## Performance
 
@@ -226,14 +237,14 @@ export default defineEventHandler(async (event) => {
 - Use `useHead` for more granular control.
 - Marketing pages (`apps/www/`) must have proper meta tags.
 
-````vue
+```vue
 <script setup>
 useSeoMeta({
-  title: 'Incidents — Agent Action Firewall',
-  description: 'Review and manage agent incidents in real time.',
+  title: "Incidents — Agent Action Firewall",
+  description: "Review and manage agent incidents in real time.",
 });
 </script>
-````
+```
 
 ## What NOT to do in Nuxt code
 
@@ -243,4 +254,4 @@ useSeoMeta({
 ❌ Do NOT bypass `$fetch` with raw `fetch`. `$fetch` handles auth, errors, SSR.
 ❌ Do NOT put business logic in components. Extract to composables.
 ❌ Do NOT import from `vue` directly when Nuxt auto-imports work
-   (`ref`, `computed`, `watch` are auto-imported).
+(`ref`, `computed`, `watch` are auto-imported).

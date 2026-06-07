@@ -1,8 +1,8 @@
 declare global {
   const H3Error: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').H3Error
   const H3Event: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').H3Event
-  const __buildAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
-  const __publicAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
+  const __buildAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
+  const __publicAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').publicAssetsURL
   const appendCorsHeaders: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').appendCorsHeaders
   const appendCorsPreflightHeaders: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').appendCorsPreflightHeaders
   const appendHeader: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').appendHeader
@@ -24,7 +24,7 @@ declare global {
   const createEventStream: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').createEventStream
   const createRouter: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').createRouter
   const defaultContentType: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').defaultContentType
-  const defineAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
+  const defineAppConfig: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/config').defineAppConfig
   const defineCachedEventHandler: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_drizzle-orm@0.44.7_postgres@3.4.9__oxc-parser@0.132.0_srvx@0.11.16/node_modules/nitropack/dist/runtime/internal/cache').defineCachedEventHandler
   const defineCachedFunction: typeof import('../../../../node_modules/.pnpm/nitropack@2.13.4_drizzle-orm@0.44.7_postgres@3.4.9__oxc-parser@0.132.0_srvx@0.11.16/node_modules/nitropack/dist/runtime/internal/cache').defineCachedFunction
   const defineEventHandler: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').defineEventHandler
@@ -359,8 +359,8 @@ export { getRouteRules } from 'nitropack/runtime/internal/route-rules';
 export { useEvent } from 'nitropack/runtime/internal/context';
 export { defineTask, runTask } from 'nitropack/runtime/internal/task';
 export { defineNitroErrorHandler } from 'nitropack/runtime/internal/error/utils';
-export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
-export { defineAppConfig } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_z6qmcmo26dzbddq74ldtubl5vi/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
+export { buildAssetsURL as __buildAssetsURL, publicAssetsURL as __publicAssetsURL } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths';
+export { defineAppConfig } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/config';
 export { defineOAuthAppleEventHandler } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/apple';
 export { defineOAuthAtlassianEventHandler } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/atlassian';
 export { defineOAuthAuth0EventHandler } from '/Users/pablosuarezpena/projects/agentic-action-firewall/node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/server/lib/oauth/auth0';

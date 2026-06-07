@@ -14,8 +14,6 @@ import 'node:https';
 import 'node:crypto';
 import 'node:events';
 import 'node:buffer';
-import '@iconify/utils';
-import 'consola';
 
 const __dirname$1 = dirname(fileURLToPath(globalThis._importMeta_.url));
 const SCHEMA_ROOT = join(__dirname$1, "..");

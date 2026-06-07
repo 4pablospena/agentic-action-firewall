@@ -34,38 +34,42 @@ await load();
 
 <template>
   <div class="space-y-6">
-    <div>
-      <h1 class="text-2xl font-semibold">Kill switch</h1>
-      <p class="text-sm text-gray-400">
-        Record kill switch activations. Distributed enforcement via control plane (Phase 1 slice 5).
-      </p>
-    </div>
+    <p class="text-sm text-muted-foreground">
+      Record kill switch activations. Distributed enforcement via control plane (Phase 1 slice 5).
+    </p>
 
-    <UCard>
-      <div class="grid gap-4 md:grid-cols-2">
-        <UFormField label="Scope">
-          <UInput v-model="scope" placeholder="all | agent:id | session:id" />
-        </UFormField>
-        <UFormField label="Reason">
-          <UInput v-model="reason" placeholder="runaway behavior detected" />
-        </UFormField>
-      </div>
-      <template #footer>
-        <UButton color="error" :loading="loading" :disabled="!reason" @click="activate">
-          Activate kill switch
-        </UButton>
-      </template>
-    </UCard>
+    <Card>
+      <CardContent class="grid gap-4 pt-6 md:grid-cols-2">
+        <div class="space-y-2">
+          <Label for="scope">Scope</Label>
+          <Input id="scope" v-model="scope" placeholder="all | agent:id | session:id" />
+        </div>
+        <div class="space-y-2">
+          <Label for="reason">Reason</Label>
+          <Input id="reason" v-model="reason" placeholder="runaway behavior detected" />
+        </div>
+      </CardContent>
+      <CardFooter>
+        <Button variant="destructive" :disabled="!reason || loading" @click="activate">
+          {{ loading ? "Activating…" : "Activate kill switch" }}
+        </Button>
+      </CardFooter>
+    </Card>
 
-    <UCard>
-      <template #header>Recent events</template>
-      <ul class="space-y-2 text-sm">
-        <li v-for="event in events" :key="event.id">
-          <span class="font-medium">{{ event.scope }}</span> — {{ event.reason }}
-          <span class="text-gray-500">({{ event.createdAt }})</span>
-        </li>
-        <li v-if="events.length === 0" class="text-gray-400">No kill switch events.</li>
-      </ul>
-    </UCard>
+    <Card>
+      <CardHeader>
+        <CardTitle class="text-base">Recent events</CardTitle>
+      </CardHeader>
+      <CardContent>
+        <ul class="space-y-3 text-sm">
+          <li v-for="event in events" :key="event.id" class="border-b border-border pb-3 last:border-0 last:pb-0">
+            <span class="font-medium">{{ event.scope }}</span>
+            — {{ event.reason }}
+            <span class="text-muted-foreground">({{ event.createdAt }})</span>
+          </li>
+          <li v-if="events.length === 0" class="text-muted-foreground">No kill switch events.</li>
+        </ul>
+      </CardContent>
+    </Card>
   </div>
 </template>

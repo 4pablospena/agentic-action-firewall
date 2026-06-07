@@ -1,53 +1,38 @@
 <script setup lang="ts">
 const route = useRoute();
-const { loggedIn, user, clear } = useUserSession();
+const mobileNavOpen = ref(false);
 
-const nav = [
-  { label: "Audit", to: "/audit", icon: "i-lucide-scroll-text" },
-  { label: "Approvals", to: "/approvals", icon: "i-lucide-user-check" },
-  { label: "Policies", to: "/policies", icon: "i-lucide-file-code-2" },
-  { label: "Kill Switch", to: "/kill-switch", icon: "i-lucide-octagon-x" },
-  { label: "Settings", to: "/settings", icon: "i-lucide-settings" },
-];
+const pageTitles: Record<string, string> = {
+  "/audit": "Audit log",
+  "/approvals": "Approvals",
+  "/policies": "Policies",
+  "/kill-switch": "Kill switch",
+  "/settings": "Settings",
+};
 
-async function logout() {
-  await clear();
-  await navigateTo("/login");
-}
+const pageTitle = computed(() => {
+  const match = Object.entries(pageTitles).find(([path]) => route.path.startsWith(path));
+  return match?.[1] ?? "AAF Dashboard";
+});
 </script>
 
 <template>
-  <div class="min-h-screen bg-gray-950 text-gray-100">
-    <header class="border-b border-gray-800 bg-gray-900/80 backdrop-blur">
-      <div class="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3">
-        <div class="flex items-center gap-6">
-          <NuxtLink to="/" class="font-semibold tracking-tight text-white">
-            AAF Dashboard
-          </NuxtLink>
-          <nav v-if="loggedIn" class="hidden items-center gap-1 md:flex">
-            <UButton
-              v-for="item in nav"
-              :key="item.to"
-              :to="item.to"
-              :icon="item.icon"
-              :variant="route.path.startsWith(item.to) ? 'soft' : 'ghost'"
-              color="neutral"
-              size="sm"
-            >
-              {{ item.label }}
-            </UButton>
-          </nav>
-        </div>
-        <div v-if="loggedIn" class="flex items-center gap-3 text-sm text-gray-300">
-          <span>{{ user?.name ?? user?.email }}</span>
-          <UButton variant="ghost" color="neutral" size="sm" @click="logout">
-            Log out
-          </UButton>
-        </div>
-      </div>
-    </header>
-    <main class="mx-auto max-w-7xl px-4 py-8">
-      <slot />
-    </main>
+  <div class="flex min-h-screen bg-background">
+    <div class="hidden md:flex">
+      <AppSidebar />
+    </div>
+
+    <Sheet v-model:open="mobileNavOpen">
+      <SheetContent class="w-64 p-0">
+        <AppSidebar />
+      </SheetContent>
+    </Sheet>
+
+    <div class="flex min-w-0 flex-1 flex-col">
+      <AppHeader :title="pageTitle" @open-mobile-nav="mobileNavOpen = true" />
+      <main class="flex-1 p-6">
+        <slot />
+      </main>
+    </div>
   </div>
 </template>
