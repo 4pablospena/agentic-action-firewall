@@ -6,5 +6,5 @@ const props = defineProps<{ class?: HTMLAttributes["class"] }>();
 </script>
 
 <template>
-  <div :class="cn('shrink-0 bg-border h-[1px] w-full', props.class)" />
+  <div :class="cn('shrink-0 bg-border h-px w-full', props.class)" />
 </template>
