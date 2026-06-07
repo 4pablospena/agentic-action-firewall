@@ -10,6 +10,7 @@ const previewEnv = {
   NUXT_OAUTH_GITHUB_CLIENT_ID: process.env.NUXT_OAUTH_GITHUB_CLIENT_ID ?? "test",
   NUXT_OAUTH_GITHUB_CLIENT_SECRET:
     process.env.NUXT_OAUTH_GITHUB_CLIENT_SECRET ?? "test",
+  NUXT_DEV_AUTH_BYPASS: "true",
 };
 
 export default defineConfig({

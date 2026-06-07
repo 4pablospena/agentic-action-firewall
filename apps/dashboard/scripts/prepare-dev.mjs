@@ -35,6 +35,8 @@ if (!hasOAuth && !devBypass) {
   console.log("Dev auth bypass enabled — use “Continue as Dev User” on /login");
 }
 
+console.log("Run pnpm db:seed to load demo audit data");
+
 const migrate = spawnSync(process.execPath, ["scripts/migrate.mjs"], {
   cwd: appRoot,
   stdio: "inherit",

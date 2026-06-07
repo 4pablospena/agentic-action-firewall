@@ -78,6 +78,8 @@ Accepted ADRs:
 
 ## For contributors
 
+**Dashboard local setup:** see [`apps/dashboard/README.md`](../apps/dashboard/README.md).
+
 ### Before changing a doc
 
 1. Is this the right place for this information? Consult the source-of-truth table in [`adrs/0001`](./adrs/0001-source-of-truth.md).

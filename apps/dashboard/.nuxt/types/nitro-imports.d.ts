@@ -1,4 +1,5 @@
 declare global {
+  const DEMO_ENTRY_ID_PREFIX: typeof import('../../server/utils/demo-audit').DEMO_ENTRY_ID_PREFIX
   const H3Error: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').H3Error
   const H3Event: typeof import('../../../../node_modules/.pnpm/h3@1.15.11/node_modules/h3').H3Event
   const __buildAssetsURL: typeof import('../../../../node_modules/.pnpm/@nuxt+nitro-server@3.21.7_db0@0.3.4_drizzle-orm@0.44.7_postgres@3.4.9___drizzle-orm@0.44.7_po_njzfr3gokuegh2uq5gz4nsitvm/node_modules/@nuxt/nitro-server/dist/runtime/utils/paths').buildAssetsURL
@@ -346,6 +347,9 @@ declare global {
   // @ts-ignore
   export type { SessionUser } from '../../server/utils/auth'
   import('../../server/utils/auth')
+  // @ts-ignore
+  export type { DemoAuditChain } from '../../server/utils/demo-audit'
+  import('../../server/utils/demo-audit')
 }
 export { H3Event, H3Error, appendCorsHeaders, appendCorsPreflightHeaders, appendHeader, appendHeaders, appendResponseHeader, appendResponseHeaders, assertMethod, callNodeListener, clearResponseHeaders, clearSession, createApp, createAppEventHandler, createError, createEvent, createEventStream, createRouter, defaultContentType, defineEventHandler, defineLazyEventHandler, defineNodeListener, defineNodeMiddleware, defineRequestMiddleware, defineResponseMiddleware, defineWebSocket, defineWebSocketHandler, deleteCookie, dynamicEventHandler, eventHandler, fetchWithEvent, fromNodeMiddleware, fromPlainHandler, fromWebHandler, getCookie, getHeader, getHeaders, getMethod, getProxyRequestHeaders, getQuery, getRequestFingerprint, getRequestHeader, getRequestHeaders, getRequestHost, getRequestIP, getRequestPath, getRequestProtocol, getRequestURL, getRequestWebStream, getResponseHeader, getResponseHeaders, getResponseStatus, getResponseStatusText, getRouterParam, getRouterParams, getSession, getValidatedQuery, getValidatedRouterParams, handleCacheHeaders, handleCors, isCorsOriginAllowed, isError, isEvent, isEventHandler, isMethod, isPreflightRequest, isStream, isWebResponse, lazyEventHandler, parseCookies, promisifyNodeListener, proxyRequest, readBody, readFormData, readMultipartFormData, readRawBody, readValidatedBody, removeResponseHeader, sanitizeStatusCode, sanitizeStatusMessage, sealSession, send, sendError, sendIterable, sendNoContent, sendProxy, sendRedirect, sendStream, sendWebResponse, serveStatic, setCookie, setHeader, setHeaders, setResponseHeader, setResponseHeaders, setResponseStatus, splitCookiesString, toEventHandler, toNodeListener, toPlainHandler, toWebHandler, toWebRequest, unsealSession, updateSession, useBase, useSession, writeEarlyHints } from 'h3';
 export { useNitroApp } from 'nitropack/runtime/internal/app';
@@ -416,3 +420,4 @@ export { default as auditList } from '/Users/pablosuarezpena/projects/agentic-ac
 export { ingestAuditEntry } from '/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/server/utils/audit';
 export { ensureUserWorkspace, requireSessionUser } from '/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/server/utils/auth';
 export { schema, useDb } from '/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/server/utils/db';
+export { DEMO_ENTRY_ID_PREFIX } from '/Users/pablosuarezpena/projects/agentic-action-firewall/apps/dashboard/server/utils/demo-audit';
