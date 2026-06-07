@@ -124,7 +124,7 @@ jobs:
         working-directory: apps/dashboard
 
       - name: Build dashboard
-        run: pnpm --filter @agent-firewall/dashboard build
+        run: pnpm --filter "@agent-firewall/dashboard..." build
         env:
           DATABASE_URL: postgresql://aaf:aaf@localhost:5432/aaf_dashboard
           NUXT_SESSION_PASSWORD: ci-test-session-password-min-32-chars
