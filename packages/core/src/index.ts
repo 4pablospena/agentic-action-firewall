@@ -17,10 +17,13 @@ export {
 export {
   buildBaseline,
   baselineToPolicyYamlSnippet,
+  createDefaultObservationStore,
   InMemoryObservationStore,
   isLearningModeActive,
   observationHours,
   ObservationRecorder,
+  resolveObservationDbPath,
+  SqliteObservationStore,
   type ObservationStore,
 } from "./learning/index.js";
 export {

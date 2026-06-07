@@ -11,6 +11,9 @@ export async function syncKillSwitchToControlPlane(
   try {
     await $fetch(`${baseUrl}/kill`, {
       method: "POST",
+      headers: config.controlPlaneToken
+        ? { Authorization: `Bearer ${config.controlPlaneToken}` }
+        : undefined,
       body: { scope, reason },
     });
   } catch (error) {

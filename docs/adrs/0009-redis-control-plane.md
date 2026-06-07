@@ -16,6 +16,8 @@ Phase 1 dashboard records kill switch activations in PostgreSQL ([`apps/dashboar
 2. **Dashboard → control plane → Redis.** Dashboard POST persists to Postgres (audit trail) and forwards to the control plane API.
 3. **Agents poll/check the control plane** before each evaluation (or cache with short TTL). No direct Postgres access from agents.
 4. **Local dev:** Redis 7+ in `docker-compose.yml` and `apps/control-plane/` Hono service for development.
+5. **Production Workers:** Cloudflare Workers entry (`src/worker.mjs`) uses **Upstash Redis REST**; Node dev uses **ioredis**. Shared `KillSwitchStore` interface in `kill-switch-store.mjs`.
+6. **Auth:** Dashboard sends `Authorization: Bearer` on `POST /kill` when `NUXT_CONTROL_PLANE_TOKEN` is set.
 
 ## Consequences
 

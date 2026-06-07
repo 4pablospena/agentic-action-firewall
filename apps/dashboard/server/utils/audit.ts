@@ -24,5 +24,21 @@ export async function ingestAuditEntry(
     payload: entry,
   });
 
+  if (entry.decision.outcome === "pending") {
+    const config = useRuntimeConfig();
+    await notifyPendingApproval(entry, {
+      slackWebhookUrl: config.slackWebhookUrl,
+      slackBotToken: config.slackBotToken,
+      slackChannelId: config.slackApprovalChannelId,
+      resendApiKey: config.resendApiKey,
+      notificationEmail: config.notificationEmail,
+      twilioAccountSid: config.twilioAccountSid,
+      twilioAuthToken: config.twilioAuthToken,
+      notificationPhone: config.notificationPhone,
+    }).catch((error) => {
+      console.error("[dashboard] pending approval notification failed:", error);
+    });
+  }
+
   return entry;
 }

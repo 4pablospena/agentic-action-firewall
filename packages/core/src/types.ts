@@ -54,8 +54,10 @@ export interface FirewallConfig {
   signingKey?: Uint8Array;
   /** When true, no blocking (Learning Mode observation). Default false in enforcement tests. */
   learningMode?: boolean;
-  /** Optional observation store; defaults to in-memory when learning mode is active. */
+  /** Optional observation store; defaults to SQLite when learning mode is active. */
   observationStore?: import("./learning/observation-store.js").ObservationStore;
+  /** SQLite path for observation events (default ~/.aaf/observations.db). */
+  observationDbPath?: string;
   /** Optional control plane base URL for distributed kill switch (Redis-backed). */
   controlPlaneUrl?: string;
   /** Optional local ONNX model path for Layer 3 ML detector (Slice 6). */

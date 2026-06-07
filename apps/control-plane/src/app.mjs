@@ -1,23 +1,31 @@
 import { Hono } from "hono";
-import Redis from "ioredis";
 
-export function createControlPlaneApp(redisUrl = process.env.REDIS_URL ?? "redis://localhost:6379") {
+export function createControlPlaneApp(store, options = {}) {
   const app = new Hono();
-  const redis = new Redis(redisUrl);
-
-  function killKey(scope) {
-    return `aaf:kill:${scope}`;
-  }
+  const authToken = options.authToken;
 
   app.get("/health", (c) => c.json({ ok: true }));
 
-  app.post("/kill", async (c) => {
+  const requireAuth = async (c, next) => {
+    if (!authToken) {
+      return next();
+    }
+
+    const header = c.req.header("authorization") ?? "";
+    if (header !== `Bearer ${authToken}`) {
+      return c.json({ error: "unauthorized" }, 401);
+    }
+
+    return next();
+  };
+
+  app.post("/kill", requireAuth, async (c) => {
     const body = await c.req.json();
     if (!body.scope || !body.reason) {
       return c.json({ error: "scope and reason are required" }, 400);
     }
 
-    await redis.set(killKey(body.scope), body.reason);
+    await store.set(body.scope, body.reason);
     return c.json({ ok: true, scope: body.scope });
   });
 
@@ -27,7 +35,7 @@ export function createControlPlaneApp(redisUrl = process.env.REDIS_URL ?? "redis
 
     const scopes = ["all", `agent:${agentId}`, `session:${sessionId}`];
     for (const scope of scopes) {
-      const reason = await redis.get(killKey(scope));
+      const reason = await store.get(scope);
       if (reason) {
         return c.json({ killed: true, scope, reason });
       }
@@ -36,9 +44,9 @@ export function createControlPlaneApp(redisUrl = process.env.REDIS_URL ?? "redis
     return c.json({ killed: false });
   });
 
-  app.delete("/kill/:scope", async (c) => {
+  app.delete("/kill/:scope", requireAuth, async (c) => {
     const scope = c.req.param("scope");
-    await redis.del(killKey(scope));
+    await store.del(scope);
     return c.json({ ok: true, scope });
   });
 

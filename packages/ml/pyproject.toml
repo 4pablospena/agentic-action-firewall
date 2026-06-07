@@ -1,0 +1,14 @@
+[project]
+name = "agent-firewall-ml"
+version = "0.0.0"
+requires-python = ">=3.12"
+dependencies = [
+  "numpy>=2.0.0",
+  "scikit-learn>=1.6.0",
+  "skl2onnx>=1.17.0",
+  "onnx>=1.17.0",
+]
+
+[project.scripts]
+aaf-ml-generate = "generate_synthetic:main"
+aaf-ml-train = "train:main"

@@ -1,22 +1,42 @@
-import { describe, expect, it } from "vitest";
+import { mkdtempSync, rmSync } from "node:fs";
+import { tmpdir } from "node:os";
+import { join } from "node:path";
+import { afterEach, describe, expect, it } from "vitest";
 import { validateObservationEvent } from "@agent-firewall/schemas/event";
 import { validateBaseline } from "@agent-firewall/schemas/baseline";
 import { Firewall } from "../../src/firewall.js";
 import { createFirewallConfig, makeDeleteBatch } from "../helpers/index.js";
+import type { Policy } from "../../src/types.js";
+
+const tempDirs: string[] = [];
+
+afterEach(() => {
+  for (const dir of tempDirs) {
+    rmSync(dir, { recursive: true, force: true });
+  }
+  tempDirs.length = 0;
+});
+
+function isolatedLearningConfig(policies: Policy) {
+  const dir = mkdtempSync(join(tmpdir(), "aaf-lm-"));
+  tempDirs.push(dir);
+  return createFirewallConfig({
+    learningMode: true,
+    policies,
+    observationDbPath: join(dir, "observations.db"),
+  });
+}
 
 describe("Learning Mode — observation phase", () => {
   it("should not block destructive actions when learning mode is enabled", async () => {
     const firewall = new Firewall(
-      createFirewallConfig({
-        learningMode: true,
-        policies: {
-          version: "1",
-          learning_mode: { enabled: true, observation_hours: 72 },
-          anomaly_detection: {
-            enabled: true,
-            patterns: {
-              mass_action: { enabled: true, threshold_per_minute: 5 },
-            },
+      isolatedLearningConfig({
+        version: "1",
+        learning_mode: { enabled: true, observation_hours: 72 },
+        anomaly_detection: {
+          enabled: true,
+          patterns: {
+            mass_action: { enabled: true, threshold_per_minute: 5 },
           },
         },
       }),
@@ -33,12 +53,9 @@ describe("Learning Mode — observation phase", () => {
 
   it("should still enforce kill switch during learning mode", async () => {
     const firewall = new Firewall(
-      createFirewallConfig({
-        learningMode: true,
-        policies: {
-          version: "1",
-          learning_mode: { enabled: true },
-        },
+      isolatedLearningConfig({
+        version: "1",
+        learning_mode: { enabled: true },
       }),
     );
 
@@ -53,10 +70,7 @@ describe("Learning Mode — observation phase", () => {
 
   it("should record observation events with canonical tool metadata", async () => {
     const firewall = new Firewall(
-      createFirewallConfig({
-        learningMode: true,
-        policies: { version: "1", learning_mode: { enabled: true } },
-      }),
+      isolatedLearningConfig({ version: "1", learning_mode: { enabled: true } }),
     );
 
     await firewall.evaluate({
@@ -80,10 +94,7 @@ describe("Learning Mode — observation phase", () => {
 describe("Learning Mode — baseline export", () => {
   it("should build a baseline from recorded observation events", async () => {
     const firewall = new Firewall(
-      createFirewallConfig({
-        learningMode: true,
-        policies: { version: "1", learning_mode: { enabled: true } },
-      }),
+      isolatedLearningConfig({ version: "1", learning_mode: { enabled: true } }),
     );
 
     for (let i = 0; i < 10; i += 1) {

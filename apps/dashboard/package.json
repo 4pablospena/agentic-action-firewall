@@ -17,6 +17,7 @@
     "@agent-firewall/core": "workspace:*",
     "@agent-firewall/nuxt": "workspace:*",
     "@agent-firewall/schemas": "workspace:*",
+    "@agent-firewall/slack-channel": "workspace:*",
     "@lucide/vue": "^1.17.0",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

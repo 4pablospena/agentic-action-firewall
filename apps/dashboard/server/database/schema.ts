@@ -4,6 +4,7 @@ import {
   pgTable,
   text,
   timestamp,
+  uniqueIndex,
   uuid,
 } from "drizzle-orm/pg-core";
 import type { AuditEntry } from "@agent-firewall/core";
@@ -81,3 +82,37 @@ export const approvalResponses = pgTable("approval_responses", {
   mfaVerified: boolean("mfa_verified").default(false),
   createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
 });
+
+export const learningBaselines = pgTable("learning_baselines", {
+  id: uuid("id").defaultRandom().primaryKey(),
+  workspaceId: uuid("workspace_id")
+    .notNull()
+    .references(() => workspaces.id),
+  agentId: text("agent_id").notNull(),
+  baseline: jsonb("baseline").$type<import("@agent-firewall/core").BehaviorBaseline>().notNull(),
+  events: jsonb("events").$type<import("@agent-firewall/core").ObservationEvent[]>(),
+  status: text("status").notNull().default("pending_review"),
+  uploadedAt: timestamp("uploaded_at", { withTimezone: true }).defaultNow().notNull(),
+});
+
+export const learningOutlierLabels = pgTable(
+  "learning_outlier_labels",
+  {
+    id: uuid("id").defaultRandom().primaryKey(),
+    baselineId: uuid("baseline_id")
+      .notNull()
+      .references(() => learningBaselines.id, { onDelete: "cascade" }),
+    eventId: text("event_id").notNull(),
+    label: text("label").notNull(),
+    createdBy: uuid("created_by")
+      .notNull()
+      .references(() => users.id),
+    createdAt: timestamp("created_at", { withTimezone: true }).defaultNow().notNull(),
+  },
+  (table) => [
+    uniqueIndex("learning_outlier_labels_baseline_event_idx").on(
+      table.baselineId,
+      table.eventId,
+    ),
+  ],
+);

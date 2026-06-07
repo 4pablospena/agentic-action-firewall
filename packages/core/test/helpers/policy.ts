@@ -17,9 +17,20 @@ export function loadEnforcementPolicy(): Policy {
   return loadValidatedPolicyFromYaml(readFileSync(path, "utf8"), path);
 }
 
-export function createFirewallConfig(overrides?: Partial<{ policies: Policy; learningMode: boolean }>) {
+export function createFirewallConfig(
+  overrides?: Partial<{
+    policies: Policy;
+    learningMode: boolean;
+    observationDbPath: string;
+    observationStore: import("../../src/learning/observation-store.js").ObservationStore;
+    controlPlaneUrl: string;
+  }>,
+) {
   return {
     policies: overrides?.policies ?? loadEnforcementPolicy(),
     learningMode: overrides?.learningMode ?? false,
+    ...(overrides?.observationDbPath ? { observationDbPath: overrides.observationDbPath } : {}),
+    ...(overrides?.observationStore ? { observationStore: overrides.observationStore } : {}),
+    ...(overrides?.controlPlaneUrl ? { controlPlaneUrl: overrides.controlPlaneUrl } : {}),
   };
 }

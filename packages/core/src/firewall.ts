@@ -20,7 +20,7 @@ import { SessionState } from "./session-state.js";
 import {
   buildBaseline,
   baselineToPolicyYamlSnippet,
-  InMemoryObservationStore,
+  createDefaultObservationStore,
   isLearningModeActive,
   ObservationRecorder,
 } from "./learning/index.js";
@@ -44,7 +44,9 @@ export class Firewall {
     this.auditLog = new AuditLog(config.signingKey);
 
     if (config.observationStore || isLearningModeActive(this.resolvedConfig)) {
-      const store = config.observationStore ?? new InMemoryObservationStore();
+      const store =
+        config.observationStore
+        ?? createDefaultObservationStore(config.observationDbPath);
       this.observationRecorder = new ObservationRecorder(store);
     }
   }

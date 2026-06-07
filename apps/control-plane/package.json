@@ -6,7 +6,8 @@
   "scripts": {
     "dev": "node --watch src/index.mjs",
     "start": "node src/index.mjs",
-    "test": "vitest run"
+    "test": "vitest run test/health.test.mjs",
+    "test:integration": "vitest run test/redis.integration.test.mjs"
   },
   "dependencies": {
     "@hono/node-server": "^1.14.3",

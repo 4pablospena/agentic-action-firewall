@@ -1,0 +1,6 @@
+name = "aaf-control-plane"
+main = "src/worker.mjs"
+compatibility_date = "2024-01-01"
+
+[vars]
+# Set UPSTASH_REDIS_REST_URL, UPSTASH_REDIS_REST_TOKEN, AAF_CONTROL_PLANE_TOKEN as secrets in production.

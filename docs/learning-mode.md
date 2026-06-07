@@ -300,6 +300,8 @@ Each policy as an interactive card with:
 
 AAF generates `firewall.yml` that the dev can inspect, version in git, and modify manually. It also saves outlier labels as training examples.
 
+**Dashboard path (opt-in):** developers may upload baseline JSON via the Pro dashboard (`POST /api/v1/learning/baseline`) for template-based review. Raw observation events are not synced unless explicitly included in the upload payload.
+
 ## Phase 3 — Enforcement with continuous learning
 
 ### Continuous learning mechanism

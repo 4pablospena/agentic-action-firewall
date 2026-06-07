@@ -1,3 +1,4 @@
+import { randomBytes } from "@noble/hashes/utils";
 import type { ObservationEvent } from "../generated/event.js";
 import type { ToolCall } from "../types.js";
 import { sha256Hex } from "../utils/crypto.js";
@@ -32,11 +33,19 @@ function batchSize(args: Record<string, unknown>): number {
   return typeof value === "number" && value >= 1 ? value : 1;
 }
 
+let eventSequence = 0;
+
+function generateEventId(): string {
+  eventSequence += 1;
+  const suffix = randomBytes(6);
+  const tail = `${eventSequence.toString(16).padStart(4, "0")}${[...suffix].map((b) => b.toString(16).padStart(2, "0")).join("")}`.slice(0, 12);
+  return `018f8b5a-7890-7000-8000-${tail.padEnd(12, "0")}`;
+}
+
 export class ObservationRecorder {
   private readonly sessionStarts = new Map<string, number>();
   private readonly lastActionMs = new Map<string, number>();
   private readonly sessionCounts = new Map<string, number>();
-  private eventCounter = 0;
 
   constructor(private readonly store: ObservationStore) {}
 
@@ -58,7 +67,7 @@ export class ObservationRecorder {
     const recipients = (call.recipients ?? []).map((recipient) => sha256Hex(recipient));
 
     const base = {
-      event_id: `018f8b5a-7890-7000-8000-${String(++this.eventCounter).padStart(12, "0")}`,
+      event_id: generateEventId(),
       agent_id: call.agentId,
       session_id: call.sessionId,
       timestamp: call.timestamp,

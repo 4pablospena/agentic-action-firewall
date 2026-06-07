@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import {
   FileCode2,
+  GraduationCap,
   OctagonX,
   ScrollText,
   Settings,
@@ -20,6 +21,7 @@ const route = useRoute();
 const nav: NavItem[] = [
   { label: "Audit", to: "/audit", icon: ScrollText },
   { label: "Approvals", to: "/approvals", icon: UserCheck },
+  { label: "Learning", to: "/learning", icon: GraduationCap },
   { label: "Policies", to: "/policies", icon: FileCode2 },
   { label: "Kill Switch", to: "/kill-switch", icon: OctagonX },
   { label: "Settings", to: "/settings", icon: Settings },

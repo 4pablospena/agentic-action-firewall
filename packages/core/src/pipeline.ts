@@ -1,6 +1,6 @@
 import { approvePending, checkApprovalGate } from "./layers/approval.js";
 import type { AuditLog } from "./layers/audit-log.js";
-import { detectAnomaly } from "./layers/anomaly.js";
+import { detectAnomaly, detectAnomalyAsync } from "./layers/anomaly.js";
 import { classifyIntent, isR1AutoAllow } from "./layers/intent.js";
 import { KillSwitch } from "./layers/kill-switch.js";
 import { checkRemoteKillSwitch } from "./layers/kill-switch-remote.js";
@@ -186,9 +186,13 @@ export async function evaluatePipeline(
     const { riskTier } = intent;
 
     if (policy.anomaly_detection?.enabled) {
-      const anomaly = detectAnomaly(call, policy, state, riskTier, {
-        ...(config.onnxModelPath ? { onnxModelPath: config.onnxModelPath } : {}),
-      });
+      const anomaly = config.onnxModelPath
+        ? await detectAnomalyAsync(call, policy, state, riskTier, {
+            onnxModelPath: config.onnxModelPath,
+          })
+        : detectAnomaly(call, policy, state, riskTier, {
+            ...(config.onnxModelPath ? { onnxModelPath: config.onnxModelPath } : {}),
+          });
       if (anomaly?.triggered) {
         return finalizeDecision(ctx, call, {
           outcome: anomaly.outcome,

@@ -54,6 +54,39 @@ jobs:
       - name: Behavioral tests
         run: pnpm test:behavioral
 
+  control-plane-integration:
+    runs-on: ubuntu-latest
+    services:
+      redis:
+        image: redis:7-alpine
+        ports:
+          - 6379:6379
+        options: >-
+          --health-cmd "redis-cli ping"
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Control plane Redis integration
+        run: pnpm --filter @agent-firewall/control-plane test:integration
+        env:
+          REDIS_URL: redis://localhost:6379
+
   dashboard-e2e:
     runs-on: ubuntu-latest
     services:

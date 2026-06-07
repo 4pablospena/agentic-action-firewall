@@ -64,6 +64,8 @@ Output shape: [`schemas/anomaly-result.schema.json`](../../schemas/anomaly-resul
 
 When Slice 6 ships, Layer 3 will use **`onnxruntime-node`** for local inference with heuristic fallback when no model is loaded (`packages/core/src/layers/anomaly-ml.ts`). Target: <50ms p95 inference, zero network calls, opt-in via `onnxModelPath` in firewall config.
 
+Training pipeline (`packages/ml/`): synthetic bootstrap dataset → scikit-learn → ONNX export via skl2onnx. CLI: `aaf ml train --synthetic`. Beta telemetry (`aaf telemetry export`) replaces synthetic labels when available.
+
 ## Alternatives considered
 
 ### A. External ML API from day 1

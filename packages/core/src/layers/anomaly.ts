@@ -1,7 +1,7 @@
 import type { Policy, RiskTier, ToolCall } from "../types.js";
 import type { SessionState } from "../session-state.js";
 import { cosineSimilarity } from "../utils/similarity.js";
-import { OnnxAnomalyDetector } from "./anomaly-ml.js";
+import { OnnxAnomalyDetector, detectMlAnomaly } from "./anomaly-ml.js";
 
 export interface AnomalyResult {
   triggered: boolean;
@@ -229,6 +229,35 @@ export function detectAnomaly(
     return null;
   }
 
+  return detectAnomalySync(call, policy, state, riskTier, options);
+}
+
+export async function detectAnomalyAsync(
+  call: ToolCall,
+  policy: Policy,
+  state: SessionState,
+  riskTier: RiskTier,
+  options?: { onnxModelPath?: string },
+): Promise<AnomalyResult | null> {
+  if (!policy.anomaly_detection?.enabled) {
+    return null;
+  }
+
+  const ml = await detectMlAnomaly(call, policy, state, riskTier, options?.onnxModelPath);
+  if (ml) {
+    return ml;
+  }
+
+  return detectAnomalySync(call, policy, state, riskTier, options);
+}
+
+function detectAnomalySync(
+  call: ToolCall,
+  policy: Policy,
+  state: SessionState,
+  riskTier: RiskTier,
+  options?: { onnxModelPath?: string },
+): AnomalyResult | null {
   const ml = new OnnxAnomalyDetector(options?.onnxModelPath).detect(
     call,
     policy,
