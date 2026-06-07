@@ -14,11 +14,9 @@ type HydrationStrategies = {
 type LazyComponent<T> = DefineComponent<HydrationStrategies, {}, {}, {}, {}, {}, {}, { hydrated: () => void }> & T
 
 
-export const OutcomeBadge: typeof import("../components/OutcomeBadge.vue")['default']
-export const RiskBadge: typeof import("../components/RiskBadge.vue")['default']
-export const LayoutAppHeader: typeof import("../components/layout/AppHeader.vue")['default']
-export const LayoutAppSidebar: typeof import("../components/layout/AppSidebar.vue")['default']
-export const LayoutColorModeToggle: typeof import("../components/layout/ColorModeToggle.vue")['default']
+export const AppHeader: typeof import("../components/layout/AppHeader.vue")['default']
+export const AppSidebar: typeof import("../components/layout/AppSidebar.vue")['default']
+export const ColorModeToggle: typeof import("../components/layout/ColorModeToggle.vue")['default']
 export const AuthState: typeof import("../../../node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/app/components/AuthState.vue")['default']
 export const NuxtWelcome: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/components/welcome.vue")['default']
 export const NuxtLayout: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/components/nuxt-layout")['default']
@@ -51,10 +49,6 @@ export const DropdownMenuItem: typeof import("../components/ui/dropdown-menu/ind
 export const Input: typeof import("../components/ui/input/index")['Input']
 export const Label: typeof import("../components/ui/label/index")['Label']
 export const Separator: typeof import("../components/ui/separator/index")['Separator']
-export const Sheet: typeof import("../components/ui/sheet/index")['Sheet']
-export const SheetContent: typeof import("../components/ui/sheet/index")['SheetContent']
-export const SheetTitle: typeof import("../components/ui/sheet/index")['SheetTitle']
-export const SheetDescription: typeof import("../components/ui/sheet/index")['SheetDescription']
 export const Table: typeof import("../components/ui/table/index")['Table']
 export const TableHeader: typeof import("../components/ui/table/index")['TableHeader']
 export const TableBody: typeof import("../components/ui/table/index")['TableBody']
@@ -66,6 +60,10 @@ export const TabsList: typeof import("../components/ui/tabs/index")['TabsList']
 export const TabsTrigger: typeof import("../components/ui/tabs/index")['TabsTrigger']
 export const TabsContent: typeof import("../components/ui/tabs/index")['TabsContent']
 export const Textarea: typeof import("../components/ui/textarea/index")['Textarea']
+export const Sheet: typeof import("../components/ui/sheet/index")['Sheet']
+export const SheetContent: typeof import("../components/ui/sheet/index")['SheetContent']
+export const SheetTitle: typeof import("../components/ui/sheet/index")['SheetTitle']
+export const SheetDescription: typeof import("../components/ui/sheet/index")['SheetDescription']
 export const NuxtPage: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/pages/runtime/page")['default']
 export const NoScript: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['NoScript']
 export const Link: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['Link']
@@ -77,11 +75,9 @@ export const Head: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parce
 export const Html: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['Html']
 export const Body: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['Body']
 export const NuxtIsland: typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/components/nuxt-island")['default']
-export const LazyOutcomeBadge: LazyComponent<typeof import("../components/OutcomeBadge.vue")['default']>
-export const LazyRiskBadge: LazyComponent<typeof import("../components/RiskBadge.vue")['default']>
-export const LazyLayoutAppHeader: LazyComponent<typeof import("../components/layout/AppHeader.vue")['default']>
-export const LazyLayoutAppSidebar: LazyComponent<typeof import("../components/layout/AppSidebar.vue")['default']>
-export const LazyLayoutColorModeToggle: LazyComponent<typeof import("../components/layout/ColorModeToggle.vue")['default']>
+export const LazyAppHeader: LazyComponent<typeof import("../components/layout/AppHeader.vue")['default']>
+export const LazyAppSidebar: LazyComponent<typeof import("../components/layout/AppSidebar.vue")['default']>
+export const LazyColorModeToggle: LazyComponent<typeof import("../components/layout/ColorModeToggle.vue")['default']>
 export const LazyAuthState: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/app/components/AuthState.vue")['default']>
 export const LazyNuxtWelcome: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/components/welcome.vue")['default']>
 export const LazyNuxtLayout: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/app/components/nuxt-layout")['default']>
@@ -114,10 +110,6 @@ export const LazyDropdownMenuItem: LazyComponent<typeof import("../components/ui
 export const LazyInput: LazyComponent<typeof import("../components/ui/input/index")['Input']>
 export const LazyLabel: LazyComponent<typeof import("../components/ui/label/index")['Label']>
 export const LazySeparator: LazyComponent<typeof import("../components/ui/separator/index")['Separator']>
-export const LazySheet: LazyComponent<typeof import("../components/ui/sheet/index")['Sheet']>
-export const LazySheetContent: LazyComponent<typeof import("../components/ui/sheet/index")['SheetContent']>
-export const LazySheetTitle: LazyComponent<typeof import("../components/ui/sheet/index")['SheetTitle']>
-export const LazySheetDescription: LazyComponent<typeof import("../components/ui/sheet/index")['SheetDescription']>
 export const LazyTable: LazyComponent<typeof import("../components/ui/table/index")['Table']>
 export const LazyTableHeader: LazyComponent<typeof import("../components/ui/table/index")['TableHeader']>
 export const LazyTableBody: LazyComponent<typeof import("../components/ui/table/index")['TableBody']>
@@ -129,6 +121,10 @@ export const LazyTabsList: LazyComponent<typeof import("../components/ui/tabs/in
 export const LazyTabsTrigger: LazyComponent<typeof import("../components/ui/tabs/index")['TabsTrigger']>
 export const LazyTabsContent: LazyComponent<typeof import("../components/ui/tabs/index")['TabsContent']>
 export const LazyTextarea: LazyComponent<typeof import("../components/ui/textarea/index")['Textarea']>
+export const LazySheet: LazyComponent<typeof import("../components/ui/sheet/index")['Sheet']>
+export const LazySheetContent: LazyComponent<typeof import("../components/ui/sheet/index")['SheetContent']>
+export const LazySheetTitle: LazyComponent<typeof import("../components/ui/sheet/index")['SheetTitle']>
+export const LazySheetDescription: LazyComponent<typeof import("../components/ui/sheet/index")['SheetDescription']>
 export const LazyNuxtPage: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/pages/runtime/page")['default']>
 export const LazyNoScript: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['NoScript']>
 export const LazyLink: LazyComponent<typeof import("../../../node_modules/.pnpm/nuxt@3.21.7_@parcel+watcher@2.5.6_@types+node@22.19.20_@vue+compiler-sfc@3.5.35_cac@6.7.14_db_b4rlyht22rszybuvn6lxrkhigq/node_modules/nuxt/dist/head/runtime/components")['Link']>

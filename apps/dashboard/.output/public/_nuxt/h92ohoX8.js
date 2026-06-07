@@ -1,1 +1,0 @@
-import{_ as s,o as t,c,a,r as o}from"./CrdlGtPG.js";const r={},n={class:"flex min-h-screen items-center justify-center bg-muted/40 p-6"},d={class:"w-full max-w-md"};function l(e,_){return t(),c("div",n,[a("div",d,[o(e.$slots,"default")])])}const i=s(r,[["render",l]]);export{i as default};

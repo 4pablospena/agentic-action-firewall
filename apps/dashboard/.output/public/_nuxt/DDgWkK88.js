@@ -1,1 +1,0 @@
-import{g as a,j as n,n as o,o as s,c as _}from"./CrdlGtPG.js";const m=a({__name:"index",async setup(c){let e,t;return[e,t]=n(()=>o("/audit")),await e,t(),(r,i)=>(s(),_("div"))}});export{m as default};

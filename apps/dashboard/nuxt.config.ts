@@ -19,6 +19,12 @@ export default defineNuxtConfig({
     prefix: "",
     componentDir: "./components/ui",
   },
+  components: [
+    {
+      path: "~/components/layout",
+      pathPrefix: false,
+    },
+  ],
   agentFirewall: {
     apiUrl: process.env.NUXT_PUBLIC_AAF_API_URL ?? "",
     apiKey: process.env.NUXT_PUBLIC_AAF_API_KEY ?? "",
