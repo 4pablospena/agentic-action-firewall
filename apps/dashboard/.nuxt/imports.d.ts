@@ -52,3 +52,4 @@ export { useToast } from '../../../node_modules/.pnpm/@nuxt+ui@3.3.7_@babel+pars
 export { useAgentFirewall, useAuditIngest } from '../../../packages/nuxt/dist/runtime/composables/useAgentFirewall';
 export { useColorMode } from '../../../node_modules/.pnpm/@nuxtjs+color-mode@3.5.2_magicast@0.5.3/node_modules/@nuxtjs/color-mode/dist/runtime/composables';
 export { useUserSession } from '../../../node_modules/.pnpm/nuxt-auth-utils@0.5.29_magicast@0.5.3/node_modules/nuxt-auth-utils/dist/runtime/app/composables/session';
+export { useNuxtDevTools } from '../../../node_modules/.pnpm/@nuxt+devtools@3.2.4_vite@7.3.5_@types+node@22.19.20_jiti@2.7.0_lightningcss@1.32.0_terser@5._yjvqw37rp6gopp66xnzg72hfqy/node_modules/@nuxt/devtools/dist/runtime/use-nuxt-devtools';
