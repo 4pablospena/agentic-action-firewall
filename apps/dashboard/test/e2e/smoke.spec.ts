@@ -10,6 +10,6 @@ test.describe("dashboard smoke", () => {
     await page.goto("/login");
     const devButton = page.getByRole("link", { name: /Continue as Dev User/i });
     const githubButton = page.getByRole("link", { name: /Continue with GitHub/i });
-    await expect(devButton.or(githubButton)).toBeVisible();
+    await expect(devButton.or(githubButton).first()).toBeVisible();
   });
 });
