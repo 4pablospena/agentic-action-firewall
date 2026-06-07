@@ -60,6 +60,10 @@ Output shape: [`schemas/anomaly-result.schema.json`](../../schemas/anomaly-resul
 - User false-positive feedback loop (weight 3.0) in continuous learning.
 - Phase 1 ONNX upgrade path documented in [`anomaly-detection.md`](../concepts/anomaly-detection.md).
 
+## Amendment (2026-06): ONNX runtime choice
+
+When Slice 6 ships, Layer 3 will use **`onnxruntime-node`** for local inference with heuristic fallback when no model is loaded (`packages/core/src/layers/anomaly-ml.ts`). Target: <50ms p95 inference, zero network calls, opt-in via `onnxModelPath` in firewall config.
+
 ## Alternatives considered
 
 ### A. External ML API from day 1

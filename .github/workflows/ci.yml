@@ -53,3 +53,57 @@ jobs:
 
       - name: Behavioral tests
         run: pnpm test:behavioral
+
+  dashboard-e2e:
+    runs-on: ubuntu-latest
+    services:
+      postgres:
+        image: postgres:16-alpine
+        env:
+          POSTGRES_USER: aaf
+          POSTGRES_PASSWORD: aaf
+          POSTGRES_DB: aaf_dashboard
+        ports:
+          - 5432:5432
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup pnpm
+        uses: pnpm/action-setup@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: pnpm
+
+      - name: Install dependencies
+        run: pnpm install --frozen-lockfile
+
+      - name: Install Playwright browsers
+        run: pnpm exec playwright install chromium --with-deps
+        working-directory: apps/dashboard
+
+      - name: Build dashboard
+        run: pnpm --filter @agent-firewall/dashboard build
+        env:
+          DATABASE_URL: postgresql://aaf:aaf@localhost:5432/aaf_dashboard
+          NUXT_SESSION_PASSWORD: ci-test-session-password-min-32-chars
+          NUXT_OAUTH_GITHUB_CLIENT_ID: ci
+          NUXT_OAUTH_GITHUB_CLIENT_SECRET: ci
+          NUXT_DEV_AUTH_BYPASS: "true"
+
+      - name: Dashboard e2e
+        run: pnpm --filter @agent-firewall/dashboard test:e2e
+        env:
+          DATABASE_URL: postgresql://aaf:aaf@localhost:5432/aaf_dashboard
+          NUXT_SESSION_PASSWORD: ci-test-session-password-min-32-chars
+          NUXT_OAUTH_GITHUB_CLIENT_ID: ci
+          NUXT_OAUTH_GITHUB_CLIENT_SECRET: ci
+          NUXT_DEV_AUTH_BYPASS: "true"

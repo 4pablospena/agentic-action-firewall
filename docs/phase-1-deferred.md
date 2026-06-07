@@ -1,24 +1,33 @@
 # Phase 1 — deferred slices (5–7)
 
-The dashboard MVP (slices 0–4) ships first. The following remain **planned** per [`docs/overview.md`](overview.md) and [`docs/architecture.md`](architecture.md):
+The dashboard MVP (slices 0–4) ships first. Status below reflects implementation progress.
 
-## Slice 5 — Control plane (Hono + Redis)
+## Slice 5 — Control plane (Hono + Redis) — **implemented (dev)**
 
-- Edge API for distributed kill switch (`POST /api/v1/kill` → Redis flag)
-- Dashboard kill events sync to control plane
-- **Requires ADR** for Redis in agent hot path (cloud opt-in)
+- [`apps/control-plane/`](../apps/control-plane/) — Hono API (`POST /kill`, `GET /kill/check`)
+- Redis in [`docker-compose.yml`](../docker-compose.yml)
+- Dashboard forwards kill events via [`sync-kill-switch.ts`](../apps/dashboard/server/utils/sync-kill-switch.ts)
+- Core remote check: [`kill-switch-remote.ts`](../packages/core/src/layers/kill-switch-remote.ts)
+- ADR: [`0009-redis-control-plane.md`](adrs/0009-redis-control-plane.md)
 
-## Slice 6 — ML detector (ONNX)
+Cloudflare Workers deployment remains Phase 1+ ops work.
 
-- Replace heuristic Layer 3 primary path with local ONNX model
-- Opt-in telemetry → training pipeline
-- **Requires ADR** per [`docs/adrs/0006-heuristics-first.md`](adrs/0006-heuristics-first.md)
+## Slice 6 — ML detector (ONNX) — **scaffold only**
 
-## Slice 7 — Multi-channel + Phase 1b
+- [`anomaly-ml.ts`](../packages/core/src/layers/anomaly-ml.ts) — stub with heuristic fallback
+- ADR-0006 amended with `onnxruntime-node` target
+- Full model training pipeline blocked on beta telemetry
 
-- SMS (Twilio), email (Resend), approval webhooks
-- Team plan: approval pooling, multi-workspace SSO prep
+## Slice 7 — Multi-channel + Phase 1b — **partial**
 
-## Parallel track (recommended)
+- Approval webhook dispatch: [`approval-notifications.ts`](../apps/dashboard/server/utils/approval-notifications.ts)
+- Slack incoming webhook support via `NUXT_SLACK_WEBHOOK_URL`
+- Resend/Twilio env stubs (integration Phase 1b)
+- Team plan: approval pooling, multi-workspace SSO prep — **pending**
 
-- **Learning Mode** ([`docs/learning-mode.md`](learning-mode.md)) — 72h observation + baseline YAML; critical for adoption, not blocked by dashboard UI.
+## Learning Mode — **implemented in core (Wave 1)**
+
+- Observation recorder + baseline builder in [`packages/core/src/learning/`](../packages/core/src/learning/)
+- CLI: `aaf learning status|export`
+- Spec: [`learning-mode.md`](learning-mode.md)
+- Dashboard review UI — **deferred (LM-4)**

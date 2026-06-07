@@ -35,8 +35,6 @@ if (!hasOAuth && !devBypass) {
   console.log("Dev auth bypass enabled — use “Continue as Dev User” on /login");
 }
 
-console.log("Run pnpm db:seed to load demo audit data");
-
 const migrate = spawnSync(process.execPath, ["scripts/migrate.mjs"], {
   cwd: appRoot,
   stdio: "inherit",
@@ -45,6 +43,22 @@ const migrate = spawnSync(process.execPath, ["scripts/migrate.mjs"], {
 
 if (migrate.status !== 0) {
   process.exit(migrate.status ?? 1);
+}
+
+const autoSeed = process.env.NUXT_AUTO_SEED !== "false";
+if (autoSeed && devBypass) {
+  const seed = spawnSync(process.execPath, ["scripts/seed-demo.mjs"], {
+    cwd: appRoot,
+    stdio: "inherit",
+    env: process.env,
+  });
+  if (seed.status !== 0) {
+    process.exit(seed.status ?? 1);
+  }
+} else if (devBypass) {
+  console.log("Auto-seed disabled (NUXT_AUTO_SEED=false). Run pnpm db:seed manually.");
+} else {
+  console.log("Run pnpm db:seed to load demo audit data");
 }
 
 const major = Number.parseInt(process.versions.node.split(".")[0] ?? "0", 10);

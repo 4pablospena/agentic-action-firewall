@@ -1,0 +1,19 @@
+{
+  "name": "@agent-firewall/control-plane",
+  "version": "0.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node --watch src/index.mjs",
+    "start": "node src/index.mjs",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@hono/node-server": "^1.14.3",
+    "hono": "^4.7.10",
+    "ioredis": "^5.6.1"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.4"
+  }
+}

@@ -17,12 +17,22 @@ import { recordRateLimitState } from "./layers/rate-limit.js";
 import { loadPolicyFromPath } from "./policy/load.js";
 import { evaluatePipeline, type ResolvedFirewallConfig } from "./pipeline.js";
 import { SessionState } from "./session-state.js";
+import {
+  buildBaseline,
+  baselineToPolicyYamlSnippet,
+  InMemoryObservationStore,
+  isLearningModeActive,
+  ObservationRecorder,
+} from "./learning/index.js";
+import type { BehaviorBaseline } from "./generated/baseline.js";
+import type { ObservationEvent } from "./generated/event.js";
 
 export class Firewall {
   private readonly resolvedConfig: ResolvedFirewallConfig;
   private readonly auditLog: AuditLog;
   private readonly killSwitch = new KillSwitch();
   private readonly state = new SessionState();
+  private readonly observationRecorder?: ObservationRecorder;
 
   constructor(config: FirewallConfig) {
     const policies: Policy =
@@ -32,6 +42,11 @@ export class Firewall {
 
     this.resolvedConfig = { ...config, policies };
     this.auditLog = new AuditLog(config.signingKey);
+
+    if (config.observationStore || isLearningModeActive(this.resolvedConfig)) {
+      const store = config.observationStore ?? new InMemoryObservationStore();
+      this.observationRecorder = new ObservationRecorder(store);
+    }
   }
 
   async evaluate(call: ToolCall): Promise<FirewallDecision> {
@@ -40,6 +55,9 @@ export class Firewall {
       state: this.state,
       auditLog: this.auditLog,
       killSwitch: this.killSwitch,
+      ...(this.observationRecorder
+        ? { observationRecorder: this.observationRecorder }
+        : {}),
     });
   }
 
@@ -101,6 +119,22 @@ export class Firewall {
 
   async verifyAuditChain(): Promise<boolean> {
     return this.auditLog.verifyChain();
+  }
+
+  getObservationEvents(agentId?: string): ObservationEvent[] {
+    return this.observationRecorder?.getStore().list(agentId) ?? [];
+  }
+
+  exportBaseline(agentId: string): BehaviorBaseline {
+    return buildBaseline(agentId, this.getObservationEvents(agentId));
+  }
+
+  exportBaselineYaml(agentId: string): string {
+    return baselineToPolicyYamlSnippet(this.exportBaseline(agentId));
+  }
+
+  isLearningModeActive(): boolean {
+    return isLearningModeActive(this.resolvedConfig);
   }
 }
 

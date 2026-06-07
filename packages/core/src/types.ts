@@ -1,7 +1,9 @@
 import type { AuditEntry } from "./generated/audit-entry.js";
+import type { BehaviorBaseline } from "./generated/baseline.js";
+import type { ObservationEvent } from "./generated/event.js";
 import type { FirewallPolicy } from "./generated/policy.js";
 
-export type { AuditEntry };
+export type { AuditEntry, BehaviorBaseline, ObservationEvent };
 export type Policy = FirewallPolicy;
 export type RiskTier = "R1" | "R2" | "R3" | "R4";
 
@@ -52,6 +54,12 @@ export interface FirewallConfig {
   signingKey?: Uint8Array;
   /** When true, no blocking (Learning Mode observation). Default false in enforcement tests. */
   learningMode?: boolean;
+  /** Optional observation store; defaults to in-memory when learning mode is active. */
+  observationStore?: import("./learning/observation-store.js").ObservationStore;
+  /** Optional control plane base URL for distributed kill switch (Redis-backed). */
+  controlPlaneUrl?: string;
+  /** Optional local ONNX model path for Layer 3 ML detector (Slice 6). */
+  onnxModelPath?: string;
   onBlock?: (event: BlockEvent) => void | Promise<void>;
   onApprovalNeeded?: (
     event: ApprovalNeededEvent,

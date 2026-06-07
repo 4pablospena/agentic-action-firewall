@@ -15,6 +15,15 @@ export {
   type AuditChainVerificationResult,
 } from "./audit-verify.js";
 export {
+  buildBaseline,
+  baselineToPolicyYamlSnippet,
+  InMemoryObservationStore,
+  isLearningModeActive,
+  observationHours,
+  ObservationRecorder,
+  type ObservationStore,
+} from "./learning/index.js";
+export {
   buildToolCall,
   guardToolExecution,
   wrapAgentTools,
@@ -26,10 +35,12 @@ export type {
   ApprovalNeededResult,
   ApproveOptions,
   AuditEntry,
+  BehaviorBaseline,
   BlockEvent,
   FirewallConfig,
   FirewallDecision,
   KillSwitchScope,
+  ObservationEvent,
   Policy,
   RiskTier,
   ToolCall,

@@ -20,5 +20,7 @@ export default defineEventHandler(async (event) => {
     })
     .returning();
 
+  await syncKillSwitchToControlPlane(body.scope, body.reason);
+
   return { event: killEvent };
 });

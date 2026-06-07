@@ -12,6 +12,14 @@
       "types": "./lib/validate-audit.d.ts",
       "import": "./lib/validate-audit.mjs"
     },
+    "./event": {
+      "types": "./lib/validate-event.d.ts",
+      "import": "./lib/validate-event.mjs"
+    },
+    "./baseline": {
+      "types": "./lib/validate-baseline.d.ts",
+      "import": "./lib/validate-baseline.mjs"
+    },
     "./policy.schema.json": "./policy.schema.json"
   },
   "scripts": {

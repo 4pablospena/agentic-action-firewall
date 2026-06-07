@@ -57,6 +57,26 @@ Re-seed (replaces existing demo entries):
 pnpm --filter @agent-firewall/dashboard db:seed -- --force
 ```
 
+With `NUXT_DEV_AUTH_BYPASS=true`, `pnpm dev` auto-seeds demo data when the audit log is empty. Disable with:
+
+```env
+NUXT_AUTO_SEED=false
+```
+
+### Control plane (optional, Slice 5)
+
+For distributed kill switch sync:
+
+```bash
+docker compose up -d redis control-plane
+```
+
+Set in `.env`:
+
+```env
+NUXT_CONTROL_PLANE_URL=http://localhost:8787
+```
+
 ## Scripts
 
 | Command | Description |

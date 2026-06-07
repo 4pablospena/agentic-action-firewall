@@ -33,8 +33,12 @@ docs/
     ├── 0004-observation-window.md
     ├── 0005-four-tier-risk.md
     ├── 0006-heuristics-first.md
-    └── 0007-ed25519-signing.md
+    ├── 0007-ed25519-signing.md
+    ├── 0008-dashboard-shadcn-ui.md
+    └── 0009-redis-control-plane.md
 ```
+
+See also [`phase-1-deferred.md`](./phase-1-deferred.md) for post-MVP slice status.
 
 ## Conventions
 
@@ -75,6 +79,8 @@ Accepted ADRs:
 - [ADR-0005: 4-tier risk structure](./adrs/0005-four-tier-risk.md)
 - [ADR-0006: Heuristics first, ML later](./adrs/0006-heuristics-first.md)
 - [ADR-0007: Ed25519 over RSA](./adrs/0007-ed25519-signing.md)
+- [ADR-0008: Dashboard shadcn UI](./adrs/0008-dashboard-shadcn-ui.md)
+- [ADR-0009: Redis control plane](./adrs/0009-redis-control-plane.md)
 
 ## For contributors
 

@@ -34,5 +34,13 @@ export default defineEventHandler(async (event) => {
     })
     .returning();
 
+  await notifyApprovalChannels({
+    auditEntryId: row.id,
+    approved: body.approved,
+    approverId: user.id,
+    workspaceId: user.workspaceId,
+    entry: row.payload,
+  });
+
   return { response };
 });

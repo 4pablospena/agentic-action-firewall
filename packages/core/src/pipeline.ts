@@ -3,6 +3,7 @@ import type { AuditLog } from "./layers/audit-log.js";
 import { detectAnomaly } from "./layers/anomaly.js";
 import { classifyIntent, isR1AutoAllow } from "./layers/intent.js";
 import { KillSwitch } from "./layers/kill-switch.js";
+import { checkRemoteKillSwitch } from "./layers/kill-switch-remote.js";
 import {
   checkRateLimits,
   recordRateLimitState,
@@ -10,6 +11,8 @@ import {
 } from "./layers/rate-limit.js";
 import type { SessionState } from "./session-state.js";
 import { FirewallInternalError } from "./errors.js";
+import { isLearningModeActive } from "./learning/is-learning-mode.js";
+import type { ObservationRecorder } from "./learning/observation-recorder.js";
 import type {
   ApprovalNeededResult,
   FirewallConfig,
@@ -27,6 +30,7 @@ export interface PipelineContext {
   state: SessionState;
   auditLog: AuditLog;
   killSwitch: KillSwitch;
+  observationRecorder?: ObservationRecorder;
 }
 
 async function invokeCallback<T>(
@@ -140,6 +144,16 @@ export async function evaluatePipeline(
     const { config, state, killSwitch } = ctx;
     const policy = config.policies;
 
+    const remoteKill = await checkRemoteKillSwitch(config.controlPlaneUrl, call);
+    if (remoteKill.killed) {
+      return finalizeDecision(ctx, call, {
+        outcome: "block",
+        byLayer: 5,
+        reason: `Kill switch: ${remoteKill.reason}`,
+        riskTier: "R1",
+      });
+    }
+
     const kill = killSwitch.isKilled(call);
     if (kill.killed) {
       return finalizeDecision(ctx, call, {
@@ -150,11 +164,31 @@ export async function evaluatePipeline(
       });
     }
 
+    if (isLearningModeActive(config)) {
+      ctx.observationRecorder?.record(call);
+      const { riskTier } = classifyIntent(call, policy);
+      ctx.state.recordCall({
+        call,
+        riskTier,
+        timestampMs: new Date(call.timestamp).getTime(),
+        outcome: "allow",
+      });
+      recordRateLimitState(call, ctx.state);
+      return {
+        outcome: "allow",
+        byLayer: 1,
+        reason: "Learning mode observation",
+        riskTier,
+      };
+    }
+
     const intent = classifyIntent(call, policy);
     const { riskTier } = intent;
 
     if (policy.anomaly_detection?.enabled) {
-      const anomaly = detectAnomaly(call, policy, state, riskTier);
+      const anomaly = detectAnomaly(call, policy, state, riskTier, {
+        ...(config.onnxModelPath ? { onnxModelPath: config.onnxModelPath } : {}),
+      });
       if (anomaly?.triggered) {
         return finalizeDecision(ctx, call, {
           outcome: anomaly.outcome,

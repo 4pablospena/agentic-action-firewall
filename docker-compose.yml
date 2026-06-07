@@ -10,5 +10,24 @@ services:
     volumes:
       - aaf_postgres_data:/var/lib/postgresql/data
 
+  redis:
+    image: redis:7-alpine
+    ports:
+      - "6379:6379"
+
+  control-plane:
+    image: node:22-alpine
+    working_dir: /app
+    command: sh -c "corepack enable && pnpm install && pnpm --filter @agent-firewall/control-plane start"
+    environment:
+      REDIS_URL: redis://redis:6379
+      PORT: "8787"
+    ports:
+      - "8787:8787"
+    volumes:
+      - .:/app
+    depends_on:
+      - redis
+
 volumes:
   aaf_postgres_data:

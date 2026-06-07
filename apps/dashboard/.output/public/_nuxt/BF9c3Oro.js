@@ -1,1 +1,0 @@
-import{c as a}from"./BXldfq8o.js";import{g as o,o as t,c as n,r as l,k as c,l as p}from"./DAx1QChS.js";const d=o({__name:"AlertDescription",props:{class:{type:[Boolean,null,String,Object,Array]}},setup(e){const s=e;return(r,i)=>(t(),n("div",{class:c(p(a)("text-sm [&_p]:leading-relaxed",s.class))},[l(r.$slots,"default")],2))}});export{d as _};

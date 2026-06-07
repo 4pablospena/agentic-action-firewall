@@ -7,6 +7,9 @@ dist/
 packages/*/dist/
 build/
 *.tsbuildinfo
+**/.nuxt/
+**/.output/
+apps/dashboard/test-results/
 
 # Environment
 .env
