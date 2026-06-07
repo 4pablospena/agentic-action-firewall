@@ -1,11 +1,6 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const SCHEMA_ROOT = join(__dirname, "..");
+import { loadSchemaJson } from "./load-schema.mjs";
 
 export class PolicyValidationError extends Error {
   /**
@@ -21,10 +16,6 @@ export class PolicyValidationError extends Error {
   }
 }
 
-function loadJson(filename) {
-  return JSON.parse(readFileSync(join(SCHEMA_ROOT, filename), "utf8"));
-}
-
 function createValidator() {
   const ajv = new Ajv2020({
     strict: true,
@@ -33,7 +24,7 @@ function createValidator() {
   });
   addFormats(ajv);
 
-  ajv.addSchema(loadJson("common.defs.json"));
+  ajv.addSchema(loadSchemaJson("common.defs.json"));
 
   for (const schemaFile of [
     "event.schema.json",
@@ -42,7 +33,7 @@ function createValidator() {
     "baseline.schema.json",
     "policy.schema.json",
   ]) {
-    ajv.addSchema(loadJson(schemaFile));
+    ajv.addSchema(loadSchemaJson(schemaFile));
   }
 
   const validate = ajv.getSchema("https://agent-firewall.dev/schemas/policy.schema.json");

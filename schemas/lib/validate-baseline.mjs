@@ -1,15 +1,6 @@
-import { readFileSync } from "node:fs";
-import { dirname, join } from "node:path";
-import { fileURLToPath } from "node:url";
 import Ajv2020 from "ajv/dist/2020.js";
 import addFormats from "ajv-formats";
-
-const __dirname = dirname(fileURLToPath(import.meta.url));
-const SCHEMA_ROOT = join(__dirname, "..");
-
-function loadJson(filename) {
-  return JSON.parse(readFileSync(join(SCHEMA_ROOT, filename), "utf8"));
-}
+import { loadSchemaJson } from "./load-schema.mjs";
 
 let baselineValidator;
 
@@ -20,8 +11,8 @@ function getBaselineValidator() {
 
   const ajv = new Ajv2020({ strict: true, allErrors: true, validateSchema: true });
   addFormats(ajv);
-  ajv.addSchema(loadJson("common.defs.json"));
-  ajv.addSchema(loadJson("baseline.schema.json"));
+  ajv.addSchema(loadSchemaJson("common.defs.json"));
+  ajv.addSchema(loadSchemaJson("baseline.schema.json"));
 
   const validate = ajv.getSchema("https://agent-firewall.dev/schemas/baseline.schema.json");
   if (!validate) {
