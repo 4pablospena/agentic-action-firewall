@@ -25,7 +25,7 @@ test.describe("learning mode review flow", () => {
     await expect(page.getByText("Section 1 — Summary")).toBeVisible();
     await expect(page.getByText("Section 2 — Recommended policies")).toBeVisible();
     await expect(page.getByText("Section 3 — Detected outliers")).toBeVisible();
-    await expect(page.getByText("gmail.send")).toBeVisible();
+    await expect(page.getByText("gmail.send", { exact: true })).toBeVisible();
 
     await page.getByRole("button", { name: /Approve & activate policies/i }).click();
     await expect(page.getByText(/Review approved/i)).toBeVisible();
