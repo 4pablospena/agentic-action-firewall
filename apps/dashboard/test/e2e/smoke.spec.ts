@@ -8,8 +8,6 @@ test.describe("dashboard smoke", () => {
 
   test("dev login button visible when configured", async ({ page }) => {
     await page.goto("/login");
-    const devButton = page.getByRole("link", { name: /Continue as Dev User/i });
-    const githubButton = page.getByRole("link", { name: /Continue with GitHub/i });
-    await expect(devButton.or(githubButton).first()).toBeVisible();
+    await expect(page.getByRole("link", { name: /Continue as Dev User/i })).toBeVisible();
   });
 });

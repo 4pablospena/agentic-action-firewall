@@ -140,6 +140,13 @@ jobs:
           NUXT_OAUTH_GITHUB_CLIENT_SECRET: ci
           NUXT_DEV_AUTH_BYPASS: "true"
 
+      - name: Prepare dashboard database
+        run: |
+          pnpm --filter @agent-firewall/dashboard db:migrate
+          pnpm --filter @agent-firewall/dashboard db:seed -- --force
+        env:
+          DATABASE_URL: postgresql://aaf:aaf@localhost:5432/aaf_dashboard
+
       - name: Dashboard e2e
         run: pnpm --filter @agent-firewall/dashboard test:e2e
         env:

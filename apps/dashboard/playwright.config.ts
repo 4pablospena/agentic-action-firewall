@@ -16,7 +16,8 @@ const previewEnv = {
 export default defineConfig({
   testDir: "./test/e2e",
   globalSetup: "./test/e2e/global-setup.ts",
-  fullyParallel: true,
+  fullyParallel: !process.env.CI,
+  workers: process.env.CI ? 1 : undefined,
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3000",
     trace: "on-first-retry",
